@@ -1,3 +1,4 @@
+import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/resources/app_colors.dart';
@@ -35,7 +36,7 @@ OutlineInputBorder outlineInputBorder = OutlineInputBorder(
 OutlineInputBorder focusedOutlineInputBorder = OutlineInputBorder(
   borderRadius:
       BorderRadius.all(Radius.circular(AppBorderRadius.semiBigBorderRadius.r)),
-  borderSide: const BorderSide(color: AppColors.primaryColor),
+  borderSide: const BorderSide(color: MyTheme.primaryColor),
 );
 
 OutlineInputBorder errorOutlineInputBorder = OutlineInputBorder(
