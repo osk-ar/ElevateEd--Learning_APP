@@ -29,6 +29,8 @@ class RegisterConfirmPasswordVisibilityChanged extends RegisterState {
   List<Object?> get props => [isConfirmPasswordVisible];
 }
 
+class RegisterDatePicked extends RegisterState {}
+
 class RegisterFailure extends RegisterState {
   final String error;
 

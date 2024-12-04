@@ -118,7 +118,9 @@ class LoginScreen extends StatelessWidget {
                 splashFactory: NoSplash.splashFactory,
                 overlayColor: WidgetStatePropertyAll(Colors.transparent),
               ),
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(Routes.signupScreenRoute);
+              },
               child: Text(
                 "Sign up",
                 style: AppTextStyles.textButtonTextStyle(context),

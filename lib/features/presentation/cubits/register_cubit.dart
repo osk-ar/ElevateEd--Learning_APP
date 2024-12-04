@@ -4,6 +4,7 @@ import 'package:e_learning_app_gp/features/domain/usecases/google_auth_usecase.d
 import 'package:e_learning_app_gp/features/domain/usecases/register_usecase.dart';
 import 'package:e_learning_app_gp/features/presentation/states/register_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/data_intent.dart';
@@ -102,5 +103,15 @@ class RegisterCubit extends Cubit<RegisterState> {
   void toggleConfirmPasswordVisibility() {
     isConfirmPasswordVisible = !isConfirmPasswordVisible;
     emit(RegisterConfirmPasswordVisibilityChanged(isConfirmPasswordVisible));
+  }
+
+  Future<void> getDateInput(BuildContext context) async {
+    DateTime? pickedTime = await showDatePicker(
+        context: context, firstDate: DateTime(1900), lastDate: DateTime(2100));
+    if (pickedTime != null) {
+      String? date = pickedTime.toString().split(" ")[0];
+      birthDateController.text = date;
+    }
+    emit(RegisterDatePicked());
   }
 }

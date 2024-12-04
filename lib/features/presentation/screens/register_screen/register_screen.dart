@@ -40,6 +40,7 @@ class RegisterScreen extends StatelessWidget {
             isObsecure: false,
             validator: (value) => Validation.validateName(value),
             controller: context.read<RegisterCubit>().fullNameController,
+            keyboardType: TextInputType.name,
           ),
           SizedBox(height: AppSize.s32.h),
           InputField(
@@ -47,6 +48,7 @@ class RegisterScreen extends StatelessWidget {
             controller: context.read<RegisterCubit>().emailController,
             validator: (value) => Validation.validateEmail(value),
             isObsecure: false,
+            keyboardType: TextInputType.emailAddress,
           ),
           SizedBox(height: AppSize.s32.h),
           BlocBuilder<RegisterCubit, RegisterState>(
@@ -56,6 +58,7 @@ class RegisterScreen extends StatelessWidget {
                 controller: context.read<RegisterCubit>().passwordController,
                 isObsecure: !context.read<RegisterCubit>().isPasswordVisible,
                 validator: (value) => Validation.validatePassword(value),
+                keyboardType: TextInputType.visiblePassword,
                 suffixIcon: IconButton(
                   icon: Icon(
                     context.read<RegisterCubit>().isPasswordVisible
@@ -79,6 +82,7 @@ class RegisterScreen extends StatelessWidget {
                 validator: (value) => Validation.validatePassword(value),
                 controller:
                     context.read<RegisterCubit>().confirmPasswordController,
+                keyboardType: TextInputType.visiblePassword,
                 suffixIcon: IconButton(
                   icon: Icon(
                     context.read<RegisterCubit>().isConfirmPasswordVisible
@@ -95,16 +99,26 @@ class RegisterScreen extends StatelessWidget {
           ),
           SizedBox(height: AppSize.s32.h),
           InputField(
-              title: "Phone Number",
-              isObsecure: false,
-              validator: (value) => Validation.validatePassword(value),
-              controller: context.read<RegisterCubit>().phoneNumberController),
+            title: "Phone Number",
+            isObsecure: false,
+            validator: (value) => Validation.validatePassword(value),
+            controller: context.read<RegisterCubit>().phoneNumberController,
+            keyboardType: TextInputType.phone,
+          ),
           SizedBox(height: AppSize.s32.h),
           InputField(
             title: "Date Of Birth",
             isObsecure: false,
+            isReadOnly: true,
             validator: (value) => Validation.validatePassword(value),
             controller: context.read<RegisterCubit>().birthDateController,
+            suffixIcon: const Icon(
+              Icons.date_range_rounded,
+              color: Colors.black45,
+            ),
+            onTap: () async {
+              await context.read<RegisterCubit>().getDateInput(context);
+            },
           ),
           SizedBox(height: AppSize.s32.h),
           BlocListener<RegisterCubit, RegisterState>(
@@ -152,7 +166,9 @@ class RegisterScreen extends StatelessWidget {
                   splashFactory: NoSplash.splashFactory,
                   overlayColor: WidgetStatePropertyAll(Colors.transparent),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context.pushNamed(Routes.loginScreenRoute);
+                },
                 child: Text(
                   "Sign in",
                   style: AppTextStyles.textButtonTextStyle(context),

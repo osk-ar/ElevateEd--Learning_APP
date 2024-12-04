@@ -10,7 +10,10 @@ class InputField extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?) validator;
   final bool isObsecure;
+  final bool isReadOnly;
   final Widget? suffixIcon;
+  final void Function()? onTap;
+  final TextInputType? keyboardType;
   const InputField({
     super.key,
     required this.title,
@@ -18,6 +21,9 @@ class InputField extends StatelessWidget {
     required this.validator,
     required this.isObsecure,
     this.suffixIcon,
+    this.isReadOnly = false,
+    this.onTap,
+    this.keyboardType,
   });
 
   @override
@@ -28,15 +34,19 @@ class InputField extends StatelessWidget {
         controller: controller,
         obscureText: isObsecure,
         validator: validator,
-        keyboardType: TextInputType.visiblePassword,
+        keyboardType: keyboardType,
         style: AppTextStyles.lightTextStyle(context),
         decoration: InputDecoration(
-            labelText: title,
-            labelStyle: TextStyle(color: MyTheme.hintTextColor),
-            contentPadding: EdgeInsets.all(AppPadding.defaultPadding.r),
-            border: outlineInputBorder,
-            suffixIcon: suffixIcon,
-            focusedBorder: focusedOutlineInputBorder),
+          labelText: title,
+          labelStyle: TextStyle(color: MyTheme.hintTextColor),
+          contentPadding: EdgeInsets.all(AppPadding.defaultPadding.r),
+          border: outlineInputBorder,
+          suffixIcon: suffixIcon,
+          focusedBorder: focusedOutlineInputBorder,
+          fillColor: MyTheme.surfaceColor,
+        ),
+        readOnly: isReadOnly,
+        onTap: onTap,
       ),
     );
   }
