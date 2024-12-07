@@ -101,7 +101,7 @@ class RegisterScreen extends StatelessWidget {
           InputField(
             title: "Phone Number",
             isObsecure: false,
-            validator: (value) => Validation.validatePassword(value),
+            validator: (value) => Validation.validatePhoneNumber(value),
             controller: context.read<RegisterCubit>().phoneNumberController,
             keyboardType: TextInputType.phone,
           ),
@@ -110,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
             title: "Date Of Birth",
             isObsecure: false,
             isReadOnly: true,
-            validator: (value) => Validation.validatePassword(value),
+            validator: (value) => Validation.validateBirthDate(value),
             controller: context.read<RegisterCubit>().birthDateController,
             suffixIcon: const Icon(
               Icons.date_range_rounded,

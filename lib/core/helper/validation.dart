@@ -1,5 +1,4 @@
 class Validation {
-
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required';
@@ -45,7 +44,8 @@ class Validation {
     return null;
   }
 
-  static String? validateConfirmPassword(String? password, String? confirmPassword) {
+  static String? validateConfirmPassword(
+      String? password, String? confirmPassword) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
       return 'Confirm password is required';
     }
@@ -56,7 +56,6 @@ class Validation {
 
     return null;
   }
-
 
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
@@ -88,13 +87,9 @@ class Validation {
     return null;
   }
 
-  static String? validateBirthDate(DateTime? date) {
+  static String? validateBirthDate(String? date) {
     if (date == null) {
       return 'Birthdate is required';
-    }
-
-    if (date.isAfter(DateTime.now())) {
-      return 'Birthdate cannot be in the future';
     }
 
     return null;

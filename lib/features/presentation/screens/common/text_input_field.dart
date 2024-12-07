@@ -45,6 +45,7 @@ class InputField extends StatelessWidget {
           focusedBorder: focusedOutlineInputBorder,
           fillColor: MyTheme.surfaceColor,
         ),
+        cursorColor: MyTheme.primaryColor,
         readOnly: isReadOnly,
         onTap: onTap,
       ),

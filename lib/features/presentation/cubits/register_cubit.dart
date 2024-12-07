@@ -107,7 +107,10 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> getDateInput(BuildContext context) async {
     DateTime? pickedTime = await showDatePicker(
-        context: context, firstDate: DateTime(1900), lastDate: DateTime(2100));
+        context: context,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(DateTime.now().year),
+        barrierColor: Colors.red.shade400);
     if (pickedTime != null) {
       String? date = pickedTime.toString().split(" ")[0];
       birthDateController.text = date;
