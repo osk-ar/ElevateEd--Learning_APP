@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
               title: 'ElevateEd',
               themeMode: ThemeMode.light,
               onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute: Routes.homeScreenRoute,
+              initialRoute: Routes.courseDetailsScreenRoute,
             ));
   }
 }

@@ -15,6 +15,7 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         title: const Text('Details'),
         leading: const Icon(
@@ -40,7 +41,7 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
                   child: Image.network(
                       "https://img.freepik.com/free-vector/gradient-ui-ux-background_23-2149024129.jpg?uid=R165238776&ga=GA1.1.626475936.1733358216&semt=ais_hybrid"),
                   width: 80,
-                  height: 80,
+                  height: 60,
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -48,17 +49,28 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Complete UX/UI & App Design',
+                        'Complete UX/UI &',
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'App Design',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'About Course : In today\'s digital age, having a strong online presence is essential for businesses and individuals alike.With the increasing use of our daily lives.....',
-                        style: TextStyle(fontSize: 14),
+                        'About Course :',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
+                      Text(
+                        ' In today\'s digital age, having a strong online presence is essential for businesses and individuals alike.With the increasing use of our daily lives.....',
+                        style: TextStyle(fontSize: 14),
+                      )
                     ],
                   ),
                 ),
@@ -75,7 +87,7 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
               child: const Row(
                 children: [
                   CircleAvatar(
-                    radius: 35, // Size of the avatar
+                    radius: 25, // Size of the avatar
                     backgroundImage: NetworkImage(
                       'https://img.freepik.com/free-photo/lovely-good-natured-afro-american-man-white-shirt-having-charming-smile-friendly-expression_273609-14102.jpg', // Replace with your image URL
                     ),
@@ -100,6 +112,7 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
                     '5 Courses',
                     style: TextStyle(color: Colors.blue, fontSize: 14),
                   ),
+                  Icon(Icons.arrow_forward)
                 ],
               ),
             ),
@@ -143,10 +156,13 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
             // Lessons
             const Row(
               children: [
-                Icon(Icons.play_arrow),
+                CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(FontAwesomeIcons.play)),
                 SizedBox(width: 10),
                 Text(
                   '24 Lesson',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -155,18 +171,18 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
               child: ListView(
                 children: const [
                   LessonTile(
-                    number: '1',
-                    title: 'Introducing UI/UX Design',
+                    icon: Icon(FontAwesomeIcons.play),
+                    title: '1. Introducing UI/UX Design',
                     duration: '43:30',
                   ),
                   LessonTile(
-                    number: '2',
-                    title: 'Figma Fundamentals',
+                    icon: Icon(FontAwesomeIcons.play),
+                    title: '2. Figma Fundamentals',
                     duration: '22:40',
                   ),
                   LessonTile(
-                    number: '3',
-                    title: 'Designer Career Path',
+                    icon: Icon(FontAwesomeIcons.play),
+                    title: '3. Designer Career Path',
                     duration: '34:30',
                   ),
                 ],
@@ -200,13 +216,13 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
 }
 
 class LessonTile extends StatelessWidget {
-  final String number;
+  final Widget icon;
   final String title;
   final String duration;
 
   const LessonTile({
     super.key,
-    required this.number,
+    required this.icon,
     required this.title,
     required this.duration,
   });
@@ -229,10 +245,7 @@ class LessonTile extends StatelessWidget {
               color: Colors.blue,
             ),
             child: Center(
-              child: Text(
-                number,
-                style: const TextStyle(color: Colors.white),
-              ),
+              child: Icon(Icons.play_arrow),
             ),
           ),
           const SizedBox(width: 16),

@@ -6,4 +6,5 @@ class Routes {
   static const String loginScreenRoute = "/login";
   static const String signupScreenRoute = "/signup";
   static const String progressScreenRoute = "/progress";
+  static const String courseDetailsScreenRoute = "/Details";
 }
