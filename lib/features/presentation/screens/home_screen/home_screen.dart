@@ -1,4 +1,4 @@
-import 'package:e_learning_app_gp/features/presentation/screens/home_screen/widgets/course_card.dart';
+import 'package:e_learning_app_gp/features/presentation/screens/course_details/widgets/course_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   progressColor: Colors.green,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 10),
               Expanded(
                 child: _buildCard(
                   icon: FontAwesomeIcons.clock,
