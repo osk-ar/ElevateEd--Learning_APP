@@ -14,6 +14,8 @@ class InputField extends StatelessWidget {
   final Widget? suffixIcon;
   final void Function()? onTap;
   final TextInputType? keyboardType;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
   const InputField({
     super.key,
     required this.title,
@@ -24,6 +26,8 @@ class InputField extends StatelessWidget {
     this.isReadOnly = false,
     this.onTap,
     this.keyboardType,
+    this.focusNode,
+    this.nextFocusNode,
   });
 
   @override
@@ -31,6 +35,7 @@ class InputField extends StatelessWidget {
     return SizedBox(
       width: AppSize.s335.w,
       child: TextFormField(
+        focusNode: focusNode,
         controller: controller,
         obscureText: isObsecure,
         validator: validator,
@@ -43,11 +48,13 @@ class InputField extends StatelessWidget {
           border: outlineInputBorder,
           suffixIcon: suffixIcon,
           focusedBorder: focusedOutlineInputBorder,
-          fillColor: MyTheme.surfaceColor,
         ),
         cursorColor: MyTheme.primaryColor,
         readOnly: isReadOnly,
         onTap: onTap,
+        onFieldSubmitted: nextFocusNode == null
+            ? null
+            : (value) => FocusScope.of(context).requestFocus(nextFocusNode),
       ),
     );
   }

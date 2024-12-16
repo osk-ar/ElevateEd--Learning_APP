@@ -3,11 +3,8 @@ import 'package:e_learning_app_gp/features/data_sources/api/remote_data_source.d
 import 'package:e_learning_app_gp/features/data_sources/local/app_prefs.dart';
 import 'package:e_learning_app_gp/features/data_sources/repo_impl/auth_repository.dart';
 import 'package:e_learning_app_gp/features/domain/repo/auth_repository.dart';
-import 'package:e_learning_app_gp/features/domain/usecases/facebook_auth_usecase.dart';
-import 'package:e_learning_app_gp/features/domain/usecases/google_auth_usecase.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/login_usecase.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/register_usecase.dart';
-import 'package:e_learning_app_gp/features/domain/usecases/user_exist_usecase.dart';
 import 'package:e_learning_app_gp/features/presentation/cubits/login_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/cubits/register_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -34,13 +31,8 @@ Future<void> init() async {
   /// UseCases
   sl.registerLazySingleton<LoginUseCase>(() => LoginUseCase(sl()));
   sl.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(sl()));
-  sl.registerLazySingleton<UserExistUseCase>(() => UserExistUseCase(sl()));
-  sl.registerLazySingleton<GoogleAuthUseCase>(() => GoogleAuthUseCase(sl()));
-  sl.registerLazySingleton<FacebookAuthUseCase>(
-      () => FacebookAuthUseCase(sl()));
 
   /// Cubits
-  sl.registerFactory<LoginCubit>(() => LoginCubit(sl(), sl(), sl(), sl()));
-  sl.registerLazySingleton<RegisterCubit>(
-      () => RegisterCubit(sl(), sl(), sl()));
+  sl.registerFactory<LoginCubit>(() => LoginCubit(sl()));
+  sl.registerFactory<RegisterCubit>(() => RegisterCubit(sl()));
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class ImageAssets {
   ImageAssets._();
 
@@ -22,11 +24,12 @@ class ImageAssets {
   static const String chatbot = "${_imagePath}chatbot.png";
   // static const String unknownUserImage = "${_imagePath}unknown_user.jpg";
 
+  static const String onBoarding_uiux = "${_imagePath}uiux_img.jpg";
+  static const String onBoarding_laptop = "${_imagePath}laptop_img.jpeg";
 }
 
 class IconsAssets {
   IconsAssets._();
-
   // static const String _basePath = "assets/icons/";
 }
 
@@ -48,7 +51,6 @@ class SVGAssets {
   static const String onboarding2 = "${_basePath}onboarding_2.svg";
   static const String onboarding3 = "${_basePath}onboarding_3.svg";
   static const String lightning = "${_basePath}lightning.svg";
-
 }
 
 class LottieAssets {

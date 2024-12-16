@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
     required this.colorText,
     this.borderColor = Colors.transparent,
     this.width,
+    this.focusNode,
   });
 
   final String text;
@@ -20,6 +21,7 @@ class CustomButton extends StatelessWidget {
   final Color colorText;
   final double? width;
   final Color borderColor;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class CustomButton extends StatelessWidget {
         width: width ?? AppSize.s335.w,
         height: AppSize.s60.h,
         child: ElevatedButton(
+          focusNode: focusNode,
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(0),

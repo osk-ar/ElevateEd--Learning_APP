@@ -45,7 +45,7 @@ extension SnakBar on BuildContext {
             style: TextStyle(color: textColor ?? AppColors.whiteColor),
           ),
           backgroundColor: color ?? AppColors.blackColor,
-          duration: duration ?? const Duration(seconds: 2),
+          duration: duration ?? const Duration(seconds: 30),
         ),
       );
 }

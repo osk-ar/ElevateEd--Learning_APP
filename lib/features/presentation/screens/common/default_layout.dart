@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultLayout extends StatelessWidget {
-  final Widget? child;
-  final List<Widget>? children;
-  final MainAxisAlignment mainAxisAlignment;
-  final CrossAxisAlignment crossAxisAlignment;
+  final Widget child;
   final double? topPadding;
   final double? bottomPadding;
   final double? leftPadding;
@@ -15,15 +12,12 @@ class DefaultLayout extends StatelessWidget {
 
   const DefaultLayout(
       {super.key,
-      this.children,
-      this.mainAxisAlignment = MainAxisAlignment.center,
-      this.crossAxisAlignment = CrossAxisAlignment.center,
       this.topPadding = 42,
       this.bottomPadding = 42,
       this.leftPadding = 12,
       this.rightPadding = 12,
       this.scrollable = false,
-      this.child});
+      required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +31,7 @@ class DefaultLayout extends StatelessWidget {
             left: leftPadding!.w,
             right: rightPadding!.w),
         child: !scrollable!
-            ? Column(
-                mainAxisAlignment: mainAxisAlignment,
-                crossAxisAlignment: crossAxisAlignment,
-                children: children!,
-              )
+            ? child
             : SingleChildScrollView(
                 child: child,
               ),

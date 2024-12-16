@@ -15,10 +15,10 @@ class UIHelpers {
 
   static Future<void> getDateInput(
       BuildContext context, TextEditingController controller) async {
-    DateTime? _pickedTime = await showDatePicker(
+    DateTime? pickedTime = await showDatePicker(
         context: context, firstDate: DateTime(1900), lastDate: DateTime(2100));
-    if (_pickedTime != null) {
-      controller.text = _pickedTime.toIso8601String().split(" ")[0];
+    if (pickedTime != null) {
+      controller.text = pickedTime.toIso8601String().split(" ")[0];
     }
   }
 }

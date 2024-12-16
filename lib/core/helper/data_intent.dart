@@ -4,130 +4,47 @@ class DataIntent {
   DataIntent._();
 
 //------------------------------------
-  //register
-  static String? _emailRegister;
-  static String? _passwordRegister;
-  static String? _confirmPasswordRegister;
-  static UserRole? _userRoleRegister;
-  static String? _firstNameRegister;
-  static String? _lastNameRegister;
-  static String? _phoneRegister;
-  static String? _birthDateRegister;
-
-  static void pushEmailRegister(String email) => _emailRegister = email;
-
-  static void pushPasswordRegister(String password) =>
-      _passwordRegister = password;
-
-  static void pushConfirmPasswordRegister(String confirmPassword) =>
-      _confirmPasswordRegister = confirmPassword;
-
-  static void pushUserRoleRegister(UserRole userRole) =>
-      _userRoleRegister = userRole;
-
-  static void pushFirstNameRegister(String firstName) =>
-      _firstNameRegister = firstName;
-
-  static void pushLastNameRegister(String lastName) =>
-      _lastNameRegister = lastName;
-
-  static void pushBirthDateRegister(String birthDate) =>
-      _birthDateRegister = birthDate;
-
-  static void pushPhoneRegister(String phone) => _phoneRegister = phone;
-
-  static String? getEmailRegister() => _emailRegister;
-
-  static String? getPasswordRegister() => _passwordRegister;
-
-  static String? getConfirmPasswordRegister() => _confirmPasswordRegister;
-
-  static UserRole? getUserRoleRegister() => _userRoleRegister;
-
-  static String? getFirstNameRegister() => _firstNameRegister;
-
-  static String? getLastNameRegister() => _lastNameRegister;
-
-  static String? getPhoneRegister() => _phoneRegister;
-
-  static String? getBirthDateRegister() => _birthDateRegister;
-
-//------------------------------------
-  //login to forget password
+  // User Data
+  static int? _id;
   static String? _email;
+  static String? _password;
+  static UserRole? _userRole;
+  static String? _fullName;
+  static String? _phone;
+  static String? _birthDate;
+  static UserRole? _role;
+
+  static void pushId(int id) => _id = id;
 
   static void pushEmail(String email) => _email = email;
 
-  static String? popEmail() {
-    String? value = _email;
-    _email = null;
-    return value;
-  }
+  static void pushPassword(String password) => _password = password;
 
-//------------------------------------
-  // login-register to All Screens
-  static String? _userID;
-  static String? _userRole;
-  static String? _token;
+  static void pushUserRole(UserRole userRole) => _userRole = userRole;
 
-  static void pushUserID(String userID) {
-    _userID = userID;
-  }
+  static void pushFullName(String firstName) => _fullName = firstName;
 
-  static void pushUserRole(String? userRole) {
-    _userRole = userRole;
-  }
+  static void pushBirthDate(String birthDate) => _birthDate = birthDate;
 
-  static void pushToken(String token) {
-    _token = token;
-  }
+  static void pushPhone(String phone) => _phone = phone;
 
-  static String? getUserID() {
-    return _userID;
-  }
+  static void pushRole(UserRole role) => _role = role;
 
-  static String? getUserRole() {
-    return _userRole;
-  }
+  static int? getId() => _id;
 
-  static String? getToken() {
-    return _token;
-  }
+  static String? getEmail() => _email;
 
-  //------------------------------------
-  // Home To Start Quiz
-  static int? _quizID;
+  static String? getPasswordRegister() => _password;
 
-  static void pushQuizID(int? quizID) {
-    _quizID = quizID;
-  }
+  static UserRole? getUserRole() => _userRole;
 
-  static int? getQuizID() {
-    return _quizID;
-  }
+  static String? getFullName() => _fullName;
 
-//------------------------------------
-  ///profile data
-  static String? _firstName;
-  static String? _lastName;
-  static String? _description;
+  static String? getPhone() => _phone;
 
-  static void pushProfileData({
-    String? firstName,
-    String? lastName,
-    String? description,
-    String? profileImage,
-    String? coverImage,
-  }) {
-    _firstName = firstName;
-    _lastName = lastName;
-    _description = description;
-  }
+  static String? getBirthDate() => _birthDate;
 
-  static String? getFirstName() => _firstName;
+  static UserRole? getRole() => _role;
 
-  static String? getLastName() => _lastName;
-
-  static String? getDescription() => _description;
 //------------------------------------
 }

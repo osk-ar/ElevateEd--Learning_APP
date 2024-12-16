@@ -19,6 +19,15 @@ class LoginPasswordVisibilityChanged extends LoginState {
   List<Object?> get props => [isPasswordVisible];
 }
 
+class LoginRememberMeChanged extends LoginState {
+  final bool isRememberMeChecked;
+
+  LoginRememberMeChanged(this.isRememberMeChecked);
+
+  @override
+  List<Object?> get props => [isRememberMeChecked];
+}
+
 class LoginDataOTPProfileLoaded extends LoginState {
   final User user;
 

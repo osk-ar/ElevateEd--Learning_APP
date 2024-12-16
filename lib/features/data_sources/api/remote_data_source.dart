@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:e_learning_app_gp/core/constants/constants.dart';
+import 'package:e_learning_app_gp/features/data_sources/models/auth_response_model.dart';
 import 'package:e_learning_app_gp/features/data_sources/models/user_login_model.dart';
 import 'package:e_learning_app_gp/features/data_sources/models/user_register_model.dart';
 
@@ -9,21 +10,26 @@ class RemoteDataSource {
   RemoteDataSource(this.dio);
 
   ///login by email and password
-  Future<UserLoginModel> loginUser(UserLoginModel user) async {
+  Future<AuthResponseModel> loginUser(UserLoginModel user) async {
     try {
       final response = await dio.request(
-        '${Constants.baseUrl}auth/emailPassword/login',
+        '${Constants.baseUrl}auth/login',
         data: user.toJson(),
         options: Options(
           method: 'POST',
+          headers: {'Content-Type': 'application/json'},
         ),
       );
-      // print(response.data);
       if (response.statusCode == 200) {
+        // empty data
+        if (response.data == null) {
+          throw Exception("Error happened in request, server returned null");
+        }
+
         // successful
-        return UserLoginModel.fromJson(response.data["data"]);
+        return AuthResponseModel.fromJson(response.data);
       } else {
-        throw Exception(response.data["message"]);
+        throw Exception("Error happened in request, status code is not 200");
       }
     } catch (error) {
       throw Exception('Error during login: $error');
@@ -31,27 +37,29 @@ class RemoteDataSource {
   }
 
   ///register by email and password
-  Future<UserRegisterModel> registerUser(UserRegisterModel user) async {
-    // print(1);
-    // print(user.toJson().fields);
+  Future<AuthResponseModel> registerUser(UserRegisterModel user) async {
     try {
       final response = await dio.request(
-        '${Constants.baseUrl}auth/emailPassword/register',
+        '${Constants.baseUrl}auth/register',
         data: user.toJson(),
         options: Options(
           method: 'POST',
+          headers: {'Content-Type': 'application/json'},
         ),
       );
 
-      // print("print: ${response.statusMessage} ,  ${response.data} , ${response.statusCode}");
       if (response.statusCode == 200) {
+        // empty data
+        if (response.data == null) {
+          throw Exception("Error happened in request, server returned null");
+        }
+
         // successful
-        return UserRegisterModel.fromJson(response.data["data"]);
+        return AuthResponseModel.fromJson(response.data);
       } else {
-        throw Exception(response.data["message"]);
+        throw Exception("Error happened in request, status code is not 200");
       }
     } catch (error) {
-      print(error);
       throw Exception('Error during registration: $error');
     }
   }

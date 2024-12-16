@@ -6,7 +6,7 @@ import '../../core/resources/app_values.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
-  fillColor: AppColors.lightGreyColor,
+  fillColor: MyTheme.surfaceColor,
   filled: true,
   hintStyle: const TextStyle(color: AppColors.greyColor),
   border: outlineInputBorder,
@@ -16,7 +16,7 @@ InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
 );
 
 InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
-  fillColor: AppColors.darkGreyColor,
+  fillColor: MyTheme.surfaceColor,
   filled: true,
   hintStyle: const TextStyle(color: AppColors.whiteColor40),
   border: outlineInputBorder,

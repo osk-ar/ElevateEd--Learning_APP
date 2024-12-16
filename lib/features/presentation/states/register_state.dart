@@ -1,3 +1,4 @@
+import 'package:e_learning_app_gp/core/constants/enum.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RegisterState extends Equatable {
@@ -27,6 +28,15 @@ class RegisterConfirmPasswordVisibilityChanged extends RegisterState {
 
   @override
   List<Object?> get props => [isConfirmPasswordVisible];
+}
+
+class RegisterRoleChanged extends RegisterState {
+  final UserRole userRole;
+
+  RegisterRoleChanged(this.userRole);
+
+  @override
+  List<Object?> get props => [userRole];
 }
 
 class RegisterDatePicked extends RegisterState {}
