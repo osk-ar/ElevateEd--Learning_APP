@@ -1,13 +1,16 @@
-enum Rank { NEWBIE, APPRENTICE, CHALLENGER, MASTER_MIND, EXPERT }
-
 enum UserRole { ADMIN, TEACHER, STUDENT }
+
+enum Interests {
+  WEB_DEV,
+  MOBILE_DEV,
+  GRAPHIC_DESIGN,
+  MODELING_3D,
+  OOP,
+  FLUTTER
+}
 
 enum Themes { LIGHT, DARK }
 
 enum Languages { ENGLISH, ARABIC }
-
-enum States { ON, OFF }
-
-enum QuestionTypeModel { MULTIBLE_CHOICE, TRUE_FALSE }
 
 enum KeyPrefs { IS_LOGGEDIN, EMAIL, PASSWORD, THEME, OLD_USER, IS_NOTIFICATON }

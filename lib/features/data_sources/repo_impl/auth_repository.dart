@@ -29,11 +29,17 @@ class AuthRepositoryImpl implements AuthRepository {
     AuthResponseModel registerResponse = await remoteDataSource.registerUser(
       UserRegisterModel(
         userRole: user.userRole,
-        fullName: user.fullName,
-        phoneNumber: user.phoneNumber,
-        birthDate: user.birthDate,
         email: user.email,
         password: user.password,
+        fullName: user.fullName,
+        description: user.description,
+        phoneNumber: user.phoneNumber,
+        birthDate: user.birthDate,
+        profileImage: user.profileImageFile,
+        interests: user.interests,
+        // only in instructor
+        professionalTitle: user.professionalTitle,
+        personalLinks: user.personalLinks,
       ),
     );
     return User(

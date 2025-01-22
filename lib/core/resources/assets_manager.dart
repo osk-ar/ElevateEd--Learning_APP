@@ -8,6 +8,7 @@ class ImageAssets {
   static const String logo = "${_imagePath}logo.png";
   static const String profile = "${_imagePath}profile.png";
   static const String avatar = "${_imagePath}avatar.png";
+  static const String avatar_black = "${_imagePath}avatar_icon.png";
   static const String defaultImage = "${_imagePath}default_image.png";
   static const String goldMedal = "${_imagePath}gold-medal.png";
   static const String silverMedal = "${_imagePath}silver-medal.png";

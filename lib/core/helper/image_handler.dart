@@ -1,88 +1,88 @@
 import 'dart:io';
-import 'package:e_learning_app_gp/core/constants/constants.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/core/resources/app_values.dart';
-import 'package:e_learning_app_gp/core/resources/assets_manager.dart';
+import 'dart:typed_data';
+
+import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:image/image.dart' as img;
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ImageManager extends StatelessWidget {
-  final String? url;
-  final double? width;
-  final double? height;
-  final BoxFit? fit;
+class ImageHandler {
+  static Future<File?> pickImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return null;
+    }
+    print("image selected!");
 
-  const ImageManager({super.key, this.url, this.width, this.height, this.fit});
+    String? croppedImagePath;
+    if (context.mounted) {
+      croppedImagePath = await _cropImage(context, image);
+    }
+    if (croppedImagePath == null) {
+      return null;
+    }
+    print("image cropped!");
 
-  @override
-  Widget build(BuildContext context) {
-    return _getImage(url);
+    File scaledProfileImage = await _convertAndScaleImage(croppedImagePath);
+    print("image scaled!");
+    return scaledProfileImage;
   }
 
-  Widget _getImage(String? url) {
-    if (url.isNullOrEmpty() || url == Constants.url) {
-      return Image.asset(ImageAssets.defaultImage);
-    }
-
-    if (url!.startsWith("http")) {
-      return _networkImage(url);
-    } else if (url.endsWith(".svg")) {
-      return SvgPicture.asset(
-        url,
-        height: height?.r ?? AppSize.s48.r,
-        width: width?.r ?? AppSize.s48.r,
-        fit: fit ?? BoxFit.contain,
-      );
-    } else if (url.endsWith(".json") || url.endsWith(".gif")) {
-      return Lottie.asset(
-        url,
-        height: height?.r ?? AppSize.s48.r,
-        width: width?.r ?? AppSize.s48.r,
-        fit: fit ?? BoxFit.contain,
-      );
-    } else if (url.contains('cache')) {
-      return _cachedImage(url);
-    } else {
-      return Image.asset(
-        url,
-        height: height?.r ?? AppSize.s48.r,
-        width: width?.r ?? AppSize.s48.r,
-        fit: fit ?? BoxFit.contain,
-      );
-    }
-  }
-
-  Widget _networkImage(String url) {
-    return CachedNetworkImage(
-      imageUrl: url,
-      height: height?.r ?? AppSize.s48.r,
-      width: width?.r ?? AppSize.s48.r,
-      fit: fit ?? BoxFit.contain,
-      progressIndicatorBuilder: (context, url, progress) {
-        return const Skeletonizer(enabled: true, child: SizedBox.shrink());
-      },
+  static Future<String?> _cropImage(BuildContext context, XFile image) async {
+    final CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: image.path,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 70,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Image Editor',
+          toolbarColor: MyTheme.backgroundColor,
+          toolbarWidgetColor: MyTheme.textColor,
+          activeControlsWidgetColor: MyTheme.primaryColor,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+          ],
+        ),
+        IOSUiSettings(
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+          ],
+        ),
+        WebUiSettings(
+          context: context,
+          presentStyle: WebPresentStyle.dialog,
+          size: const CropperSize(
+            width: 520,
+            height: 520,
+          ),
+        ),
+      ],
     );
+    if (croppedFile != null) {
+      return croppedFile.path;
+    }
+    return null;
   }
 
-  Widget _cachedImage(String path) {
-    try {
-      return Image.memory(
-        File(path).readAsBytesSync(),
-        height: height?.r ?? AppSize.s48.r,
-        width: width?.r ?? AppSize.s48.r,
-        fit: fit ?? BoxFit.contain,
-      );
-    } catch (e) {
-      return Image.asset(
-        ImageAssets.defaultImage,
-        height: height?.r ?? AppSize.s48.r,
-        width: width?.r ?? AppSize.s48.r,
-        fit: fit ?? BoxFit.contain,
-      );
-    }
+  static Future<File> _convertAndScaleImage(String path) async {
+    // Read the Cropped File
+    File imageFile = File(path);
+    // Convert to Image File
+    List<int> imageBytes = await imageFile.readAsBytes();
+    img.Image image = img.decodeImage(Uint8List.fromList(imageBytes))!;
+
+    // Convert to JPG
+    List<int> jpgBytes = img.encodeJpg(image);
+
+    // Save the resized JPG image to a new file
+    String newPath =
+        imageFile.path.replaceAll('.png', '_scaled.jpg'); // Save as .jpg
+    File resizedImageFile = File(newPath)..writeAsBytesSync(jpgBytes);
+
+    return resizedImageFile;
   }
 }

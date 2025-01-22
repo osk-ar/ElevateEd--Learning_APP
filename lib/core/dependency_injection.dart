@@ -5,8 +5,10 @@ import 'package:e_learning_app_gp/features/data_sources/repo_impl/auth_repositor
 import 'package:e_learning_app_gp/features/domain/repo/auth_repository.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/login_usecase.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/register_usecase.dart';
-import 'package:e_learning_app_gp/features/presentation/cubits/login_cubit.dart';
-import 'package:e_learning_app_gp/features/presentation/cubits/register_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/register/cubits/instructor_register_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/login/cubits/login_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/register/cubits/register_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/register/cubits/student_register_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,6 +35,10 @@ Future<void> init() async {
   sl.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(sl()));
 
   /// Cubits
-  sl.registerFactory<LoginCubit>(() => LoginCubit(sl()));
-  sl.registerFactory<RegisterCubit>(() => RegisterCubit(sl()));
+  sl.registerFactory<LoginCubit>(() => LoginCubit(sl(), sl()));
+  sl.registerFactory<RegisterCubit>(() => RegisterCubit());
+  sl.registerFactory<StudentRegisterCubit>(
+      () => StudentRegisterCubit(sl(), sl()));
+  sl.registerFactory<InstructorRegisterCubit>(
+      () => InstructorRegisterCubit(sl(), sl()));
 }

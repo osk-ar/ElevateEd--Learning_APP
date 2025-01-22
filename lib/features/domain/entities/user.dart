@@ -8,11 +8,14 @@ class User {
   final String? email;
   final String? password;
   final String? fullName;
-  final String? profileImage;
   final File? profileImageFile;
+  final String? profileImage;
   final String? description;
   final DateTime? birthDate;
   final String? phoneNumber;
+  final List<Interests>? interests;
+  final List<String>? personalLinks;
+  final String? professionalTitle;
 
   User({
     this.profileImageFile,
@@ -25,5 +28,8 @@ class User {
     this.birthDate,
     this.email,
     this.password,
+    this.interests,
+    this.personalLinks,
+    this.professionalTitle,
   });
 }

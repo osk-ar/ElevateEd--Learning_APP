@@ -50,6 +50,38 @@ extension SnakBar on BuildContext {
       );
 }
 
+// extension Dialog on BuildContext {
+//   Future<void> showCustomDialog({
+//     required String title,
+//     required String content,
+//     required String confirmButtonText,
+//     required VoidCallback onConfirmPressed,
+//     required String cancelButtonText,
+//     required VoidCallback onCancelPressed,
+//   }) {
+//     return showDialog(
+//       context: this,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text(title),
+//           content: Text(content),
+//           actionsAlignment: MainAxisAlignment.spaceAround,
+//           actions: [
+//             TextButton(
+//               onPressed: onCancelPressed,
+//               child: Text(cancelButtonText),
+//             ),
+//             TextButton(
+//               onPressed: onConfirmPressed,
+//               child: Text(confirmButtonText),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+
 extension ColorTheme on BuildContext {
   Color get primaryColor => Theme.of(this).primaryColor;
 

@@ -9,6 +9,7 @@ import 'package:e_learning_app_gp/core/resources/language_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:themed/themed.dart';
 
@@ -28,6 +29,9 @@ void main() async {
       Themed.currentTheme = darkTheme;
     }
   };
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(
     EasyLocalization(
       supportedLocales: AppLanguages.locals,
@@ -72,12 +76,21 @@ class MyApp extends StatelessWidget {
 //? 2hrs        -> change text select color to secondary color
 //? 2hrs        -> fix role button in register page
 //? 4hrs        -> fix themes & clean project
-// TODO 1/4day  -> create student register page
-// TODO 1/4day  -> create instructor register page
-// TODO 15min   -> send request shape to remon
-// TODO 1day    -> create cubit - repo - usecase - request = for register
-// TODO 1/4day  -> create sharedPrefs for auth creds
-// TODO 1day    -> modify courseDetails screen from baioumy
-// TODO 15min   -> send request shape from remon
-// TODO 1day    -> create cubit - repo - usecase - request = for courseDetails
+//? 1/4day      -> create student register page
+//? 1/4day      -> create instructor register page
+//? 15min       -> send request shape to remon
+//? 1day        -> create cubit - repo - usecase - request = for register
+//? 1/4day      -> create sharedPrefs for auth creds
+// TODO 1day    -> modify progress screen from baioumy
+// TODO 15min   -> send progress screen request shape to remon
+// TODO 1day    -> create cubit - repo - usecase - request = for progress
 //* Total sum to: 3.75 days | 2.5 hrs ~= 1 week
+//// Extras
+// TODO -> fix ui doesn't build when navigating thru screens in register & login
+// TODO -> instead of multiple cubit calls (context.read<>()...) in blocBuilders create a final cubit = context.read<>(); then take values from it
+// TODO -> add forget password & email verification to auth
+
+///* recap
+/// use 1 state and a state.copyWith to emit new states
+/// use blocSelector to listen to a specific variable change in the state then rebuild
+/// split cubit into state and ui component

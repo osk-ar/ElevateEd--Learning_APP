@@ -1,10 +1,10 @@
 import 'package:e_learning_app_gp/core/constants/enum.dart';
 
 class AuthResponseModel {
-  final int? id;
-  final UserRole? userRole;
+  final int id;
+  final UserRole userRole;
 
-  AuthResponseModel({this.id, this.userRole});
+  AuthResponseModel({required this.id, required this.userRole});
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
     return AuthResponseModel(
