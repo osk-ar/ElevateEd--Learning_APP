@@ -1,4 +1,6 @@
 import 'package:e_learning_app_gp/config/themes/theme.dart';
+import 'package:e_learning_app_gp/core/resources/app_styles.dart';
+import 'package:e_learning_app_gp/features/presentation/common/stats_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,14 +18,17 @@ class ProgressChar extends StatelessWidget {
       child: Column(
         children: [
           // TODO -> change this to an expand icon button
+          SizedBox(height: 16.h),
           Text(
             'This Week',
-            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            style: getMediumStyle(
+                fontSize: 20.sp, color: MyTheme.inverseTextColor),
           ),
           SizedBox(height: 8.h),
           Text(
             '52h 24m',
-            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+            style:
+                getBoldStyle(fontSize: 24.sp, color: MyTheme.inverseTextColor),
           ),
           const Spacer(),
           Row(
@@ -35,7 +40,7 @@ class ProgressChar extends StatelessWidget {
                     '+${[10, 9, 6, 5, 6, 4, 8][index]}',
                     style: TextStyle(fontSize: 12.sp),
                   ),
-                  CharBar(
+                  StatsBar(
                     topColor: MyTheme.secondaryColor,
                     bottomColor: MyTheme.primaryColor,
                     duration: 500,
@@ -57,52 +62,6 @@ class ProgressChar extends StatelessWidget {
           SizedBox(height: 24.h),
         ],
       ),
-    );
-  }
-}
-
-class CharBar extends StatelessWidget {
-  const CharBar(
-      {super.key,
-      this.topColor,
-      this.bottomColor,
-      this.gradient,
-      this.duration,
-      this.isToday = false});
-  final Color? topColor;
-  final Color? bottomColor;
-  final LinearGradient? gradient;
-  final int? duration;
-  final bool isToday;
-
-  @override
-  Widget build(BuildContext context) {
-    final double height = 100.h;
-    final double width = 36.w;
-    final double borderRadius = 8.r;
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        AnimatedContainer(
-          width: width,
-          height: isToday ? height + 3.h : height,
-          duration: Duration(milliseconds: duration ?? 300),
-          decoration: BoxDecoration(
-            color: bottomColor,
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-        ),
-        AnimatedContainer(
-          width: width,
-          height: height,
-          duration: Duration(milliseconds: duration ?? 300),
-          decoration: BoxDecoration(
-            color: topColor,
-            gradient: gradient,
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-        ),
-      ],
     );
   }
 }

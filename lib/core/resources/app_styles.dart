@@ -64,10 +64,15 @@ TextStyle getMediumStyle(
 }
 
 // semiBold style
-// TextStyle getSemiBoldStyle(
-//     {fontFamily = FontConstants.primaryEnglishFont, double fontSize = FontSize.f12, required Color color, List<Shadow>? shadows}) {
-//   return _getTextStyle(fontFamily, fontSize, FontWeightManager.semiBold, color, shadows);
-// }
+TextStyle getSemiBoldStyle(
+    {fontFamily = FontConstants.primaryEnglishFont,
+    required double fontSize,
+    required Color color,
+    List<Shadow>? shadows,
+    double? letterSpacing}) {
+  return _getTextStyle(fontFamily, fontSize, FontWeightManager.bold, color,
+      shadows, letterSpacing);
+}
 
 // bold style
 TextStyle getBoldStyle(

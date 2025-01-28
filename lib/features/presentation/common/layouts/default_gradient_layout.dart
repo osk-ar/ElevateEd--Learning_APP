@@ -1,6 +1,5 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 
 class DefaultGradientLayout extends StatelessWidget {
   final Widget? child;
@@ -23,23 +22,19 @@ class DefaultGradientLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: MyTheme.backgroundColor,
-      body: Container(
-        decoration: BoxDecoration(gradient: gradient),
-        child: Padding(
-          padding: EdgeInsets.only(
-              top: topPadding!.h,
-              bottom: bottomPadding!.h,
-              left: leftPadding!.w,
-              right: rightPadding!.w),
-          child: !scrollable!
-              ? child
-              : SingleChildScrollView(
-                  child: child,
-                ),
-        ),
+    return Container(
+      decoration: BoxDecoration(gradient: gradient),
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: topPadding!.h,
+            bottom: bottomPadding!.h,
+            left: leftPadding!.w,
+            right: rightPadding!.w),
+        child: !scrollable!
+            ? child
+            : SingleChildScrollView(
+                child: child,
+              ),
       ),
     );
   }

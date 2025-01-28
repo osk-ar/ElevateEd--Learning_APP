@@ -1,8 +1,7 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/features/presentation/common/layouts/default_appbar_layout.dart';
 import 'package:e_learning_app_gp/features/presentation/statistics/widgets/progress_char.dart';
-import 'package:flutter/material.dart';
+import 'package:e_learning_app_gp/features/presentation/common/layouts/default_layout.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 //progress Screen
 
 class StatisticsScreen extends StatefulWidget {
@@ -15,27 +14,19 @@ class StatisticsScreen extends StatefulWidget {
 class _StatisticsScreenState extends State<StatisticsScreen> {
   @override
   Widget build(BuildContext context) {
-    return DefaultAppbarLayout(
+    return DefaultLayout(
       topPadding: 16,
       bottomPadding: 16,
       leftPadding: 16,
       rightPadding: 16,
       scrollable: true,
-      title: "Progress",
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.search, color: MyTheme.textColor),
-          onPressed: () {},
-        ),
-        SizedBox(width: 8.w),
-      ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProgressChar(),
+          const ProgressChar(),
           SizedBox(height: 24.h),
           const Text(
-            "Mycourse",
+            "My courses",
             style: TextStyle(fontSize: 30),
           ),
           const SizedBox(

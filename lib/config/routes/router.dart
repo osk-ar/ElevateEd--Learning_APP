@@ -1,5 +1,8 @@
 import 'package:e_learning_app_gp/config/routes/route_constants.dart';
 import 'package:e_learning_app_gp/core/dependency_injection.dart';
+import 'package:e_learning_app_gp/features/presentation/home/cubits/home_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/home/screen/home_screen.dart';
+import 'package:e_learning_app_gp/features/presentation/main_page/main_page.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/instructor_register_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/login/cubits/login_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/register_cubit.dart';
@@ -36,6 +39,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const courseDetailsScreen(),
         );
+      case Routes.mainScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => const MainPage(),
+        );
 
       case Routes.loginScreenRoute:
         return MaterialPageRoute(
@@ -66,6 +73,14 @@ class RouteGenerator {
           builder: (context) => BlocProvider<InstructorRegisterCubit>(
             create: (context) => sl<InstructorRegisterCubit>(),
             child: const RegisterAsInstructor(),
+          ),
+        );
+
+      case Routes.homeScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<HomeCubit>(
+            create: (context) => sl<HomeCubit>(),
+            child: const HomeScreen(),
           ),
         );
 

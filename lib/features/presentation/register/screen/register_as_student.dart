@@ -42,119 +42,124 @@ class _RegisterAsStudentState extends State<RegisterAsStudent> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(
-      scrollable: true,
-      child: Column(
-        children: [
-          SizedBox(height: 30.h),
-          const Header(
-            title: "Student Register",
-            subTitle: "One more step to start learning",
-          ),
-          SizedBox(height: 30.h),
-          BlocBuilder<StudentRegisterCubit, StudentRegisterState>(
-            builder: (context, state) {
-              return ImagePicker(
-                iconSize: 40.r,
-                radius: 77.r,
-                borderWidth: 3.r,
-                imageExist:
-                    context.read<StudentRegisterCubit>().profileImage != null,
-                imageFile: context.read<StudentRegisterCubit>().profileImage,
-                onTap: () {
-                  if (context.read<StudentRegisterCubit>().profileImage ==
-                      null) {
-                    print("Choosing An image");
-                    context.read<StudentRegisterCubit>().selectImage(context);
-                  } else {
-                    context.read<StudentRegisterCubit>().clearImage();
-                    print("Image Cleared");
-                  }
-                },
-              );
-            },
-          ),
-          SizedBox(height: 40.h),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              "Add a short description about yourself:",
-              style: AppTextStyles.mediumTextStyle(context,
-                  fontSize: 14, color: MyTheme.textColor),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: MyTheme.backgroundColor,
+      body: DefaultLayout(
+        scrollable: true,
+        child: Column(
+          children: [
+            SizedBox(height: 30.h),
+            const Header(
+              title: "Student Register",
+              subTitle: "One more step to start learning",
             ),
-          ),
-          SizedBox(height: 20.h),
-          TextFormField(
-            controller: bioController,
-            keyboardType: TextInputType.text,
-            style: AppTextStyles.lightTextStyle(context),
-            minLines: 1,
-            maxLines: 5,
-            decoration: InputDecoration(
-              labelText: "Bio",
-              labelStyle: AppTextStyles.regularTextStyle(
-                context,
-                color: MyTheme.labelTextColor,
-              ),
-              contentPadding: EdgeInsets.all(AppPadding.defaultPadding.r),
-              border: outlineInputBorder,
-              focusedBorder: focusedOutlineInputBorder,
-            ),
-          ),
-          SizedBox(height: 40.h),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              "Choose One or More Interests:",
-              style: AppTextStyles.mediumTextStyle(context,
-                  fontSize: 14, color: MyTheme.textColor),
-            ),
-          ),
-          SizedBox(height: 10.h),
-          SuggestionsWidget(
-            editSuggestions: (topic) =>
-                context.read<StudentRegisterCubit>().editSuggestions(topic),
-            suggestionSelected: (topic) =>
-                context.read<StudentRegisterCubit>().suggestionSelected(topic),
-            getSelectedSuggestionTextColor: (topic) => context
-                .read<StudentRegisterCubit>()
-                .getSelectedSuggestionTextColor(topic),
-          ),
-          SizedBox(height: 30.h),
-          BlocListener<StudentRegisterCubit, StudentRegisterState>(
-            listener: (context, state) {
-              if (state is StudentRegisterSuccess) {
-                // give message with success
-                context.message(message: "success");
-                // push dataIntent
-                DataIntent.pushAuthResponseData(state.responseModel);
-                // navigate to next screen
-                context.pushReplacementNamed(Routes.statisticsScreenRoute);
-              } else if (state is StudentRegisterFailure) {
-                // give message with error
-                context.message(message: "error${state.error}");
-              }
-            },
-            child: CustomButton(
-              text: "Register",
-              color: MyTheme.primaryColor,
-              colorText: Colors.white,
-              onPressed: () {
-                if (context.read<StudentRegisterCubit>().interests.isEmpty) {
-                  context.message(
-                      message: "Please choose at least 1 Interest",
-                      textColor: Colors.red[300],
-                      duration: const Duration(seconds: 3));
-                  return;
-                }
-                print("Loading Student Register...");
-                context
-                    .read<StudentRegisterCubit>()
-                    .register(bio: bioController.text);
+            SizedBox(height: 30.h),
+            BlocBuilder<StudentRegisterCubit, StudentRegisterState>(
+              builder: (context, state) {
+                return ImagePicker(
+                  iconSize: 40.r,
+                  radius: 77.r,
+                  borderWidth: 3.r,
+                  imageExist:
+                      context.read<StudentRegisterCubit>().profileImage != null,
+                  imageFile: context.read<StudentRegisterCubit>().profileImage,
+                  onTap: () {
+                    if (context.read<StudentRegisterCubit>().profileImage ==
+                        null) {
+                      print("Choosing An image");
+                      context.read<StudentRegisterCubit>().selectImage(context);
+                    } else {
+                      context.read<StudentRegisterCubit>().clearImage();
+                      print("Image Cleared");
+                    }
+                  },
+                );
               },
             ),
-          )
-        ],
+            SizedBox(height: 40.h),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                "Add a short description about yourself:",
+                style: AppTextStyles.mediumTextStyle(context,
+                    fontSize: 14, color: MyTheme.textColor),
+              ),
+            ),
+            SizedBox(height: 20.h),
+            TextFormField(
+              controller: bioController,
+              keyboardType: TextInputType.text,
+              style: AppTextStyles.lightTextStyle(context),
+              minLines: 1,
+              maxLines: 5,
+              decoration: InputDecoration(
+                labelText: "Bio",
+                labelStyle: AppTextStyles.regularTextStyle(
+                  context,
+                  color: MyTheme.labelTextColor,
+                ),
+                contentPadding: EdgeInsets.all(AppPadding.defaultPadding.r),
+                border: outlineInputBorder,
+                focusedBorder: focusedOutlineInputBorder,
+              ),
+            ),
+            SizedBox(height: 40.h),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                "Choose One or More Interests:",
+                style: AppTextStyles.mediumTextStyle(context,
+                    fontSize: 14, color: MyTheme.textColor),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            SuggestionsWidget(
+              editSuggestions: (topic) =>
+                  context.read<StudentRegisterCubit>().editSuggestions(topic),
+              suggestionSelected: (topic) => context
+                  .read<StudentRegisterCubit>()
+                  .suggestionSelected(topic),
+              getSelectedSuggestionTextColor: (topic) => context
+                  .read<StudentRegisterCubit>()
+                  .getSelectedSuggestionTextColor(topic),
+            ),
+            SizedBox(height: 30.h),
+            BlocListener<StudentRegisterCubit, StudentRegisterState>(
+              listener: (context, state) {
+                if (state is StudentRegisterSuccess) {
+                  // give message with success
+                  context.message(message: "success");
+                  // push dataIntent
+                  DataIntent.pushAuthResponseData(state.responseModel);
+                  // navigate to next screen
+                  context.pushReplacementNamed(Routes.statisticsScreenRoute);
+                } else if (state is StudentRegisterFailure) {
+                  // give message with error
+                  context.message(message: "error${state.error}");
+                }
+              },
+              child: CustomButton(
+                text: "Register",
+                color: MyTheme.primaryColor,
+                colorText: Colors.white,
+                onPressed: () {
+                  if (context.read<StudentRegisterCubit>().interests.isEmpty) {
+                    context.message(
+                        message: "Please choose at least 1 Interest",
+                        textColor: Colors.red[300],
+                        duration: const Duration(seconds: 3));
+                    return;
+                  }
+                  print("Loading Student Register...");
+                  context
+                      .read<StudentRegisterCubit>()
+                      .register(bio: bioController.text);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

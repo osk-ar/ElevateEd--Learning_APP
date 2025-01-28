@@ -1,5 +1,6 @@
 import 'package:e_learning_app_gp/core/resources/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnimatedFloatingContainer extends StatefulWidget {
   const AnimatedFloatingContainer(
@@ -9,25 +10,21 @@ class AnimatedFloatingContainer extends StatefulWidget {
       required this.endOffset,
       required this.beginAngle,
       required this.endAngle,
-      required this.movementCurve,
-      required this.rotationCurve,
       required this.backgroundColor,
       required this.textColor,
-      required this.floatingDistance,
-      required this.animationDuration,
       required this.floatingDuration});
   final String text;
+  final Color textColor;
+  final Color backgroundColor;
   final Offset beginOffset;
   final Offset endOffset;
-  final Curve movementCurve;
   final double beginAngle;
   final double endAngle;
-  final Curve rotationCurve;
-  final Color backgroundColor;
-  final Color textColor;
-  final double floatingDistance;
-  final int animationDuration;
+  final Curve movementCurve = Curves.easeOutQuint;
+  final Curve rotationCurve = Curves.easeOutQuint;
   final int floatingDuration;
+  final int animationDuration = 2000;
+  final double floatingDistance = 5;
   @override
   AnimatedFloatingContainerState createState() =>
       AnimatedFloatingContainerState();
@@ -77,7 +74,7 @@ class AnimatedFloatingContainerState extends State<AnimatedFloatingContainer>
 
     _floatingAnimation = Tween<Offset>(
       begin: widget.endOffset,
-      end: widget.endOffset.translate(0, widget.floatingDistance),
+      end: widget.endOffset.translate(0, widget.floatingDistance.r),
     ).animate(CurvedAnimation(
       parent: _floatingController,
       curve: Curves.linear,

@@ -5,6 +5,7 @@ import 'package:e_learning_app_gp/features/data_sources/repo_impl/auth_repositor
 import 'package:e_learning_app_gp/features/domain/repo/auth_repository.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/login_usecase.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/register_usecase.dart';
+import 'package:e_learning_app_gp/features/presentation/home/cubits/home_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/instructor_register_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/login/cubits/login_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/register_cubit.dart';
@@ -41,4 +42,5 @@ Future<void> init() async {
       () => StudentRegisterCubit(sl(), sl()));
   sl.registerFactory<InstructorRegisterCubit>(
       () => InstructorRegisterCubit(sl(), sl()));
+  sl.registerFactory<HomeCubit>(() => HomeCubit());
 }

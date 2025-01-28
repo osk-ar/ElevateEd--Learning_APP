@@ -8,7 +8,11 @@ class MyTheme {
   static const backgroundGradientColor = ColorRef(Color(0xF59AC8FF));
 
   //* Common Colors
+  static const brighterPrimaryColor =
+      ColorRef(Color(0xFF429EF9), id: "brighterPrimaryColor");
   static const primaryColor = ColorRef(Color(0xFF2889FB), id: "primaryColor");
+  static const darkerPrimaryColor =
+      ColorRef(Color(0xFF206FCC), id: "darkerPrimaryColor");
   static const secondaryColor =
       ColorRef(Color(0xFFD0E5FE), id: "secondaryColor");
   static const onSecondaryColor =

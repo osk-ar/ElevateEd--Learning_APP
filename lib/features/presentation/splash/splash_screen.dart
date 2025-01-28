@@ -1,4 +1,5 @@
 import 'package:e_learning_app_gp/config/routes/route_constants.dart';
+import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:e_learning_app_gp/core/helper/extensions.dart';
 import 'package:e_learning_app_gp/features/presentation/common/layouts/default_layout.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
         () {
           print("Splash Passed");
           FlutterNativeSplash.remove();
-          context.pushNamed(Routes.onBoardingScreenRoute);
+          if (context.mounted) {
+            context.pushNamed(Routes.onBoardingScreenRoute);
+          }
         },
       );
     });
@@ -29,8 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultLayout(
-      child: Center(),
+    return const Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: MyTheme.backgroundColor,
+      body: DefaultLayout(
+        child: Center(),
+      ),
     );
   }
 }
