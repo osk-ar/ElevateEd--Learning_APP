@@ -95,7 +95,7 @@ extension ColorTheme on BuildContext {
 }
 
 extension StringExtension on String? {
-  RegExp get isContainsLink {
+  RegExp get containsLink {
     return RegExp(
       r'((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?([a-z0-9]+([-\.]{1}[a-z0-9]+)*\.[a-z]{2,5})(:[0-9]{1,5})?(\/\S*)?)',
       caseSensitive: false,

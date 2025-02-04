@@ -53,7 +53,7 @@ class RolePicker extends StatelessWidget {
                     onPressed: () {
                       context
                           .read<RegisterCubit>()
-                          .toggleRole(UserRole.STUDENT);
+                          .toggleRole(UserRole.student);
                     },
                     child: Text(
                       'Student',
@@ -71,7 +71,7 @@ class RolePicker extends StatelessWidget {
                     onPressed: () {
                       context
                           .read<RegisterCubit>()
-                          .toggleRole(UserRole.TEACHER);
+                          .toggleRole(UserRole.instructor);
                     },
                     child: Text(
                       'Instructor',

@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class HomeState extends Equatable {
+class SplashState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class HomeInitial extends HomeState {}
+class SplashInitial extends SplashState {}

@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
               if (state is LoginSuccess) {
                 context.message(message: "success");
                 DataIntent.pushAuthResponseData(state.user);
-                context.pushReplacementNamed(Routes.courseDetailsScreenRoute);
+                context.pushReplacementNamed(Routes.mainScreenRoute);
               } else if (state is LoginFailure) {
                 context.message(message: "error${state.error}");
               }

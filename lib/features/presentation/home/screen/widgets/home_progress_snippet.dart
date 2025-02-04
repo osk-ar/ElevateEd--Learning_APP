@@ -1,11 +1,18 @@
 import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:e_learning_app_gp/core/resources/app_styles.dart';
-import 'package:e_learning_app_gp/features/presentation/common/bar_char.dart';
+import 'package:e_learning_app_gp/features/presentation/common/bar_chart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class HomeProgressSnippet extends StatelessWidget {
-  const HomeProgressSnippet({super.key});
+  final Map<String, int> progressPoints;
+  final int totalRecenProgress;
+
+  const HomeProgressSnippet({
+    super.key,
+    required this.progressPoints,
+    required this.totalRecenProgress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class HomeProgressSnippet extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "17",
+                      text: totalRecenProgress.toString(),
                       style: getSemiBoldStyle(
                           color: MyTheme.textColor, fontSize: 24.sp),
                     ),
@@ -69,9 +76,11 @@ class HomeProgressSnippet extends StatelessWidget {
                 width: 100.w,
                 child: CustomBarChart(
                   titleHeight: 20.h,
-                  titlesBarSpacer: 4.h,
+                  titlesTopMargin: 4.h,
                   toolTipMargin: 0,
-                  barData: const [5, 9, 3],
+                  barData: progressPoints.values
+                      .map((element) => element.toDouble())
+                      .toList(),
                   titles: const ["Th", "Fr", "Sa"],
                   width: 24.w,
                   radius: 4.r,

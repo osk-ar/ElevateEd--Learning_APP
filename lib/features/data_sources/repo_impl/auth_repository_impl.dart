@@ -36,7 +36,7 @@ class AuthRepositoryImpl implements AuthRepository {
         phoneNumber: user.phoneNumber,
         birthDate: user.birthDate,
         profileImage: user.profileImageFile,
-        interests: user.interests,
+        interests: user.interests!.map((item) => item.name).toList(),
         // only in instructor
         professionalTitle: user.professionalTitle,
         personalLinks: user.personalLinks,

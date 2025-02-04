@@ -25,7 +25,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     if (!context.mounted) {
       return;
     }
-    if (state.userRole == UserRole.STUDENT) {
+    if (state.userRole == UserRole.student) {
       context.pushNamed(Routes.signupAsStudentScreenRoute);
     } else {
       context.pushNamed(Routes.signupAsInstructorScreenRoute);

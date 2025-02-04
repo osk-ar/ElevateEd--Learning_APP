@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:e_learning_app_gp/core/helper/data_intent.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
 import 'package:e_learning_app_gp/features/data_sources/local/app_prefs.dart';
+import 'package:e_learning_app_gp/features/domain/entities/home.dart';
+import 'package:e_learning_app_gp/features/domain/usecases/get_homeusecase.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/register_usecase.dart';
 import 'package:e_learning_app_gp/features/presentation/register/states/student_register_state.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,10 @@ import 'package:e_learning_app_gp/core/helper/theme_helper_functions.dart';
 
 class StudentRegisterCubit extends Cubit<StudentRegisterState> {
   final RegisterUseCase registerUserUseCase;
+  final GetHomeusecase getHomeusecase;
   final AppPrefs appSharedPrefs;
-  StudentRegisterCubit(this.registerUserUseCase, this.appSharedPrefs)
+  StudentRegisterCubit(
+      this.registerUserUseCase, this.appSharedPrefs, this.getHomeusecase)
       : super(StudentRegisterInitial());
   File? profileImage;
   List<Interests> interests = [];
@@ -53,25 +56,6 @@ class StudentRegisterCubit extends Cubit<StudentRegisterState> {
     return Colors.white;
   }
 
-  void updatesharedPrefs({String? email, String? password}) {
-    if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
-      appSharedPrefs.setBool(KeyPrefs.IS_LOGGEDIN.name, true);
-      appSharedPrefs.setString(KeyPrefs.EMAIL.name, email!);
-      appSharedPrefs.setString(KeyPrefs.PASSWORD.name, password!);
-      return;
-    }
-
-    if (appSharedPrefs.containKey(KeyPrefs.IS_LOGGEDIN.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.IS_LOGGEDIN.name);
-    }
-    if (appSharedPrefs.containKey(KeyPrefs.EMAIL.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.EMAIL.name);
-    }
-    if (appSharedPrefs.containKey(KeyPrefs.PASSWORD.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.PASSWORD.name);
-    }
-  }
-
   Future<void> register({required final String bio}) async {
     emit(StudentRegisterLoading());
     try {
@@ -87,12 +71,23 @@ class StudentRegisterCubit extends Cubit<StudentRegisterState> {
         interests: interests,
       );
 
+      print(user);
+
       User userData = await registerUserUseCase.call(user);
-      updatesharedPrefs(email: user.email, password: user.password);
+      updatesharedPrefs(authResponseData: userData);
+      Home home = await getHomeusecase.call(userData.id!);
+      DataIntent.pushHomeData(home);
       emit(StudentRegisterSuccess(responseModel: userData));
     } catch (error) {
       print(error.toString());
       emit(StudentRegisterFailure(error.toString()));
     }
+  }
+
+  void updatesharedPrefs({required User authResponseData}) {
+    appSharedPrefs.setBool(KeyPrefs.IS_LOGGEDIN.name, true);
+    appSharedPrefs.setInt(KeyPrefs.ID.name, authResponseData.id!);
+    appSharedPrefs.setString(
+        KeyPrefs.ROLE.name, authResponseData.userRole!.name);
   }
 }

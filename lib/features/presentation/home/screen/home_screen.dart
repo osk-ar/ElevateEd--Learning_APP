@@ -2,6 +2,7 @@
 
 import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:e_learning_app_gp/core/resources/app_styles.dart';
+import 'package:e_learning_app_gp/features/domain/entities/home.dart';
 import 'package:e_learning_app_gp/features/presentation/home/screen/widgets/course_card.dart';
 import 'package:e_learning_app_gp/features/presentation/home/screen/widgets/home_progress_snippet.dart';
 import 'package:e_learning_app_gp/features/presentation/home/screen/widgets/minimized_stats_snippet.dart';
@@ -12,8 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-  final String name = "Anwar";
+  const HomeScreen({super.key, required this.homeData});
+  final Home homeData;
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +24,21 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 16.h),
-          HomeAppbar(name: name),
+          HomeAppbar(name: homeData.userName),
           SizedBox(height: 16.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
+            children: [
               MinimizedStatsSnippet(
                 title: "Enrollment",
-                value: "4",
+                value: homeData.totalCourses.toString(),
                 valueExtention: "Courses",
                 icon: CupertinoIcons.book,
                 progressValue: 0.6,
               ),
               MinimizedStatsSnippet(
                 title: "Learning Time",
-                value: "23",
+                value: homeData.totalLearningTime.toString(),
                 valueExtention: "Hrs",
                 icon: CupertinoIcons.clock,
                 progressValue: 0.4,
@@ -45,7 +46,10 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
-          HomeProgressSnippet(),
+          HomeProgressSnippet(
+            totalRecenProgress: homeData.todayLearningHours,
+            progressPoints: homeData.learningHoursDataPoints,
+          ),
           SizedBox(height: 24.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

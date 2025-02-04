@@ -1,12 +1,13 @@
+import 'package:e_learning_app_gp/core/helper/data_intent.dart';
 import 'package:e_learning_app_gp/features/presentation/courses/screen/courses_screen.dart';
 import 'package:e_learning_app_gp/features/presentation/profile/screen/profile_screen.dart';
 import 'package:e_learning_app_gp/features/presentation/statistics/statistics_screen.dart';
 import 'package:e_learning_app_gp/features/presentation/home/screen/home_screen.dart';
 import 'package:e_learning_app_gp/core/resources/text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:e_learning_app_gp/config/themes/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   PageController pageController = PageController();
   int selectedIndex = 0;
-  List<BarItem> barItems = [
+  final List<BarItem> barItems = [
     BarItem(
       filledIcon: Icons.home_rounded,
       outlinedIcon: Icons.home_outlined,
@@ -37,11 +38,13 @@ class _MainPageState extends State<MainPage> {
       outlinedIcon: Icons.person_outline_rounded,
     ),
   ];
-  List<Widget> pages = const [
-    HomeScreen(),
-    CoursesScreen(),
-    StatisticsScreen(),
-    ProfileScreen(),
+  final List<Widget> pages = [
+    HomeScreen(
+      homeData: DataIntent.getHomeData()!,
+    ),
+    const CoursesScreen(),
+    const StatisticsScreen(),
+    const ProfileScreen(),
   ];
 
   @override
@@ -49,7 +52,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: MyTheme.backgroundColor,
-      appBar: getAppBar(context, selectedIndex),
+      appBar: getAppBar(selectedIndex),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -74,7 +77,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  PreferredSizeWidget? getAppBar(BuildContext context, int selectedIndex) {
+  PreferredSizeWidget? getAppBar(int selectedIndex) {
     switch (selectedIndex) {
       case 1:
         return _getCoursesAppBar;
@@ -106,6 +109,17 @@ class _MainPageState extends State<MainPage> {
           style: AppTextStyles.mediumTextStyle(context, fontSize: 24)),
       centerTitle: true,
       leading: const SizedBox(),
+      actions: [
+        IconButton(
+          onPressed: () {
+            //TODO add Settings Screen
+          },
+          icon: const Icon(
+            Icons.settings,
+            color: MyTheme.textColor,
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,9 +1,12 @@
 import 'package:e_learning_app_gp/core/resources/app_styles.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/cubits/course_details_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/states/course_details_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:flutter/material.dart';
 
-class CourseHeader extends StatefulWidget {
+class CourseHeader extends StatelessWidget {
   const CourseHeader(
       {super.key,
       required this.imageurl,
@@ -13,12 +16,6 @@ class CourseHeader extends StatefulWidget {
   final String courseTitle;
   final String courseDescription;
 
-  @override
-  State<CourseHeader> createState() => _CourseHeaderState();
-}
-
-class _CourseHeaderState extends State<CourseHeader> {
-  int maxLines = 3;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +30,7 @@ class _CourseHeaderState extends State<CourseHeader> {
               decoration: BoxDecoration(
                 color: MyTheme.onSurfaceColor,
                 image: DecorationImage(
-                  image: NetworkImage(widget.imageurl),
+                  image: NetworkImage(imageurl),
                   fit: BoxFit.fill,
                 ),
                 borderRadius: BorderRadius.circular(4.r),
@@ -42,7 +39,7 @@ class _CourseHeaderState extends State<CourseHeader> {
             SizedBox(width: 16.w),
             Expanded(
               child: Text(
-                widget.courseTitle,
+                courseTitle,
                 style: getBoldStyle(fontSize: 20, color: MyTheme.textColor),
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
@@ -58,19 +55,29 @@ class _CourseHeaderState extends State<CourseHeader> {
         ),
         InkWell(
           onTap: () {
-            //TODO expand description text on click
-            //! using setState for test purpose only, remove it later
-            print("clicked $maxLines");
-            setState(() {
-              maxLines = maxLines == 3 ? 10 : 3;
-            });
+            context.read<CourseDetailsCubit>().changeDescriptionSize();
           },
-          child: Text(
-            maxLines: maxLines,
-            softWrap: true,
-            widget.courseDescription,
-            overflow: TextOverflow.ellipsis,
-            style: getLightStyle(fontSize: 14.sp, color: MyTheme.textColor),
+          child: BlocBuilder<CourseDetailsCubit, CourseDetailsState>(
+            buildWhen: (previous, current) {
+              return current is CourseDetailsDescriptionSizeChanged;
+            },
+            builder: (context, state) {
+              late int maxLines;
+              if (state is CourseDetailsDescriptionSizeChanged) {
+                maxLines = state.size;
+              } else {
+                maxLines = 3;
+              }
+              print("rebuilding!");
+
+              return Text(
+                maxLines: maxLines,
+                softWrap: true,
+                courseDescription,
+                overflow: TextOverflow.ellipsis,
+                style: getLightStyle(fontSize: 14.sp, color: MyTheme.textColor),
+              );
+            },
           ),
         ),
       ],

@@ -47,6 +47,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final FocusNode fullNameFocusNode;
   late final FocusNode phoneNumberFocusNode;
 
+  //- role selector
+
+  UserRole userRole = UserRole.student;
+
   @override
   void initState() {
     //- FormKey Initial
@@ -106,8 +110,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           BlocSelector<RegisterCubit, RegisterState, UserRole>(
             selector: (state) => state.userRole,
             builder: (context, selectedUserRole) {
+              userRole = selectedUserRole;
               return RolePicker(
-                isStudent: selectedUserRole == UserRole.STUDENT ? true : false,
+                isStudent: selectedUserRole == UserRole.student ? true : false,
               );
             },
           ),
@@ -226,6 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // push data to next screen
               DataIntent.pushRegisterData({
+                "role": userRole,
                 "email": emailController.text,
                 "password": passwordController.text,
                 "fullName": fullNameController.text,

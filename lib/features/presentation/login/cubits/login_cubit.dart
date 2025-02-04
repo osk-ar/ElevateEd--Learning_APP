@@ -1,5 +1,4 @@
 import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
 import 'package:e_learning_app_gp/features/data_sources/local/app_prefs.dart';
 import 'package:e_learning_app_gp/features/domain/entities/user.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/login_usecase.dart';
@@ -27,7 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
         password: password,
       );
       final User userData = await loginUserUseCase.call(user);
-      updatesharedPrefs(email: email, password: password);
+      updatesharedPrefs(authResponseData: userData);
       emit(LoginSuccess(user: userData));
     } catch (error) {
       print(error.toString());
@@ -45,24 +44,23 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginRememberMeChanged(isRememberMeChecked));
   }
 
-  void updatesharedPrefs({String? email, String? password}) {
-    if (isRememberMeChecked &&
-        !email.isNullOrEmpty() &&
-        !password.isNullOrEmpty()) {
+  void updatesharedPrefs({required User authResponseData}) {
+    if (isRememberMeChecked) {
       appSharedPrefs.setBool(KeyPrefs.IS_LOGGEDIN.name, true);
-      appSharedPrefs.setString(KeyPrefs.EMAIL.name, email!);
-      appSharedPrefs.setString(KeyPrefs.PASSWORD.name, password!);
+      appSharedPrefs.setInt(KeyPrefs.ID.name, authResponseData.id!);
+      appSharedPrefs.setString(
+          KeyPrefs.ROLE.name, authResponseData.userRole!.name);
       return;
     }
 
     if (appSharedPrefs.containKey(KeyPrefs.IS_LOGGEDIN.name)) {
       appSharedPrefs.removeByKey(KeyPrefs.IS_LOGGEDIN.name);
     }
-    if (appSharedPrefs.containKey(KeyPrefs.EMAIL.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.EMAIL.name);
+    if (appSharedPrefs.containKey(KeyPrefs.ID.name)) {
+      appSharedPrefs.removeByKey(KeyPrefs.ID.name);
     }
-    if (appSharedPrefs.containKey(KeyPrefs.PASSWORD.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.PASSWORD.name);
+    if (appSharedPrefs.containKey(KeyPrefs.ROLE.name)) {
+      appSharedPrefs.removeByKey(KeyPrefs.ROLE.name);
     }
   }
 }

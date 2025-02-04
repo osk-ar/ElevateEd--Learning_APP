@@ -1,20 +1,19 @@
 import 'package:e_learning_app_gp/config/routes/route_constants.dart';
 import 'package:e_learning_app_gp/core/dependency_injection.dart';
-import 'package:e_learning_app_gp/features/presentation/home/cubits/home_cubit.dart';
-import 'package:e_learning_app_gp/features/presentation/home/screen/home_screen.dart';
-import 'package:e_learning_app_gp/features/presentation/main_page/main_page.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/cubits/course_details_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/main_page/screen/main_page.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/instructor_register_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/login/cubits/login_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/register_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/register/cubits/student_register_cubit.dart';
-import 'package:e_learning_app_gp/features/presentation/course_details/course_details_screen.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/screen/course_details_screen.dart';
 import 'package:e_learning_app_gp/features/presentation/login/screen/login_screen.dart';
 import 'package:e_learning_app_gp/features/presentation/on_boarding/on_boarding_screen.dart';
-import 'package:e_learning_app_gp/features/presentation/statistics/statistics_screen.dart';
+import 'package:e_learning_app_gp/features/presentation/splash/cubits/splash_cubit.dart';
 import 'package:e_learning_app_gp/features/presentation/register/screen/register_as_instructor.dart';
 import 'package:e_learning_app_gp/features/presentation/register/screen/register_as_student.dart';
 import 'package:e_learning_app_gp/features/presentation/register/screen/register_screen.dart';
-import 'package:e_learning_app_gp/features/presentation/splash/splash_screen.dart';
+import 'package:e_learning_app_gp/features/presentation/splash/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,27 +22,22 @@ class RouteGenerator {
 
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
+      //* Intro
       case Routes.splashScreenRoute:
+        //!-----------------------------------------------------
         return MaterialPageRoute(
-          builder: (context) => const SplashScreen(),
+          builder: (context) => BlocProvider<SplashCubit>(
+            create: (context) => sl<SplashCubit>(),
+            child: const SplashScreen(),
+          ),
         );
+      //!-----------------------------------------------------
       case Routes.onBoardingScreenRoute:
         return MaterialPageRoute(
           builder: (context) => const OnBoardingScreen(),
         );
-      case Routes.statisticsScreenRoute:
-        return MaterialPageRoute(
-          builder: (context) => const StatisticsScreen(),
-        );
-      case Routes.courseDetailsScreenRoute:
-        return MaterialPageRoute(
-          builder: (context) => const courseDetailsScreen(),
-        );
-      case Routes.mainScreenRoute:
-        return MaterialPageRoute(
-          builder: (context) => const MainPage(),
-        );
 
+      //* Auth
       case Routes.loginScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<LoginCubit>.value(
@@ -51,7 +45,6 @@ class RouteGenerator {
             child: const LoginScreen(),
           ),
         );
-
       case Routes.signupScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<RegisterCubit>(
@@ -59,7 +52,6 @@ class RouteGenerator {
             child: const RegisterScreen(),
           ),
         );
-
       case Routes.signupAsStudentScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<StudentRegisterCubit>(
@@ -67,7 +59,6 @@ class RouteGenerator {
             child: const RegisterAsStudent(),
           ),
         );
-
       case Routes.signupAsInstructorScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<InstructorRegisterCubit>(
@@ -76,11 +67,18 @@ class RouteGenerator {
           ),
         );
 
-      case Routes.homeScreenRoute:
+      //* Main
+      case Routes.mainScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<HomeCubit>(
-            create: (context) => sl<HomeCubit>(),
-            child: const HomeScreen(),
+          builder: (context) => const MainPage(),
+        );
+
+      //* Sub Main
+      case Routes.courseDetailsScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<CourseDetailsCubit>(
+            create: (context) => sl<CourseDetailsCubit>(),
+            child: const courseDetailsScreen(),
           ),
         );
 

@@ -1,4 +1,5 @@
 import 'package:e_learning_app_gp/core/constants/enum.dart';
+import 'package:e_learning_app_gp/core/helper/map_string_to_user_role.dart';
 
 class AuthResponseModel {
   final int id;
@@ -8,21 +9,8 @@ class AuthResponseModel {
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
     return AuthResponseModel(
-      userRole: json['role'],
+      userRole: getUserRoleFromString(json['role']),
       id: json['id'],
     );
-  }
-}
-
-UserRole getUserRoleFromInt(int userRole) {
-  switch (userRole) {
-    case 0:
-      return UserRole.ADMIN;
-    case 1:
-      return UserRole.STUDENT;
-    case 2:
-      return UserRole.TEACHER;
-    default:
-      throw Exception('Invalid role value');
   }
 }

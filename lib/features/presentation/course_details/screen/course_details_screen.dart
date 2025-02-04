@@ -3,10 +3,13 @@ import 'package:e_learning_app_gp/core/helper/extensions.dart';
 import 'package:e_learning_app_gp/core/resources/app_styles.dart';
 import 'package:e_learning_app_gp/core/resources/text_styles.dart';
 import 'package:e_learning_app_gp/features/presentation/common/layouts/default_layout.dart';
-import 'package:e_learning_app_gp/features/presentation/course_details/widgets/course_header.dart';
-import 'package:e_learning_app_gp/features/presentation/course_details/widgets/instructor_list_tile.dart';
-import 'package:e_learning_app_gp/features/presentation/course_details/widgets/video_list_tile.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/cubits/course_details_cubit.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/screen/widgets/course_header.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/screen/widgets/instructor_list_tile.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/screen/widgets/video_list_tile.dart';
+import 'package:e_learning_app_gp/features/presentation/course_details/states/course_details_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: camel_case_types
@@ -139,7 +142,7 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
             ),
             SizedBox(height: 16.h),
             Text(
-              'Total Length: 11h 30m',
+              'Approximate Duration: 11h 30m',
               style:
                   getSemiBoldStyle(fontSize: 20.sp, color: MyTheme.textColor),
             ),
@@ -170,11 +173,30 @@ class courseDetailsScreenState extends State<courseDetailsScreen> {
           style: AppTextStyles.mediumTextStyle(context, fontSize: 24)),
       actions: [
         IconButton(
-          //TODO add favourite functionality
-          onPressed: () {},
-          icon: const Icon(
-            Icons.favorite_border_rounded,
-            color: MyTheme.textColor,
+          onPressed: () {
+            //TODO add favourite functionality
+            context.read<CourseDetailsCubit>().toggleFavorite();
+          },
+          icon: BlocBuilder<CourseDetailsCubit, CourseDetailsState>(
+            buildWhen: (previous, current) {
+              return current is CourseDetailsFavouriteChanged;
+            },
+            builder: (context, state) {
+              late bool isFavorite;
+              if (state is CourseDetailsFavouriteChanged) {
+                isFavorite = state.isFavorite;
+              } else {
+                isFavorite = false;
+              }
+              print("rebuilding!");
+
+              return Icon(
+                isFavorite
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+                color: MyTheme.textColor,
+              );
+            },
           ),
         ),
       ],

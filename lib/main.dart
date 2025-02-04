@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           theme: lightThemeData,
           darkTheme: darkThemeData,
           onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.mainScreenRoute,
+          initialRoute: Routes.splashScreenRoute,
         ),
       ),
     );
@@ -91,6 +91,9 @@ class MyApp extends StatelessWidget {
 // TODO -> add forget password & email verification to auth
 
 ///* recap
-/// use 1 state and a state.copyWith to emit new states
-/// use blocSelector to listen to a specific variable change in the state then rebuild
-/// split cubit into state and ui component
+/// auth request has profile
+/// home request  has stats
+/// courses request has courses and categories
+/// 
+/// use memory cache
+/// dont forget to clear cache

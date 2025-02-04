@@ -133,7 +133,7 @@ class _RegisterAsStudentState extends State<RegisterAsStudent> {
                   // push dataIntent
                   DataIntent.pushAuthResponseData(state.responseModel);
                   // navigate to next screen
-                  context.pushReplacementNamed(Routes.statisticsScreenRoute);
+                  context.pushReplacementNamed(Routes.mainScreenRoute);
                 } else if (state is StudentRegisterFailure) {
                   // give message with error
                   context.message(message: "error${state.error}");

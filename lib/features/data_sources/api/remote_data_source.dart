@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:e_learning_app_gp/core/constants/constants.dart';
 import 'package:e_learning_app_gp/features/data_sources/models/auth_response_model.dart';
+import 'package:e_learning_app_gp/features/data_sources/models/home_response_model.dart';
 import 'package:e_learning_app_gp/features/data_sources/models/user_login_model.dart';
 import 'package:e_learning_app_gp/features/data_sources/models/user_register_model.dart';
 
@@ -41,7 +44,7 @@ class RemoteDataSource {
     try {
       final response = await dio.request(
         '${Constants.baseUrl}auth/register',
-        data: user.toJson(),
+        data: await user.toJsonWithFiles(),
         options: Options(
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -55,12 +58,41 @@ class RemoteDataSource {
         }
 
         // successful
+        log("Success ya Nigm");
         return AuthResponseModel.fromJson(response.data);
       } else {
         throw Exception("Error happened in request, status code is not 200");
       }
     } catch (error) {
       throw Exception('Error during registration: $error');
+    }
+  }
+
+  ///Get Home Data
+  Future<HomeResponseModel> getHome(int id) async {
+    try {
+      final response = await dio.request(
+        '${Constants.baseUrl}auth/register/$id',
+        options: Options(
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        // empty data
+        if (response.data == null) {
+          throw Exception("Error happened in request, server returned null");
+        }
+
+        // successful
+        log("Success ya Nigm Home");
+        return HomeResponseModel.fromJson(response.data);
+      } else {
+        throw Exception("Error happened in request, status code is not 200");
+      }
+    } catch (error) {
+      throw Exception('Error during Get Home: $error');
     }
   }
 }

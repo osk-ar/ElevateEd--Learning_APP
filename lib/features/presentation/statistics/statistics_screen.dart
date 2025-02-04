@@ -1,4 +1,7 @@
-import 'package:e_learning_app_gp/features/presentation/statistics/widgets/progress_char.dart';
+import 'dart:math';
+
+import 'package:e_learning_app_gp/core/constants/enum.dart';
+import 'package:e_learning_app_gp/features/presentation/statistics/widgets/progress_chart.dart';
 import 'package:e_learning_app_gp/features/presentation/common/layouts/default_layout.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -11,19 +14,89 @@ class StatisticsScreen extends StatefulWidget {
   State<StatisticsScreen> createState() => _StatisticsScreenState();
 }
 
+Map<DateTime, double> generateRandomMap(int count, double min, double max) {
+  final DateTime startDate = DateTime(2021, 4, 1); // 1 to 7 so 0 to 6 in points
+  final Random random = Random();
+  Map<DateTime, double> data = {};
+
+  for (int i = 0; i < count; i++) {
+    DateTime date = startDate.add(Duration(days: i));
+    double value = min + random.nextDouble() * (max - min);
+    data[date] = value;
+  }
+  print(data.keys.last);
+
+  return data;
+}
+
+Map<DateTime, double> generateRandomYearMap(int count, double min, double max) {
+  final DateTime startDate = DateTime(2021, 1, 1); // 1 to 7 so 0 to 6 in points
+  final Random random = Random();
+  Map<DateTime, double> data = {};
+
+  for (int i = 0; i < count; i++) {
+    // Add one month while handling overflow
+    DateTime date =
+        DateTime(startDate.year, startDate.month + i, startDate.day);
+    double value = min + random.nextDouble() * (max - min);
+    data[date] = value;
+  }
+  print(data.keys.last);
+
+  return data;
+}
+
 class _StatisticsScreenState extends State<StatisticsScreen> {
+  late Map<DateTime, double> rawWeekData;
+  late Map<DateTime, double> rawMonthData;
+  late Map<DateTime, double> rawYearData;
+  Map<DateTime, double> getRawData(int index) {
+    switch (index) {
+      case 0:
+        return rawWeekData;
+      case 1:
+        return rawMonthData;
+      case 2:
+        return rawYearData;
+      default:
+        return {};
+    }
+  }
+
+  @override
+  void initState() {
+    rawWeekData = generateRandomMap(7, 2, 7);
+    rawMonthData = generateRandomMap(30, 2, 7);
+    rawYearData = generateRandomYearMap(12, 30, 120);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      topPadding: 16,
-      bottomPadding: 16,
+      topPadding: 0,
+      bottomPadding: 0,
       leftPadding: 16,
       rightPadding: 16,
       scrollable: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ProgressChar(),
+          SizedBox(height: 24.h),
+          SizedBox(
+            height: 330.h,
+            child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                controller: PageController(initialPage: 1, keepPage: true),
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return ProgressChart(
+                    rawData: getRawData(index),
+                    chartDurationType: ProgressCharType.values[index],
+                  );
+                }),
+          ),
           SizedBox(height: 24.h),
           const Text(
             "My courses",
@@ -35,9 +108,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildTabButton('All Class', true),
-              _buildTabButton('On Going', false),
-              _buildTabButton('Finished', false),
+              _buildTabButton('All Courses', true, () {}),
+              _buildTabButton('On Going', false, () {}),
+              _buildTabButton('Finished', false, () {}),
             ],
           ),
           const SizedBox(height: 16),
@@ -49,13 +122,16 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             'Web Design Beginner Class',
             'Start your journey to master web design basics.',
           ),
+          SizedBox(height: 24.h),
         ],
       ),
     );
   }
 
-  Widget _buildTabButton(String text, bool isActive) {
-    return GestureDetector(
+  Widget _buildTabButton(String text, bool isActive, Function()? onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20.r),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(

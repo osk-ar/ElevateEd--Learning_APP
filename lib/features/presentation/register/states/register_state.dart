@@ -16,7 +16,7 @@ class RegisterState {
     return const RegisterState(
       isPasswordVisible: false,
       isConfirmPasswordVisible: false,
-      userRole: UserRole.STUDENT,
+      userRole: UserRole.student,
     );
   }
 

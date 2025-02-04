@@ -8,14 +8,14 @@ class CustomBarChart extends StatelessWidget {
   const CustomBarChart(
       {super.key,
       required this.titleHeight,
-      required this.titlesBarSpacer,
+      required this.titlesTopMargin,
       required this.toolTipMargin,
       required this.barData,
       required this.titles,
       this.width,
       this.radius});
   final double titleHeight;
-  final double titlesBarSpacer;
+  final double titlesTopMargin;
   final double toolTipMargin;
   final List<double> barData;
   final List<String> titles;
@@ -67,7 +67,7 @@ class CustomBarChart extends StatelessWidget {
   Widget getTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       axisSide: AxisSide.bottom,
-      space: titlesBarSpacer,
+      space: titlesTopMargin,
       child: Text(
         titles[value.toInt()],
         style: getBoldStyle(

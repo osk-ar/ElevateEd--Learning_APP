@@ -1,4 +1,5 @@
 import 'package:e_learning_app_gp/core/constants/enum.dart';
+import 'package:e_learning_app_gp/features/domain/entities/home.dart';
 import 'package:e_learning_app_gp/features/domain/entities/user.dart';
 
 class DataIntent {
@@ -13,6 +14,7 @@ class DataIntent {
   static String? _password;
   static String? _phone;
   static String? _birthDate;
+  static Home? _homeData;
 
   static void pushId(int id) => _id = id;
 
@@ -28,6 +30,8 @@ class DataIntent {
 
   static void pushPhone(String phone) => _phone = phone;
 
+  static void pushHomeData(Home homeData) => _homeData = homeData;
+
   static int? getId() => _id;
 
   static String? getEmail() => _email;
@@ -42,8 +46,11 @@ class DataIntent {
 
   static String? getBirthDate() => _birthDate;
 
+  static Home? getHomeData() => _homeData;
+
 //------------------------------------
-  static void pushRegisterData(Map<String, String> registerModel) {
+  static void pushRegisterData(Map<String, dynamic> registerModel) {
+    DataIntent.pushUserRole(registerModel['role']!);
     DataIntent.pushEmail(registerModel['email']!);
     DataIntent.pushPassword(registerModel['password']!);
     DataIntent.pushFullName(registerModel['fullName']!);

@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:e_learning_app_gp/core/constants/enum.dart';
 import 'package:e_learning_app_gp/core/helper/data_intent.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
 import 'package:e_learning_app_gp/core/helper/image_handler.dart';
 import 'package:e_learning_app_gp/core/helper/theme_helper_functions.dart';
 import 'package:e_learning_app_gp/features/data_sources/local/app_prefs.dart';
+import 'package:e_learning_app_gp/features/domain/entities/home.dart';
 import 'package:e_learning_app_gp/features/domain/entities/user.dart';
+import 'package:e_learning_app_gp/features/domain/usecases/get_homeusecase.dart';
 import 'package:e_learning_app_gp/features/domain/usecases/register_usecase.dart';
 import 'package:e_learning_app_gp/features/presentation/register/states/instructor_register_state.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
   final RegisterUseCase registerUserUseCase;
   final AppPrefs appSharedPrefs;
-  InstructorRegisterCubit(this.registerUserUseCase, this.appSharedPrefs)
+  final GetHomeusecase getHomeusecase;
+  InstructorRegisterCubit(
+      this.registerUserUseCase, this.appSharedPrefs, this.getHomeusecase)
       : super(InstructorRegisterInitial());
 
   GlobalKey<FormState> instructorRegisterFormStateKey = GlobalKey<FormState>();
@@ -87,23 +90,11 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
     }
   }
 
-  void updatesharedPrefs({String? email, String? password}) {
-    if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
-      appSharedPrefs.setBool(KeyPrefs.IS_LOGGEDIN.name, true);
-      appSharedPrefs.setString(KeyPrefs.EMAIL.name, email!);
-      appSharedPrefs.setString(KeyPrefs.PASSWORD.name, password!);
-      return;
-    }
-
-    if (appSharedPrefs.containKey(KeyPrefs.IS_LOGGEDIN.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.IS_LOGGEDIN.name);
-    }
-    if (appSharedPrefs.containKey(KeyPrefs.EMAIL.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.EMAIL.name);
-    }
-    if (appSharedPrefs.containKey(KeyPrefs.PASSWORD.name)) {
-      appSharedPrefs.removeByKey(KeyPrefs.PASSWORD.name);
-    }
+  void updatesharedPrefs({required User authResponseData}) {
+    appSharedPrefs.setBool(KeyPrefs.IS_LOGGEDIN.name, true);
+    appSharedPrefs.setInt(KeyPrefs.ID.name, authResponseData.id!);
+    appSharedPrefs.setString(
+        KeyPrefs.ROLE.name, authResponseData.userRole!.name);
   }
 
   // get dataIntent
@@ -125,7 +116,9 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
       );
 
       User userData = await registerUserUseCase.call(user);
-      updatesharedPrefs(email: user.email, password: user.password);
+      updatesharedPrefs(authResponseData: userData);
+      Home home = await getHomeusecase.call(userData.id!);
+      DataIntent.pushHomeData(home);
       emit(InstructorRegisterSuccess(user: userData));
     } catch (error) {
       print(error.toString());
