@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:e_learning_app_gp/core/constants/constants.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/auth_response_model.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/home_response_model.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/user_login_model.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/user_register_model.dart';
+import 'package:ElevatED/core/constants/constants.dart';
+import 'package:ElevatED/features/data_sources/models/auth_response_model.dart';
+import 'package:ElevatED/features/data_sources/models/home_response_model.dart';
+import 'package:ElevatED/features/data_sources/models/user_login_model.dart';
+import 'package:ElevatED/features/data_sources/models/user_register_model.dart';
 
 class RemoteDataSource {
   late Dio dio;

@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/features/presentation/statistics/widgets/progress_chart.dart';
-import 'package:e_learning_app_gp/features/presentation/common/layouts/default_layout.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/features/presentation/statistics/widgets/progress_chart.dart';
+import 'package:ElevatED/features/presentation/common/layouts/default_layout.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 //progress Screen

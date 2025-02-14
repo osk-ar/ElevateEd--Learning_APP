@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:e_learning_app_gp/features/domain/entities/user.dart';
+import 'package:ElevatED/features/domain/entities/user.dart';
 import 'package:equatable/equatable.dart';
 
 class InstructorRegisterState extends Equatable {

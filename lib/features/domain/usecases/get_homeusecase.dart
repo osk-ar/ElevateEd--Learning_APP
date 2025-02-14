@@ -1,5 +1,5 @@
-import 'package:e_learning_app_gp/features/domain/entities/home.dart';
-import 'package:e_learning_app_gp/features/domain/repo/main_repository.dart';
+import 'package:ElevatED/features/domain/entities/home.dart';
+import 'package:ElevatED/features/domain/repo/main_repository.dart';
 
 class GetHomeusecase {
   final MainRepository repository;

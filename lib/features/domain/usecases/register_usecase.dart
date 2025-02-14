@@ -1,5 +1,5 @@
-import 'package:e_learning_app_gp/features/domain/entities/user.dart';
-import 'package:e_learning_app_gp/features/domain/repo/auth_repository.dart';
+import 'package:ElevatED/features/domain/entities/user.dart';
+import 'package:ElevatED/features/domain/repo/auth_repository.dart';
 
 class RegisterUseCase {
   final AuthRepository repository;

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:e_learning_app_gp/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_cropper/image_cropper.dart';

@@ -1,4 +1,5 @@
-import 'package:e_learning_app_gp/core/resources/app_colors.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 extension Navigation on BuildContext {
@@ -44,8 +45,8 @@ extension SnakBar on BuildContext {
             message,
             style: TextStyle(color: textColor ?? AppColors.whiteColor),
           ),
-          backgroundColor: color ?? AppColors.blackColor,
-          duration: duration ?? const Duration(seconds: 30),
+          backgroundColor: color ?? ThemeColors.secondaryColor,
+          duration: duration ?? const Duration(seconds: 4),
         ),
       );
 }

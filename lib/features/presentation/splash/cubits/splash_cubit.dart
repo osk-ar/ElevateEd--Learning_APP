@@ -1,10 +1,10 @@
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/core/helper/data_intent.dart';
-import 'package:e_learning_app_gp/core/helper/map_string_to_user_role.dart';
-import 'package:e_learning_app_gp/features/data_sources/local/app_prefs.dart';
-import 'package:e_learning_app_gp/features/domain/entities/home.dart';
-import 'package:e_learning_app_gp/features/domain/usecases/get_homeusecase.dart';
-import 'package:e_learning_app_gp/features/presentation/splash/states/splash_state.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/json_helpers.dart';
+import 'package:ElevatED/features/data_sources/local/app_prefs.dart';
+import 'package:ElevatED/features/domain/entities/home.dart';
+import 'package:ElevatED/features/domain/usecases/get_homeusecase.dart';
+import 'package:ElevatED/features/presentation/splash/states/splash_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashCubit extends Cubit<SplashState> {

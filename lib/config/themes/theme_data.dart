@@ -1,5 +1,5 @@
-import 'package:e_learning_app_gp/config/themes/input_decoration_theme.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/input_decoration_theme.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData lightThemeData = ThemeData.light().copyWith(
@@ -8,12 +8,12 @@ ThemeData lightThemeData = ThemeData.light().copyWith(
   inputDecorationTheme: lightInputDecorationTheme,
   //-
   colorScheme: const ColorScheme.light(
-    primary: MyTheme.primaryColor,
-    onPrimary: Colors.white,
-    //-
-    surface: MyTheme.surfaceColor,
-    onSurface: MyTheme.textColor,
-  ),
+      primary: AppColors.primaryColor,
+      onPrimary: Colors.white,
+      //-
+      surface: AppColors.surfaceColor,
+      onSurface: AppColors.onSurfaceColor,
+      error: AppColors.lightErrorColor),
 );
 
 ThemeData darkThemeData = ThemeData.dark().copyWith(
@@ -22,16 +22,16 @@ ThemeData darkThemeData = ThemeData.dark().copyWith(
   inputDecorationTheme: darkInputDecorationTheme,
   //-
   colorScheme: const ColorScheme.dark(
-    primary: MyTheme.primaryColor,
-    onPrimary: Colors.white,
-    //-
-    surface: MyTheme.surfaceColor,
-    onSurface: MyTheme.textColor,
-  ),
+      primary: AppColors.primaryColor,
+      onPrimary: Colors.white,
+      //-
+      surface: AppColors.surfaceColor,
+      onSurface: AppColors.onSurfaceColor,
+      error: AppColors.lightErrorColor),
 );
 
 TextSelectionThemeData textSelectionThemeData = TextSelectionThemeData(
-  selectionColor: MyTheme.primaryColor.withOpacity(0.4),
-  selectionHandleColor: MyTheme.primaryColor,
-  cursorColor: MyTheme.primaryColor,
+  selectionColor: AppColors.primaryColor.withOpacity(0.4),
+  selectionHandleColor: AppColors.primaryColor,
+  cursorColor: AppColors.primaryColor,
 );

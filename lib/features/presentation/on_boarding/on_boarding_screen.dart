@@ -1,11 +1,12 @@
-import 'package:e_learning_app_gp/features/presentation/common/layouts/default_gradient_layout.dart';
-import 'package:e_learning_app_gp/features/presentation/on_boarding/widgets/custom_animated_widget.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/features/presentation/on_boarding/widgets/custom_animated_widget.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/features/presentation/common/custom_button.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -14,58 +15,51 @@ class OnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: MyTheme.backgroundColor,
-      body: DefaultGradientLayout(
-        topPadding: 64,
-        bottomPadding: 24,
-        gradient: const LinearGradient(
-          begin: AlignmentDirectional.bottomCenter,
-          end: AlignmentDirectional.topCenter,
-          tileMode: TileMode.decal,
-          transform: GradientRotation(180),
-          colors: [
-            MyTheme.backgroundGradientColor,
-            MyTheme.backgroundColor,
-            MyTheme.backgroundColor,
-          ],
-        ),
+      backgroundColor: MyTheme.tempBackgroundColor,
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.centerLeft,
+                colors: [
+              AppColors.fadedPrimaryColor,
+              ThemeColors.backgroundColor,
+              ThemeColors.backgroundColor,
+              ThemeColors.backgroundColor,
+            ])),
         child: Column(
           children: [
+            SizedBox(height: 48.h),
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                  style: AppTextStyles.lightTextStyle(
-                    context,
-                    color: MyTheme.textColor,
-                    fontSize: 36,
+                  style: getLightStyle(
+                    color: ThemeColors.textColor,
+                    fontSize: 32.sp,
                   ),
                   children: [
                     const TextSpan(text: "Build "),
                     TextSpan(
                       text: "Learning\n",
-                      style: AppTextStyles.boldTextStyle(
-                        context,
-                        color: MyTheme.primaryColor,
-                        fontSize: 36,
+                      style: getBoldStyle(
+                        color: MyTheme.tempPrimary,
+                        fontSize: 32.sp,
                       ),
                     ),
                     const TextSpan(text: "As Good Habit\n to "),
                     TextSpan(
                       text: "Improve Skills!",
-                      style: AppTextStyles.boldTextStyle(
-                        context,
-                        color: MyTheme.primaryColor,
-                        fontSize: 36,
+                      style: getBoldStyle(
+                        color: MyTheme.tempPrimary,
+                        fontSize: 32.sp,
                       ),
                     ),
                   ]),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             const CustomAnimatedWidget(),
-            const SizedBox(height: 20),
-            CustomButton(
-              color: MyTheme.primaryColor,
-              colorText: Colors.white,
+            SizedBox(height: 20.h),
+            CTAButton(
               text: "Start Learning!",
               onPressed: () {
                 context.pushNamed(Routes.signupScreenRoute);
@@ -74,8 +68,13 @@ class OnBoardingScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Already have an account?",
-                    style: AppTextStyles.semiBoldHintTextStyle(context)),
+                Text(
+                  "Already have an account?",
+                  style: getRegularStyle(
+                    fontSize: 14.sp,
+                    color: ThemeColors.textColor,
+                  ),
+                ),
                 TextButton(
                   style: const ButtonStyle(
                     splashFactory: NoSplash.splashFactory,
@@ -86,11 +85,14 @@ class OnBoardingScreen extends StatelessWidget {
                   },
                   child: Text(
                     "Sign in",
-                    style: AppTextStyles.textButtonTextStyle(context),
+                    style: getSemiBoldStyle(
+                      fontSize: 14.sp,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

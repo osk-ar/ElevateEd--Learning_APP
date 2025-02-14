@@ -1,7 +1,7 @@
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/features/presentation/common/info_row.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/features/presentation/common/info_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

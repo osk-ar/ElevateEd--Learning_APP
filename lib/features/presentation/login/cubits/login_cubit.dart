@@ -1,8 +1,8 @@
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/features/data_sources/local/app_prefs.dart';
-import 'package:e_learning_app_gp/features/domain/entities/user.dart';
-import 'package:e_learning_app_gp/features/domain/usecases/login_usecase.dart';
-import 'package:e_learning_app_gp/features/presentation/login/states/login_state.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/features/data_sources/local/app_prefs.dart';
+import 'package:ElevatED/features/domain/entities/user.dart';
+import 'package:ElevatED/features/domain/usecases/login_usecase.dart';
+import 'package:ElevatED/features/presentation/login/states/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginCubit extends Cubit<LoginState> {

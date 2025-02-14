@@ -1,9 +1,9 @@
-import 'package:e_learning_app_gp/core/resources/app_styles.dart';
-import 'package:e_learning_app_gp/features/presentation/course_details/cubits/course_details_cubit.dart';
-import 'package:e_learning_app_gp/features/presentation/course_details/states/course_details_state.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/features/presentation/course_details/cubits/course_details_cubit.dart';
+import 'package:ElevatED/features/presentation/course_details/states/course_details_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme.dart';
 import 'package:flutter/material.dart';
 
 class CourseHeader extends StatelessWidget {

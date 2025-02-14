@@ -1,4 +1,4 @@
-import 'package:e_learning_app_gp/core/constants/enum.dart';
+import 'package:ElevatED/core/constants/enum.dart';
 
 class UserLoginModel {
   final String? email;

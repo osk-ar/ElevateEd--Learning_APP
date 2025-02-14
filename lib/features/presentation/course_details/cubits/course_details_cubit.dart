@@ -1,4 +1,4 @@
-import 'package:e_learning_app_gp/features/presentation/course_details/states/course_details_state.dart';
+import 'package:ElevatED/features/presentation/course_details/states/course_details_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseDetailsCubit extends Cubit<CourseDetailsState> {

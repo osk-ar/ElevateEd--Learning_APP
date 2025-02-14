@@ -1,28 +1,30 @@
-import 'package:e_learning_app_gp/config/themes/input_decoration_theme.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/resources/app_values.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
+import 'package:ElevatED/config/themes/input_decoration_theme.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/core/resources/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InputField extends StatelessWidget {
   final String title;
-  final String? hint;
   final TextEditingController controller;
-  final String? Function(String?) validator;
-  final bool isObsecure;
-  final bool isReadOnly;
   final Widget? suffixIcon;
-  final void Function()? onTap;
-  final TextInputType? keyboardType;
   final FocusNode? focusNode;
   final FocusNode? nextFocusNode;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+  final void Function()? onTap;
+  final bool? isObsecure;
+  final bool? isReadOnly;
+  final String? hint;
+  final int? minLines;
+  final int? maxLines;
   const InputField({
     super.key,
     required this.title,
     required this.controller,
-    required this.validator,
-    required this.isObsecure,
+    this.validator,
+    this.isObsecure,
     this.suffixIcon,
     this.isReadOnly = false,
     this.onTap,
@@ -30,30 +32,40 @@ class InputField extends StatelessWidget {
     this.focusNode,
     this.nextFocusNode,
     this.hint,
+    this.minLines,
+    this.maxLines,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSize.s335.w,
+      width: 300.w,
       child: TextFormField(
         focusNode: focusNode,
         controller: controller,
-        obscureText: isObsecure,
+        obscureText: isObsecure ?? false,
         validator: validator,
         keyboardType: keyboardType,
-        style: AppTextStyles.lightTextStyle(context),
+        style: getRegularStyle(
+          fontSize: 14.sp,
+          color: ThemeColors.textColor,
+        ),
         decoration: InputDecoration(
-            labelText: title,
-            labelStyle: TextStyle(color: MyTheme.labelTextColor),
-            contentPadding: EdgeInsets.all(AppPadding.defaultPadding.r),
-            border: outlineInputBorder,
-            suffixIcon: suffixIcon,
-            focusedBorder: focusedOutlineInputBorder,
-            hintText: hint,
-            hintStyle: AppTextStyles.lightTextStyle(context,
-                fontSize: 16, color: MyTheme.hintTextColor)),
-        readOnly: isReadOnly,
+          contentPadding: EdgeInsets.all(AppEvenSizes.medium.r),
+          border: outlineInputBorder,
+          suffixIcon: suffixIcon,
+          iconColor: ThemeColors.textColor,
+          fillColor: ThemeColors.secondaryColor,
+          focusedBorder: focusedOutlineInputBorder,
+          hintText: title == "" ? null : title,
+          hintStyle: getRegularStyle(
+            fontSize: 12.sp,
+            color: ThemeColors.textColor,
+          ),
+        ),
+        minLines: minLines,
+        maxLines: maxLines ?? 1,
+        readOnly: isReadOnly ?? false,
         onTap: onTap,
         onFieldSubmitted: nextFocusNode == null
             ? null

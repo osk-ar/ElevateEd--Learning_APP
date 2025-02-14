@@ -1,9 +1,9 @@
-import 'package:e_learning_app_gp/features/data_sources/api/remote_data_source.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/auth_response_model.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/user_login_model.dart';
-import 'package:e_learning_app_gp/features/data_sources/models/user_register_model.dart';
-import 'package:e_learning_app_gp/features/domain/entities/user.dart';
-import 'package:e_learning_app_gp/features/domain/repo/auth_repository.dart';
+import 'package:ElevatED/features/data_sources/api/remote_data_source.dart';
+import 'package:ElevatED/features/data_sources/models/auth_response_model.dart';
+import 'package:ElevatED/features/data_sources/models/user_login_model.dart';
+import 'package:ElevatED/features/data_sources/models/user_register_model.dart';
+import 'package:ElevatED/features/domain/entities/user.dart';
+import 'package:ElevatED/features/domain/repo/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final RemoteDataSource remoteDataSource;

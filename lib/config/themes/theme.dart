@@ -1,7 +1,13 @@
+import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:themed/themed.dart';
 
 class MyTheme {
+  // NEW THEME
+
+  static const tempPrimary = ColorRef(Color(0xFFF4A900));
+  static const tempBackgroundColor = ColorRef(Color(0xFFF8E8C0));
+
   //* Background Colors
   static const backgroundColor =
       ColorRef(Color(0xFFFFFFFF), id: "backgroundColor");
@@ -22,7 +28,7 @@ class MyTheme {
       ColorRef(Color(0xFFFFFFFF), id: "onSurfaceColor");
 
   //* Text Colors
-  static const textColor = ColorRef(Color(0xFF000000), id: "textColor");
+  static const textColor = ColorRef(Color(0xFF1A1A1A), id: "textColor");
   static const inverseTextColor =
       ColorRef(Color(0xFFFFFFFF), id: "inverseTextColor");
   static final labelTextColor =
@@ -39,17 +45,36 @@ class MyTheme {
       ColorRef(Color(0xFF2889FB), id: "charBottomColor");
 }
 
-Map<ThemeRef, Object> lightTheme = {
-  MyTheme.labelTextColor: const Color(0xFF2889FA),
-};
+Map<ThemeRef, Object> lightTheme = {};
 
 Map<ThemeRef, Object> darkTheme = {
+  MyTheme.tempBackgroundColor: const Color(0xFF1A1A1A),
   MyTheme.surfaceColor: const Color(0xFF0C172B),
   MyTheme.onSurfaceColor: const Color(0xFF1F2833),
   MyTheme.secondaryColor: const Color(0xFF1F2833),
   MyTheme.onSecondaryColor: const Color(0xFFFFFFFF),
   MyTheme.backgroundColor: const Color(0xFF010A1B),
   MyTheme.textColor: const Color(0xFFFFFFFF),
-  MyTheme.inverseTextColor: const Color(0xFF000000),
+  MyTheme.inverseTextColor: const Color(0xFF1A1A1A),
   MyTheme.backgroundGradientColor: const Color(0xF51F2833)
+};
+
+// NEW THEME
+class ThemeColors {
+  static const backgroundColor = ColorRef(AppColors.lightBackgroundColor);
+
+  static const secondaryColor =
+      ColorRef(AppColors.lightSecondaryColor, id: "secondary");
+
+  static const textColor = ColorRef(AppColors.darkBackgroundColor, id: "text");
+
+  static const inverseTextColor =
+      ColorRef(AppColors.whiteColor, id: "inverseText");
+}
+
+Map<ThemeRef, Object> newDarkTheme = {
+  ThemeColors.backgroundColor: AppColors.darkBackgroundColor,
+  ThemeColors.secondaryColor: AppColors.darkSecondaryColor,
+  ThemeColors.textColor: AppColors.whiteColor,
+  ThemeColors.inverseTextColor: AppColors.darkBackgroundColor,
 };

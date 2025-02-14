@@ -1,4 +1,4 @@
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -118,8 +118,8 @@ class AnimatedFloatingContainerState extends State<AnimatedFloatingContainer>
                 ),
                 child: Text(
                   widget.text,
-                  style: AppTextStyles.mediumTextStyle(context,
-                      fontSize: 16, color: widget.textColor),
+                  style:
+                      getMediumStyle(fontSize: 16.sp, color: widget.textColor),
                 ),
               ),
             ),

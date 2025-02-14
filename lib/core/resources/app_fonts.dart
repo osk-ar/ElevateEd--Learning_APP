@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FontConstants {
-  static const String primaryEnglishFont = "Satoshi";
-  static const String primaryArabicFont = "Satoshi";
+  static const String primaryEnglishFont = "Urbanist";
+  static const String primaryArabicFont = "Urbanist";
 }
 
 class FontWeightManager {
@@ -16,12 +15,4 @@ class FontWeightManager {
   static const FontWeight bold = FontWeight.w700;
   static const FontWeight extraBold = FontWeight.w800;
   static const FontWeight black = FontWeight.w900;
-}
-
-class FontSize {
-  static double f8 = 8.0.sp;
-  static double f14 = 14.0.sp;
-  static double f16 = 16.0.sp;
-  static double f20 = 20.0.sp;
-  static double f36 = 36.0.sp;
 }

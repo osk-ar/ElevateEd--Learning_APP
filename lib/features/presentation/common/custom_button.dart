@@ -1,53 +1,59 @@
-import 'package:e_learning_app_gp/core/resources/app_values.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/core/resources/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CTAButton extends StatelessWidget {
+  const CTAButton({
     super.key,
     required this.text,
     required this.onPressed,
-    required this.color,
-    required this.colorText,
-    this.borderColor = Colors.transparent,
     this.width,
     this.focusNode,
   });
 
   final String text;
   final VoidCallback onPressed;
-  final Color color;
-  final Color colorText;
   final double? width;
-  final Color borderColor;
   final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        width: width ?? AppSize.s335.w,
-        height: AppSize.s60.h,
+    return SizedBox(
+      width: width ?? 300.w,
+      height: 50.h,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              AppColors.primaryColor,
+              AppColors.primaryGradientColor_1,
+              AppColors.primaryColor,
+              AppColors.primaryGradientColor_2,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(AppOddSizes.medium.r),
+        ),
         child: ElevatedButton(
           focusNode: focusNode,
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(0),
-            backgroundColor: color,
             splashFactory: InkRipple.splashFactory,
             elevation: 0,
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
             shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(AppBorderRadius.bigBorderRadius.r),
-              side: BorderSide(color: borderColor),
+              borderRadius: BorderRadius.circular(AppOddSizes.medium.r),
             ),
           ),
           child: Text(
             text,
-            style:
-                AppTextStyles.customButtonTextStyle(context, color: colorText),
+            style: getSemiBoldStyle(
+                fontSize: 16.sp, color: ThemeColors.inverseTextColor),
           ),
         ),
       ),

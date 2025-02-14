@@ -1,20 +1,19 @@
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/helper/data_intent.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/core/helper/validation.dart';
-import 'package:e_learning_app_gp/core/resources/app_values.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
-import 'package:e_learning_app_gp/features/presentation/login/cubits/login_cubit.dart';
-import 'package:e_learning_app_gp/features/presentation/common/layouts/default_form_layout.dart';
-import 'package:e_learning_app_gp/features/presentation/login/screen/widgets/forget_password.dart';
-import 'package:e_learning_app_gp/features/presentation/common/header.dart';
-import 'package:e_learning_app_gp/features/presentation/common/text_input_field.dart';
-import 'package:e_learning_app_gp/features/presentation/common/checkable.dart';
-import 'package:e_learning_app_gp/features/presentation/common/custom_button.dart';
-import 'package:e_learning_app_gp/features/presentation/common/or_line.dart';
-import 'package:e_learning_app_gp/features/presentation/common/social.dart';
-import 'package:e_learning_app_gp/features/presentation/login/states/login_state.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/core/helper/validation.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/features/presentation/common/default_appbar.dart';
+import 'package:ElevatED/features/presentation/common/double_circular_avatar.dart';
+import 'package:ElevatED/features/presentation/common/rotating_logo.dart';
+import 'package:ElevatED/features/presentation/login/cubits/login_cubit.dart';
+import 'package:ElevatED/features/presentation/login/screen/widgets/forget_password.dart';
+import 'package:ElevatED/features/presentation/common/text_input_field.dart';
+import 'package:ElevatED/features/presentation/common/remember_me_box.dart';
+import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:ElevatED/features/presentation/login/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,114 +57,120 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultFormLayout(
-      topPadding: AppSize.s60,
-      leftPadding: AppSize.s24,
-      rightPadding: AppSize.s24,
-      bottomPadding: AppSize.s0,
-      scrollable: false,
-      formKey: loginFormStateKey,
-      child: Column(
-        children: [
-          const Header(
-            title: "Welcome Back!",
-            subTitle: "You have been missed",
-          ),
-          SizedBox(height: AppSize.s60.h),
-          InputField(
-            focusNode: emailFocusNode,
-            nextFocusNode: passwordFocusNode,
-            title: "Email",
-            controller: emailController,
-            validator: (value) => Validation.validateEmail(value),
-            keyboardType: TextInputType.emailAddress,
-            isObsecure: false,
-          ),
-          SizedBox(height: AppSize.s32.h),
-          BlocBuilder<LoginCubit, LoginState>(
-            builder: (context, state) {
-              return InputField(
-                focusNode: passwordFocusNode,
-                nextFocusNode: submitButtonFocusNode,
-                title: "Password",
-                controller: passwordController,
-                isObsecure: !context.read<LoginCubit>().isPasswordVisible,
-                validator: (value) => Validation.validatePassword(value),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    context.read<LoginCubit>().isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: MyTheme.textColor,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: ThemeColors.backgroundColor,
+      appBar: defaultAppbar("Login"),
+      body: Form(
+        key: loginFormStateKey,
+        child: Column(
+          children: [
+            SizedBox(height: 60.h),
+            DoubleCircularAvatar(
+              child: SizedBox(
+                width: 46.r,
+                height: 46.r,
+                child: const RotatingLogo(isInfiniteRotation: true),
+              ),
+            ),
+            SizedBox(height: 60.h),
+            InputField(
+              focusNode: emailFocusNode,
+              controller: emailController,
+              nextFocusNode: passwordFocusNode,
+              title: "Email",
+              isObsecure: false,
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) => Validation.validateEmail(value),
+            ),
+            SizedBox(height: 24.h),
+            BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state) {
+                return InputField(
+                  title: "Password",
+                  focusNode: passwordFocusNode,
+                  controller: passwordController,
+                  nextFocusNode: submitButtonFocusNode,
+                  isObsecure: !context.read<LoginCubit>().isPasswordVisible,
+                  validator: (value) => Validation.validatePassword(value),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      context.read<LoginCubit>().isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: ThemeColors.textColor,
+                    ),
+                    onPressed: () =>
+                        context.read<LoginCubit>().togglePasswordVisibility(),
                   ),
-                  onPressed: () =>
-                      context.read<LoginCubit>().togglePasswordVisibility(),
-                ),
-              );
-            },
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Checkable(),
-              ForgetPassword(),
-            ],
-          ),
-          SizedBox(height: AppSize.s24.h),
-          const OrLine(),
-          SizedBox(height: AppSize.s24.h),
-          Social(
-              onTapFacebook: () => print("Facebook Tapped"),
-              onTapGoogle: () => print("Google Tapped")),
-          const Spacer(),
-          BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state is LoginSuccess) {
-                context.message(message: "success");
-                DataIntent.pushAuthResponseData(state.user);
-                context.pushReplacementNamed(Routes.mainScreenRoute);
-              } else if (state is LoginFailure) {
-                context.message(message: "error${state.error}");
-              }
-            },
-            child: CustomButton(
-              focusNode: submitButtonFocusNode,
-              color: MyTheme.primaryColor,
-              colorText: Colors.white,
-              text: "Login",
-              onPressed: () async {
-                if (loginFormStateKey.currentState!.validate() &&
-                    emailController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  await context.read<LoginCubit>().login(
-                      email: emailController.text,
-                      password: passwordController.text);
-                }
+                );
               },
             ),
-          ),
-          SizedBox(height: AppSize.s0.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Don't have an account?",
-                  style: AppTextStyles.semiBoldHintTextStyle(context)),
-              TextButton(
-                style: const ButtonStyle(
-                  splashFactory: NoSplash.splashFactory,
-                  overlayColor: WidgetStatePropertyAll(Colors.transparent),
-                ),
-                onPressed: () {
-                  context.pushReplacementNamed(Routes.signupScreenRoute);
-                },
-                child: Text(
-                  "Sign up",
-                  style: AppTextStyles.textButtonTextStyle(context),
-                ),
+            Padding(
+              padding: EdgeInsets.only(right: 35.w, left: 30.w),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RememberMeBox(),
+                  ForgetPassword(),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+            const Spacer(),
+            BlocListener<LoginCubit, LoginState>(
+              listener: (context, state) {
+                if (state is LoginSuccess) {
+                  context.message(message: "success");
+                  DataIntent.pushAuthResponseData(state.user);
+                  context.pushReplacementNamed(Routes.mainScreenRoute);
+                } else if (state is LoginFailure) {
+                  context.message(message: "error${state.error}");
+                }
+              },
+              child: CTAButton(
+                focusNode: submitButtonFocusNode,
+                text: "Login",
+                onPressed: () async {
+                  if (loginFormStateKey.currentState!.validate() &&
+                      emailController.text.isNotEmpty &&
+                      passwordController.text.isNotEmpty) {
+                    await context.read<LoginCubit>().login(
+                        email: emailController.text,
+                        password: passwordController.text);
+                  }
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Don't have an account?",
+                  style: getRegularStyle(
+                    fontSize: 14.sp,
+                    color: ThemeColors.textColor,
+                  ),
+                ),
+                TextButton(
+                  style: const ButtonStyle(
+                    splashFactory: NoSplash.splashFactory,
+                    overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                  ),
+                  onPressed: () {
+                    context.pushReplacementNamed(Routes.signupScreenRoute);
+                  },
+                  child: Text(
+                    "Register",
+                    style: getSemiBoldStyle(
+                      fontSize: 14.sp,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

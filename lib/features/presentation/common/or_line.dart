@@ -1,7 +1,6 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/resources/app_fonts.dart';
-import 'package:e_learning_app_gp/core/resources/app_values.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/core/resources/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,22 +15,21 @@ class OrLine extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          width: AppSize.s140.w,
-          height: AppSize.s1_5.h,
+          width: 140.w,
+          height: (1.5).h,
           color: MyTheme.labelTextColor,
         ),
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: AppPadding.defaultPadding.w),
+          padding: EdgeInsets.symmetric(horizontal: AppEvenSizes.medium.w),
           child: Text(
             "OR",
-            style: AppTextStyles.regularTextStyle(context,
-                color: MyTheme.labelTextColor, fontSize: FontSize.f16),
+            style:
+                getRegularStyle(color: MyTheme.labelTextColor, fontSize: 16.sp),
           ),
         ),
         Container(
-          width: AppSize.s140.w,
-          height: AppSize.s1_5.h,
+          width: 140.w,
+          height: (1.5).h,
           color: MyTheme.labelTextColor,
         ),
       ],

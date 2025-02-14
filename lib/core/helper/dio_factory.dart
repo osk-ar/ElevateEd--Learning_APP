@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:e_learning_app_gp/core/constants/constants.dart';
+import 'package:ElevatED/core/constants/constants.dart';
 
 // const String APPLICATION_JSON = "application/json";
 // const String CONTENT_TYPE = "content-type";

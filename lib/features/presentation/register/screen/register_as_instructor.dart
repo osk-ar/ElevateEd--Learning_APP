@@ -1,18 +1,18 @@
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/config/themes/input_decoration_theme.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/core/helper/validation.dart';
-import 'package:e_learning_app_gp/core/resources/app_values.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
-import 'package:e_learning_app_gp/features/presentation/register/cubits/instructor_register_cubit.dart';
-import 'package:e_learning_app_gp/features/presentation/register/states/instructor_register_state.dart';
-import 'package:e_learning_app_gp/features/presentation/common/custom_button.dart';
-import 'package:e_learning_app_gp/features/presentation/common/layouts/default_form_layout.dart';
-import 'package:e_learning_app_gp/features/presentation/common/header.dart';
-import 'package:e_learning_app_gp/features/presentation/common/image_picker_wdiget.dart';
-import 'package:e_learning_app_gp/features/presentation/common/text_input_field.dart';
-import 'package:e_learning_app_gp/features/presentation/register/screen/widgets/suggestions_picker.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/config/themes/input_decoration_theme.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/core/helper/validation.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/core/resources/app_sizes.dart';
+import 'package:ElevatED/features/presentation/register/cubits/instructor_register_cubit.dart';
+import 'package:ElevatED/features/presentation/register/states/instructor_register_state.dart';
+import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:ElevatED/features/presentation/common/layouts/default_form_layout.dart';
+import 'package:ElevatED/features/presentation/common/header.dart';
+import 'package:ElevatED/features/presentation/common/image_picker_wdiget.dart';
+import 'package:ElevatED/features/presentation/common/text_input_field.dart';
+import 'package:ElevatED/features/presentation/register/screen/widgets/suggestions_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,21 +73,21 @@ class RegisterAsInstructor extends StatelessWidget {
           ),
           SizedBox(height: 20.h),
           SizedBox(
-            width: AppSize.s335.w,
+            width: 335.w,
             child: TextFormField(
               controller: context.read<InstructorRegisterCubit>().bioController,
               keyboardType: TextInputType.text,
-              style: AppTextStyles.lightTextStyle(context),
+              style: getLightStyle(color: MyTheme.textColor, fontSize: 16.sp),
               minLines: 1,
               maxLines: 5,
               focusNode: context.read<InstructorRegisterCubit>().bioFocusNode,
               decoration: InputDecoration(
                 labelText: "Bio",
-                labelStyle: AppTextStyles.regularTextStyle(
-                  context,
+                labelStyle: getRegularStyle(
+                  fontSize: 16.sp,
                   color: MyTheme.labelTextColor,
                 ),
-                contentPadding: EdgeInsets.all(AppPadding.defaultPadding.r),
+                contentPadding: EdgeInsets.all(AppEvenSizes.medium.r),
                 border: outlineInputBorder,
                 focusedBorder: focusedOutlineInputBorder,
               ),
@@ -98,8 +98,7 @@ class RegisterAsInstructor extends StatelessWidget {
             alignment: AlignmentDirectional.centerStart,
             child: Text(
               "Choose One or More Field of Expertise:",
-              style: AppTextStyles.mediumTextStyle(context,
-                  fontSize: 14, color: MyTheme.textColor),
+              style: getMediumStyle(fontSize: 14.sp, color: MyTheme.textColor),
             ),
           ),
           SizedBox(height: 10.h),
@@ -109,17 +108,13 @@ class RegisterAsInstructor extends StatelessWidget {
             suggestionSelected: (topic) => context
                 .read<InstructorRegisterCubit>()
                 .suggestionSelected(topic),
-            getSelectedSuggestionTextColor: (topic) => context
-                .read<InstructorRegisterCubit>()
-                .getSelectedSuggestionTextColor(topic),
           ),
           SizedBox(height: 30.h),
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
               "Optional, add social media links:",
-              style: AppTextStyles.mediumTextStyle(context,
-                  fontSize: 14, color: MyTheme.textColor),
+              style: getMediumStyle(fontSize: 14.sp, color: MyTheme.textColor),
             ),
           ),
           SizedBox(height: 20.h),
@@ -169,7 +164,7 @@ class RegisterAsInstructor extends StatelessWidget {
                 context.message(message: "error${state.error}");
               }
             },
-            child: CustomButton(
+            child: CTAButton(
               text: "Register",
               onPressed: () {
                 print("Loading Instructor Register...");
@@ -196,8 +191,6 @@ class RegisterAsInstructor extends StatelessWidget {
                     .addLinksToPersonalList();
                 context.read<InstructorRegisterCubit>().register();
               },
-              color: MyTheme.primaryColor,
-              colorText: Colors.white,
             ),
           ),
           SizedBox(height: 42.h)

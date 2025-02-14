@@ -1,4 +1,5 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -21,13 +22,13 @@ class ImagePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: MyTheme.primaryColor,
+      backgroundColor: AppColors.fadedPrimaryColor,
       minRadius: radius + borderWidth,
       maxRadius: radius + borderWidth,
       child: CircleAvatar(
         minRadius: radius,
         maxRadius: radius,
-        backgroundColor: MyTheme.secondaryColor,
+        backgroundColor: AppColors.primaryColor,
         backgroundImage: imageExist ? FileImage(imageFile!) : null,
         child: Stack(
           alignment: AlignmentDirectional.center,
@@ -37,7 +38,7 @@ class ImagePicker extends StatelessWidget {
                 : Icon(
                     Icons.add,
                     size: iconSize,
-                    color: MyTheme.onSecondaryColor,
+                    color: ThemeColors.inverseTextColor,
                   ),
             InkWell(
               onTap: onTap,

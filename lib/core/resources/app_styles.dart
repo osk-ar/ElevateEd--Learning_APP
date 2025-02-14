@@ -19,16 +19,26 @@ TextStyle _getTextStyle(
 }
 
 // thin style
-// TextStyle getThinStyle(
-//     {fontFamily = FontConstants.primaryEnglishFont, fontSize = FontSize.f12, required Color color, List<Shadow>? shadows}) {
-//   return _getTextStyle(fontFamily, fontSize, FontWeightManager.thin, color, shadows);
-// }
+TextStyle getThinStyle(
+    {fontFamily = FontConstants.primaryEnglishFont,
+    required double fontSize,
+    required Color color,
+    List<Shadow>? shadows,
+    double? letterSpacing}) {
+  return _getTextStyle(fontFamily, fontSize, FontWeightManager.thin, color,
+      shadows, letterSpacing);
+}
 
 // extraLight style
-// TextStyle getExtraLightStyle(
-//     {fontFamily = FontConstants.primaryEnglishFont, fontSize = FontSize.f12, required Color color, List<Shadow>? shadows}) {
-//   return _getTextStyle(fontFamily, fontSize, FontWeightManager.extraLight, color, shadows);
-// }
+TextStyle getExtraLightStyle(
+    {fontFamily = FontConstants.primaryEnglishFont,
+    required double fontSize,
+    required Color color,
+    List<Shadow>? shadows,
+    double? letterSpacing}) {
+  return _getTextStyle(fontFamily, fontSize, FontWeightManager.extraLight,
+      color, shadows, letterSpacing);
+}
 
 // light style
 TextStyle getLightStyle(
@@ -86,10 +96,15 @@ TextStyle getBoldStyle(
 }
 
 // extraBold style
-// TextStyle getExtraBoldStyle(
-//     {fontFamily = FontConstants.primaryEnglishFont, double fontSize = FontSize.f12, required Color color, List<Shadow>? shadows}) {
-//   return _getTextStyle(fontFamily, fontSize, FontWeightManager.extraBold, color, shadows,);
-// }
+TextStyle getExtraBoldStyle(
+    {fontFamily = FontConstants.primaryEnglishFont,
+    required double fontSize,
+    required Color color,
+    List<Shadow>? shadows,
+    double? letterSpacing}) {
+  return _getTextStyle(fontFamily, fontSize, FontWeightManager.extraBold, color,
+      shadows, letterSpacing);
+}
 
 // black style
 TextStyle getBlackStyle(

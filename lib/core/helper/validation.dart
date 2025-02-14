@@ -1,4 +1,4 @@
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
 
 class Validation {
   static String? validateEmail(String? value) {

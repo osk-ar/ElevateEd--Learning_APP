@@ -1,11 +1,14 @@
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/features/presentation/common/layouts/default_layout.dart';
-import 'package:e_learning_app_gp/features/presentation/splash/cubits/splash_cubit.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/features/presentation/common/double_circular_avatar.dart';
+import 'package:ElevatED/features/presentation/splash/cubits/splash_cubit.dart';
+import 'package:ElevatED/features/presentation/common/rotating_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,37 +21,51 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bool isSignedIn = await context.read<SplashCubit>().checkSharedPrefs();
-
       FlutterNativeSplash.remove();
-      if (isSignedIn) {
-        if (context.mounted) {
-          context.pushNamed(Routes.mainScreenRoute);
-        }
-      } else {
-        if (context.mounted) {
-          context.pushNamed(Routes.onBoardingScreenRoute);
-        }
-      }
 
-      Future.delayed(
-        const Duration(seconds: 1),
+      await Future.delayed(
+        const Duration(seconds: 3),
         () {
           print("Splash Passed");
         },
       );
+      if (!context.mounted) {
+        return;
+      }
+
+      bool isSignedIn = await context.read<SplashCubit>().checkSharedPrefs();
+      if (!context.mounted) {
+        return;
+      }
+
+      if (isSignedIn) {
+        context.pushNamed(Routes.mainScreenRoute);
+      } else {
+        context.pushNamed(Routes.onBoardingScreenRoute);
+      }
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: MyTheme.backgroundColor,
-      body: DefaultLayout(
-        child: Center(),
-      ),
-    );
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: MyTheme.tempBackgroundColor,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: context.width, height: 155.h),
+            const DoubleCircularAvatar(
+                child: RotatingLogo(
+              isInfiniteRotation: false,
+            )),
+            SizedBox(height: 436.h),
+            Text(
+              "ElevatED",
+              style: getMediumStyle(fontSize: 16, color: ThemeColors.textColor),
+            ),
+          ],
+        ));
   }
 }

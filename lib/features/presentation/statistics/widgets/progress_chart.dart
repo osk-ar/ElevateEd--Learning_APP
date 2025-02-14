@@ -1,8 +1,7 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/core/resources/app_styles.dart';
-import 'package:e_learning_app_gp/core/resources/text_styles.dart';
-import 'package:e_learning_app_gp/features/presentation/common/line_chart.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/features/presentation/common/line_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,7 +68,7 @@ class _ProgressChartState extends State<ProgressChart> {
           ),
           Text(
             widget.chartDurationType.name.toUpperCase(),
-            style: AppTextStyles.mediumTextStyle(context, fontSize: 16),
+            style: getMediumStyle(fontSize: 16, color: MyTheme.textColor),
           ),
           Expanded(
             child: CustomLineChart(

@@ -1,7 +1,7 @@
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/core/helper/extensions.dart';
-import 'package:e_learning_app_gp/features/presentation/register/states/register_state.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/features/presentation/register/states/register_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

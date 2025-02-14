@@ -1,14 +1,17 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/features/presentation/register/cubits/register_cubit.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/features/presentation/register/cubits/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RolePicker extends StatelessWidget {
   const RolePicker({
     super.key,
     this.width = 200,
-    this.height = 50,
+    this.height = 46,
     this.animationDuration = 300,
     required this.isStudent,
   });
@@ -21,27 +24,27 @@ class RolePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      width: width!.w,
+      height: height!.h,
       decoration: BoxDecoration(
-        color: MyTheme.secondaryColor,
-        borderRadius: BorderRadius.circular(25),
-      ),
+          color: ThemeColors.secondaryColor,
+          borderRadius: BorderRadius.circular(25.r),
+          border: Border.all(color: AppColors.primaryColor)),
       child: Stack(
         fit: StackFit.expand,
         children: [
           AnimatedPositioned(
             duration: Duration(milliseconds: animationDuration!),
             curve: Curves.easeInOut,
-            left: isStudent ? 0 : width! / 2,
+            left: isStudent ? 0 : width!.w / 2,
             child: AnimatedContainer(
               duration: Duration(milliseconds: animationDuration!),
               curve: Curves.easeInOut,
-              width: isStudent ? width! / 2 : width! / 2,
-              height: height,
+              width: isStudent ? width!.w / 2 : width!.w / 2,
+              height: height!.h,
               decoration: BoxDecoration(
-                color: MyTheme.primaryColor,
-                borderRadius: BorderRadius.circular(height! / 2),
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(height!.h / 2),
               ),
             ),
           ),
@@ -57,9 +60,10 @@ class RolePicker extends StatelessWidget {
                     },
                     child: Text(
                       'Student',
-                      style: TextStyle(
-                        color: isStudent ? Colors.white : MyTheme.primaryColor,
-                        fontWeight: FontWeight.bold,
+                      style: getMediumStyle(
+                        fontSize: 16.sp,
+                        color:
+                            isStudent ? Colors.white : AppColors.primaryColor,
                       ),
                     ),
                   ),
@@ -75,9 +79,10 @@ class RolePicker extends StatelessWidget {
                     },
                     child: Text(
                       'Instructor',
-                      style: TextStyle(
-                        color: isStudent ? MyTheme.primaryColor : Colors.white,
-                        fontWeight: FontWeight.bold,
+                      style: getMediumStyle(
+                        fontSize: 16.sp,
+                        color:
+                            isStudent ? AppColors.primaryColor : Colors.white,
                       ),
                     ),
                   ),

@@ -1,10 +1,10 @@
 enum Interests {
   WEB_DEV,
-  MOBILE_DEV,
-  GRAPHIC_DESIGN,
-  MODELING_3D,
+  FLUTTER,
   OOP,
-  FLUTTER
+  GRAPHIC_DESIGN,
+  MOBILE_DEV,
+  MODELING_3D,
 }
 
 enum Themes { LIGHT, DARK }

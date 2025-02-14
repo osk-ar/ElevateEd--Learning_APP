@@ -1,6 +1,6 @@
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/features/domain/entities/home.dart';
-import 'package:e_learning_app_gp/features/domain/entities/user.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/features/domain/entities/home.dart';
+import 'package:ElevatED/features/domain/entities/user.dart';
 
 class DataIntent {
   DataIntent._();

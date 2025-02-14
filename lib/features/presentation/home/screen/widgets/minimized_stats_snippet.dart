@@ -1,6 +1,6 @@
-import 'package:e_learning_app_gp/core/resources/app_styles.dart';
+import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/config/themes/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
 import 'package:flutter/material.dart';
 
 class MinimizedStatsSnippet extends StatelessWidget {

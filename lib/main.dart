@@ -1,26 +1,29 @@
 import 'dart:ui';
 
-import 'package:e_learning_app_gp/config/routes/route_constants.dart';
-import 'package:e_learning_app_gp/config/routes/router.dart';
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/config/themes/theme_data.dart';
-import 'package:e_learning_app_gp/core/dependency_injection.dart';
-import 'package:e_learning_app_gp/core/resources/language_manager.dart';
+import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/config/routes/router.dart';
+import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_data.dart';
+import 'package:ElevatED/core/dependency_injection.dart';
+import 'package:ElevatED/core/resources/language_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:themed/themed.dart';
 
 late final WidgetsBinding engine;
 
 void main() async {
-  // ElevateEd
   engine = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: engine);
+  var widgetsBinding = WidgetsBinding.instance;
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await EasyLocalization.ensureInitialized();
   await init();
+
   PlatformDispatcher.instance.onPlatformBrightnessChanged = () {
     final brightness = PlatformDispatcher.instance.platformBrightness;
     if (brightness == Brightness.light) {
@@ -53,11 +56,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(390, 844),
+      designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => Themed(
-        currentTheme: brightness == Brightness.light ? lightTheme : darkTheme,
+        currentTheme:
+            brightness == Brightness.light ? lightTheme : newDarkTheme,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'ElevateEd',

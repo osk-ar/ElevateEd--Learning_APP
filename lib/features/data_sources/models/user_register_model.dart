@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:e_learning_app_gp/core/constants/enum.dart';
+import 'package:ElevatED/core/constants/enum.dart';
 
 class UserRegisterModel {
   final String? fullName;

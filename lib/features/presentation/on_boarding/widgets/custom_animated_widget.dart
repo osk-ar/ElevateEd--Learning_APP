@@ -1,7 +1,7 @@
-import 'package:e_learning_app_gp/config/themes/theme.dart';
-import 'package:e_learning_app_gp/core/resources/assets_manager.dart';
-import 'package:e_learning_app_gp/features/presentation/on_boarding/widgets/floating_text_container.dart';
-import 'package:e_learning_app_gp/features/presentation/on_boarding/widgets/image_container.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/resources/assets_manager.dart';
+import 'package:ElevatED/features/presentation/on_boarding/widgets/floating_text_container.dart';
+import 'package:ElevatED/features/presentation/on_boarding/widgets/image_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -42,6 +42,10 @@ class _CustomAnimatedWidgetState extends State<CustomAnimatedWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const double verticalBeginOffset = 10;
+    const double horizontalBeginOffset = 10;
+    const double verticalEndOffset = -30;
+    const double horizontalEndOffset = 10;
     return Expanded(
       child: SizedBox(
         width: double.infinity,
@@ -52,40 +56,48 @@ class _CustomAnimatedWidgetState extends State<CustomAnimatedWidget> {
               text: "#Mentoring",
               beginAngle: 0.2,
               endAngle: -0.2,
-              beginOffset: Offset(-100.w, 100.h),
-              endOffset: Offset(-120.w, -90.h),
-              backgroundColor: MyTheme.textColor,
-              textColor: MyTheme.inverseTextColor,
+              beginOffset: Offset((horizontalBeginOffset - 100).w,
+                  (verticalBeginOffset + 90).h),
+              endOffset: Offset(
+                  (horizontalEndOffset - 120).w, (verticalEndOffset - 90).h),
+              textColor: AppColors.darkSecondaryColor,
+              backgroundColor: AppColors.whiteColor,
               floatingDuration: widget.textFloatingLoopDuration - 100,
             ),
             AnimatedFloatingContainer(
               text: "#Improvement",
               beginAngle: -0.2,
               endAngle: 0.4,
-              beginOffset: Offset(-10.w, 100.h),
-              endOffset: Offset(-10.w, -150.h),
-              backgroundColor: MyTheme.inverseTextColor,
-              textColor: MyTheme.textColor,
+              beginOffset: Offset(
+                  (horizontalBeginOffset - 20).w, (verticalBeginOffset + 90).h),
+              endOffset: Offset(
+                  (horizontalEndOffset - 20).w, (verticalEndOffset - 150).h),
+              textColor: AppColors.whiteColor,
+              backgroundColor: AppColors.darkSecondaryColor,
               floatingDuration: widget.textFloatingLoopDuration + 50,
             ),
             AnimatedFloatingContainer(
               text: "#LevelUp",
               beginAngle: 0,
               endAngle: -0.3,
-              beginOffset: Offset(80.w, 100.h),
-              endOffset: Offset(80.w, -80.h),
-              backgroundColor: MyTheme.textColor,
-              textColor: MyTheme.inverseTextColor,
+              beginOffset: Offset(
+                  (horizontalBeginOffset - 80).w, (verticalBeginOffset + 90).h),
+              endOffset: Offset(
+                  (horizontalEndOffset + 70).w, (verticalEndOffset - 80).h),
+              textColor: AppColors.darkSecondaryColor,
+              backgroundColor: AppColors.whiteColor,
               floatingDuration: widget.textFloatingLoopDuration + 100,
             ),
             AnimatedFloatingContainer(
               text: "#Course",
               beginAngle: 0,
               endAngle: 0.3,
-              beginOffset: Offset(90.w, 100.h),
-              endOffset: Offset(90.w, 0.h),
-              backgroundColor: MyTheme.inverseTextColor,
-              textColor: MyTheme.textColor,
+              beginOffset: Offset(
+                  (horizontalBeginOffset + 80).w, (verticalBeginOffset + 90).h),
+              endOffset: Offset(
+                  (horizontalEndOffset + 80).w, (verticalEndOffset - 10).h),
+              textColor: AppColors.whiteColor,
+              backgroundColor: AppColors.darkSecondaryColor,
               floatingDuration: widget.textFloatingLoopDuration - 50,
             ),
             Positioned(

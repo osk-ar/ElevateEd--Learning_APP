@@ -1,5 +1,5 @@
-import 'package:e_learning_app_gp/core/constants/enum.dart';
-import 'package:e_learning_app_gp/core/helper/map_string_to_user_role.dart';
+import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/core/helper/json_helpers.dart';
 
 class AuthResponseModel {
   final int id;
