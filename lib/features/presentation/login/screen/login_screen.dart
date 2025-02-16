@@ -10,9 +10,9 @@ import 'package:ElevatED/features/presentation/common/double_circular_avatar.dar
 import 'package:ElevatED/features/presentation/common/rotating_logo.dart';
 import 'package:ElevatED/features/presentation/login/cubits/login_cubit.dart';
 import 'package:ElevatED/features/presentation/login/screen/widgets/forget_password.dart';
-import 'package:ElevatED/features/presentation/common/text_input_field.dart';
+import 'package:ElevatED/features/presentation/common/input_field.dart';
 import 'package:ElevatED/features/presentation/common/remember_me_box.dart';
-import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:ElevatED/features/presentation/common/cta_button.dart';
 import 'package:ElevatED/features/presentation/login/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

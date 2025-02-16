@@ -1,6 +1,12 @@
 import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/core/dependency_injection.dart';
 import 'package:ElevatED/features/presentation/course_details/cubits/course_details_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/cubit/change_password_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/cubit/validation_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/cubit/verification_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/screens/change_password_screen.dart';
+import 'package:ElevatED/features/presentation/forget_password/screens/validation_screen.dart';
+import 'package:ElevatED/features/presentation/forget_password/screens/verification_screen.dart';
 import 'package:ElevatED/features/presentation/main_page/main_page.dart';
 import 'package:ElevatED/features/presentation/register/cubits/instructor_register_cubit.dart';
 import 'package:ElevatED/features/presentation/login/cubits/login_cubit.dart';
@@ -24,14 +30,12 @@ class RouteGenerator {
     switch (settings.name) {
       //* Intro
       case Routes.splashScreenRoute:
-        //!-----------------------------------------------------
         return MaterialPageRoute(
           builder: (context) => BlocProvider<SplashCubit>(
             create: (context) => sl<SplashCubit>(),
             child: const SplashScreen(),
           ),
         );
-      //!-----------------------------------------------------
       case Routes.onBoardingScreenRoute:
         return MaterialPageRoute(
           builder: (context) => const OnBoardingScreen(),
@@ -45,6 +49,29 @@ class RouteGenerator {
             child: const LoginScreen(),
           ),
         );
+      //!-----------------------------------------------------
+      case Routes.forgetPasswordValidationScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<ValidationCubit>(
+            create: (context) => sl<ValidationCubit>(),
+            child: const ValidationScreen(),
+          ),
+        );
+      case Routes.forgetPasswordVerificationScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<VerificationCubit>(
+            create: (context) => sl<VerificationCubit>(),
+            child: const VerificationScreen(),
+          ),
+        );
+      case Routes.forgetPasswordChangePasswordScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<ChangePasswordCubit>(
+            create: (context) => sl<ChangePasswordCubit>(),
+            child: const ChangePasswordScreen(),
+          ),
+        );
+      //!-----------------------------------------------------
       case Routes.signupScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<RegisterCubit>(

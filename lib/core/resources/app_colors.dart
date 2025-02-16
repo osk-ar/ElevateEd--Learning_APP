@@ -11,6 +11,8 @@ class AppColors {
   static const Color surfaceColor = Color(0xFF664950);
   static const Color onSurfaceColor = Color(0xFF402E32);
   static const Color whiteColor = Color(0xFFFFFFFF);
+  static const Color successColor = Color(0xFF1DE56A);
+  //todo delete success color if not needed
   //
   static const Color lightBackgroundColor = Color(0xFFF8E8C0);
   static const Color lightSecondaryColor = Color(0xFFF1DEB6);
@@ -19,6 +21,6 @@ class AppColors {
   //
   static const Color darkBackgroundColor = Color(0xFF1A1A1A);
   static const Color darkSecondaryColor = Color(0xFF242424);
-  static const Color darkHintColor = Color(0xFF402E32);
   static const Color darkErrorColor = Color(0xFFC1121F);
+  static const Color darkSubColor = Color(0xFFAEAEAE);
 }

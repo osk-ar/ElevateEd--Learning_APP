@@ -8,6 +8,7 @@ PreferredSizeWidget? defaultAppbar(String title) {
     centerTitle: true,
     backgroundColor: Colors.transparent,
     foregroundColor: ThemeColors.textColor,
+    surfaceTintColor: Colors.transparent,
     title: Text(
       title,
       style: getMediumStyle(fontSize: 16.sp, color: ThemeColors.textColor),

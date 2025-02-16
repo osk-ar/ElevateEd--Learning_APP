@@ -22,7 +22,7 @@ class ImagePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: AppColors.fadedPrimaryColor,
+      backgroundColor: AppColors.lightFadedPrimaryColor,
       minRadius: radius + borderWidth,
       maxRadius: radius + borderWidth,
       child: CircleAvatar(

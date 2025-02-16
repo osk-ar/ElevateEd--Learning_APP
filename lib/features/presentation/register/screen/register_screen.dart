@@ -9,8 +9,8 @@ import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/register/cubits/register_cubit.dart';
 import 'package:ElevatED/features/presentation/register/states/register_state.dart';
-import 'package:ElevatED/features/presentation/common/text_input_field.dart';
-import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:ElevatED/features/presentation/common/input_field.dart';
+import 'package:ElevatED/features/presentation/common/cta_button.dart';
 import 'package:ElevatED/features/presentation/register/screen/widgets/date_picker.dart';
 import 'package:ElevatED/features/presentation/register/screen/widgets/role_picker.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +26,11 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   //- FormKey
-
   late final GlobalKey<FormState> registerFormStateKey;
+  //- role selector
+  UserRole userRole = UserRole.student;
 
   //- controllers
-
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
@@ -39,16 +39,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final TextEditingController birthDateController;
 
   //- focus Nodes
-
   late final FocusNode emailFocusNode;
   late final FocusNode passwordFocusNode;
   late final FocusNode confirmPasswordFocusNode;
   late final FocusNode fullNameFocusNode;
   late final FocusNode phoneNumberFocusNode;
-
-  //- role selector
-
-  UserRole userRole = UserRole.student;
 
   @override
   void initState() {
@@ -137,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isPasswordVisible
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: MyTheme.textColor,
+                      color: ThemeColors.textColor,
                     ),
                     onPressed: () => context
                         .read<RegisterCubit>()
@@ -165,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       confirmPasswordVisible
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: MyTheme.textColor,
+                      color: ThemeColors.textColor,
                     ),
                     onPressed: () => context
                         .read<RegisterCubit>()
@@ -178,7 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Divider(
               indent: 30.w,
               endIndent: 30.w,
-              color: MyTheme.textColor.withOpacity(0.7),
+              color: ThemeColors.textColor.withOpacity(0.7),
               thickness: 2,
             ),
             SizedBox(height: 24.h),
@@ -209,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               isReadOnly: true,
               suffixIcon: const Icon(
                 Icons.date_range_rounded,
-                color: MyTheme.textColor,
+                color: ThemeColors.textColor,
               ),
               onTap: () async {
                 String? date = await getDateInput(context);

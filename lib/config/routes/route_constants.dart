@@ -2,13 +2,18 @@ class Routes {
   Routes._();
 
   //* Welcome screens
-  //TODO change "/splash" to "/" to make app start here and make it navigate to home or onBoarding
+  //todo change "/splash" to "/" to make app start here and make it navigate to home or onBoarding
   static const String splashScreenRoute = "/splash";
   static const String onBoardingScreenRoute = "/onBoarding";
 
   //* Auth screens
   static const String loginScreenRoute = "/login";
-  static const String forgetPasswordScreenRoute = "/forgetPassword";
+  static const String forgetPasswordValidationScreenRoute =
+      "/forgetPasswordValidation";
+  static const String forgetPasswordVerificationScreenRoute =
+      "/forgetPasswordVerification";
+  static const String forgetPasswordChangePasswordScreenRoute =
+      "/forgetPasswordChangePassword";
   static const String signupScreenRoute = "/signup";
   static const String signupAsStudentScreenRoute = "/studentSignup";
   static const String signupAsInstructorScreenRoute = "/instructorSignup";

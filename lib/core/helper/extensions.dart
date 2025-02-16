@@ -1,6 +1,7 @@
 import 'package:ElevatED/config/themes/theme.dart';
 import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension Navigation on BuildContext {
   pop() => Navigator.of(this).pop();
@@ -45,9 +46,29 @@ extension SnakBar on BuildContext {
             message,
             style: TextStyle(color: textColor ?? AppColors.whiteColor),
           ),
-          backgroundColor: color ?? ThemeColors.secondaryColor,
+          backgroundColor: color ?? AppColors.onSurfaceColor,
           duration: duration ?? const Duration(seconds: 4),
         ),
+      );
+}
+
+extension BottomSheet on BuildContext {
+  void bottomSheet({required Widget child}) => showModalBottomSheet(
+        context: this,
+        backgroundColor: ThemeColors.lightSurfaceToDarkSecondary,
+        enableDrag: false,
+        isDismissible: false,
+        isScrollControlled: false,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.r),
+                topRight: Radius.circular(16.r))),
+        builder: (context) {
+          return SizedBox(
+            height: 443.h,
+            child: Scaffold(backgroundColor: Colors.transparent, body: child),
+          );
+        },
       );
 }
 

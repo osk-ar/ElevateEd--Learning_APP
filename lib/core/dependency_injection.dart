@@ -1,3 +1,6 @@
+import 'package:ElevatED/features/presentation/forget_password/cubit/change_password_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/cubit/validation_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/cubit/verification_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:ElevatED/features/data_sources/api/remote_data_source.dart';
 import 'package:ElevatED/features/data_sources/local/app_prefs.dart';
@@ -42,12 +45,18 @@ Future<void> init() async {
   sl.registerLazySingleton<GetHomeusecase>(() => GetHomeusecase(sl()));
 
   /// Cubits
+  sl.registerFactory<SplashCubit>(() => SplashCubit(sl(), sl()));
+
   sl.registerFactory<LoginCubit>(() => LoginCubit(sl(), sl()));
+  sl.registerFactory<ValidationCubit>(() => ValidationCubit());
+  sl.registerFactory<VerificationCubit>(() => VerificationCubit());
+  sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit());
+
   sl.registerFactory<RegisterCubit>(() => RegisterCubit());
   sl.registerFactory<StudentRegisterCubit>(
       () => StudentRegisterCubit(sl(), sl(), sl()));
   sl.registerFactory<InstructorRegisterCubit>(
       () => InstructorRegisterCubit(sl(), sl(), sl()));
+
   sl.registerFactory<CourseDetailsCubit>(() => CourseDetailsCubit());
-  sl.registerFactory<SplashCubit>(() => SplashCubit(sl(), sl()));
 }

@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: MyTheme.tempBackgroundColor,
+        backgroundColor: ThemeColors.backgroundColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

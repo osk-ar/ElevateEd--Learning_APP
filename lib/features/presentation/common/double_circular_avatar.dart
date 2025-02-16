@@ -17,7 +17,7 @@ class DoubleCircularAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: outerRadius ?? 61.r,
-      backgroundColor: AppColors.fadedPrimaryColor,
+      backgroundColor: AppColors.lightFadedPrimaryColor,
       child: CircleAvatar(
           radius: innerRadius ?? 46.r,
           backgroundColor: AppColors.primaryColor,

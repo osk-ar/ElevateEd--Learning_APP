@@ -5,10 +5,10 @@ import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/common/default_appbar.dart';
-import 'package:ElevatED/features/presentation/common/text_input_field.dart';
+import 'package:ElevatED/features/presentation/common/input_field.dart';
 import 'package:ElevatED/features/presentation/register/cubits/student_register_cubit.dart';
 import 'package:ElevatED/features/presentation/register/states/student_register_state.dart';
-import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:ElevatED/features/presentation/common/cta_button.dart';
 import 'package:ElevatED/features/presentation/common/image_picker_wdiget.dart';
 import 'package:ElevatED/features/presentation/register/screen/widgets/suggestions_picker.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,7 @@ class _RegisterAsStudentState extends State<RegisterAsStudent> {
   late final TextEditingController bioController;
   @override
   void initState() {
-    bioController = TextEditingController()
-      ..text = "Hi, I'm new here! No welcome?";
+    bioController = TextEditingController()..text = "Hi, I'm new to ElevatED";
     super.initState();
   }
 

@@ -61,20 +61,32 @@ Map<ThemeRef, Object> darkTheme = {
 
 // NEW THEME
 class ThemeColors {
-  static const backgroundColor = ColorRef(AppColors.lightBackgroundColor);
+  static const backgroundColor =
+      ColorRef(AppColors.lightBackgroundColor, id: "background");
 
   static const secondaryColor =
       ColorRef(AppColors.lightSecondaryColor, id: "secondary");
 
   static const textColor = ColorRef(AppColors.darkBackgroundColor, id: "text");
 
+  static const subTextColor = ColorRef(AppColors.surfaceColor, id: "subText");
+
   static const inverseTextColor =
       ColorRef(AppColors.whiteColor, id: "inverseText");
+
+  static const disabledColor =
+      ColorRef(AppColors.lightHintColor, id: "disabled");
+
+  static const lightSurfaceToDarkSecondary =
+      ColorRef(AppColors.surfaceColor, id: "lightSurfaceToDarkSecondary");
 }
 
 Map<ThemeRef, Object> newDarkTheme = {
   ThemeColors.backgroundColor: AppColors.darkBackgroundColor,
   ThemeColors.secondaryColor: AppColors.darkSecondaryColor,
   ThemeColors.textColor: AppColors.whiteColor,
+  ThemeColors.subTextColor: AppColors.darkSubColor,
   ThemeColors.inverseTextColor: AppColors.darkBackgroundColor,
+  ThemeColors.disabledColor: AppColors.surfaceColor,
+  ThemeColors.lightSurfaceToDarkSecondary: AppColors.darkSecondaryColor,
 };

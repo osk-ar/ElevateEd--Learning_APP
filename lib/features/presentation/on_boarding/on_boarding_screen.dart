@@ -4,7 +4,7 @@ import 'package:ElevatED/features/presentation/on_boarding/widgets/custom_animat
 import 'package:ElevatED/config/themes/theme.dart';
 import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/config/routes/route_constants.dart';
-import 'package:ElevatED/features/presentation/common/custom_button.dart';
+import 'package:ElevatED/features/presentation/common/cta_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class OnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: MyTheme.tempBackgroundColor,
+      backgroundColor: ThemeColors.backgroundColor,
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(

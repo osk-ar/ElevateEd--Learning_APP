@@ -19,7 +19,7 @@ late final WidgetsBinding engine;
 void main() async {
   engine = WidgetsFlutterBinding.ensureInitialized();
   var widgetsBinding = WidgetsBinding.instance;
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await EasyLocalization.ensureInitialized();
   await init();

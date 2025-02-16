@@ -11,8 +11,8 @@ ThemeData lightThemeData = ThemeData.light().copyWith(
       primary: AppColors.primaryColor,
       onPrimary: Colors.white,
       //-
-      surface: AppColors.surfaceColor,
-      onSurface: AppColors.onSurfaceColor,
+      surface: AppColors.primaryColor,
+      onSurface: AppColors.darkBackgroundColor,
       error: AppColors.lightErrorColor),
 );
 
@@ -25,8 +25,8 @@ ThemeData darkThemeData = ThemeData.dark().copyWith(
       primary: AppColors.primaryColor,
       onPrimary: Colors.white,
       //-
-      surface: AppColors.surfaceColor,
-      onSurface: AppColors.onSurfaceColor,
+      surface: AppColors.onSurfaceColor,
+      onSurface: AppColors.whiteColor,
       error: AppColors.lightErrorColor),
 );
 

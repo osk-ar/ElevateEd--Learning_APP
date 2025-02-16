@@ -20,23 +20,8 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
       this.registerUserUseCase, this.appSharedPrefs, this.getHomeusecase)
       : super(InstructorRegisterInitial());
 
-  GlobalKey<FormState> instructorRegisterFormStateKey = GlobalKey<FormState>();
-
-  FocusNode titleFocusNode = FocusNode();
-  FocusNode bioFocusNode = FocusNode();
-  FocusNode facebookFocusNode = FocusNode();
-  FocusNode githubFocusNode = FocusNode();
-  FocusNode linkedInFocusNode = FocusNode();
-  FocusNode portfolioFocusNode = FocusNode();
-
   File? profileImage;
-  TextEditingController titleController = TextEditingController();
-  TextEditingController bioController = TextEditingController()
-    ..text = "Hi, I'm new here! No welcome?";
-  TextEditingController facebookController = TextEditingController();
-  TextEditingController githubController = TextEditingController();
-  TextEditingController linkedInController = TextEditingController();
-  TextEditingController portfolioController = TextEditingController();
+
   List<Interests> expertiseFields = [];
   List<String> personalLinks = [];
 
@@ -66,18 +51,23 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
     return expertiseFields.any((element) => element == item);
   }
 
-  void addLinksToPersonalList() {
-    if (facebookController.text.isNotEmpty) {
-      personalLinks.add(facebookController.text);
+  void addLinksToPersonalList(
+    String facebook,
+    String github,
+    String linkedin,
+    String portfolio,
+  ) {
+    if (facebook.isNotEmpty) {
+      personalLinks.add(facebook);
     }
-    if (githubController.text.isNotEmpty) {
-      personalLinks.add(githubController.text);
+    if (github.isNotEmpty) {
+      personalLinks.add(github);
     }
-    if (linkedInController.text.isNotEmpty) {
-      personalLinks.add(linkedInController.text);
+    if (linkedin.isNotEmpty) {
+      personalLinks.add(linkedin);
     }
-    if (portfolioController.text.isNotEmpty) {
-      personalLinks.add(portfolioController.text);
+    if (portfolio.isNotEmpty) {
+      personalLinks.add(portfolio);
     }
   }
 
@@ -89,7 +79,7 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
   }
 
   // get dataIntent
-  Future<void> register() async {
+  Future<void> register(String title, String description) async {
     emit(InstructorRegisterLoading());
     try {
       final user = User(
@@ -100,8 +90,8 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
         email: DataIntent.getEmail(),
         password: DataIntent.getPassword(),
         profileImageFile: profileImage,
-        professionalTitle: titleController.text,
-        description: bioController.text,
+        professionalTitle: title,
+        description: description,
         interests: expertiseFields,
         personalLinks: personalLinks,
       );
