@@ -125,10 +125,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         color: AppColors.inversePrimaryColor),
                   );
                 }
-                return const SizedBox();
+                return SizedBox(height: 33.h);
               },
             ),
-            SizedBox(height: 85.h),
+            SizedBox(height: 50.h),
           ],
         ),
       ),
