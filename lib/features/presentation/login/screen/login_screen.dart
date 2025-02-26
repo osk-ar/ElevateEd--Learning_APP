@@ -1,6 +1,6 @@
 import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/themes/theme.dart';
-import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
 import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/core/helper/validation.dart';
 import 'package:ElevatED/core/resources/app_colors.dart';
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
               listener: (context, state) {
                 if (state is LoginSuccess) {
                   context.message(message: "success");
-                  DataIntent.pushAuthResponseData(state.user);
+                  MemoryCache.pushAuthResponseData(state.user);
                   context.pushReplacementNamed(Routes.mainScreenRoute);
                 } else if (state is LoginFailure) {
                   context.message(message: "error${state.error}");

@@ -53,6 +53,10 @@ dependencies:
   lottie:
   image:
   path:
+  # Firebase
+  firebase_core:
+  firebase_analytics:
+  firebase_crashlytics:
   # UI
   water_drop_nav_bar:
   fl_chart: 0.69.2
@@ -88,7 +92,7 @@ flutter:
     - assets/images/splash_logo.png
     - assets/images/
     - assets/translations/
-    - assets/svg/
+    - assets/icons/
     - assets/lotties/
 
   fonts:

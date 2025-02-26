@@ -6,9 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpField extends StatelessWidget {
-  const OtpField({super.key, this.onCompleted, this.validator});
+  const OtpField(
+      {super.key, this.onCompleted, this.validator, required this.controller});
   final void Function(String)? onCompleted;
   final String? Function(String?)? validator;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class OtpField extends StatelessWidget {
       length: 5,
       showCursor: true,
       validator: validator,
+      controller: controller,
       onCompleted: onCompleted,
       closeKeyboardWhenCompleted: true,
       defaultPinTheme: defaultPinTheme,

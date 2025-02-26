@@ -1,10 +1,9 @@
+import 'package:ElevatED/core/constants/enum.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
 import 'app_fonts.dart';
-
-enum Languages { ar, en }
 
 Languages appLanguage = Languages.en;
 
@@ -35,8 +34,6 @@ class AppLanguages {
 
   static Languages getCurrentLang(BuildContext context) {
     switch (getCurrentLocal(context)) {
-      case 'en':
-        return Languages.en;
       case 'ar':
         return Languages.ar;
       default:
@@ -45,22 +42,8 @@ class AppLanguages {
   }
 
   static String getPrimaryFont(BuildContext context) {
-    Languages language = getCurrentLang(context);
-    if (language == Languages.ar) {
-      return FontConstants.primaryArabicFont;
-    } else {
-      return FontConstants.primaryEnglishFont;
-    }
+    return FontConstants.primaryEnglishFont;
   }
-
-  // static String getSecondaryFont(BuildContext context) {
-  //   Languages language = getCurrentLang(context);
-  //   if (language == Languages.ar) {
-  //     return FontConstants.secondaryArabicFont;
-  //   } else {
-  //     return FontConstants.secondaryEnglishFont;
-  //   }
-  // }
 
   static TextDirection getCurrentTextDirection(BuildContext context) {
     switch (context.locale.languageCode) {
@@ -70,6 +53,15 @@ class AppLanguages {
         return TextDirection.rtl;
       default:
         return TextDirection.ltr;
+    }
+  }
+
+  static String languageEnumToString(Languages language) {
+    switch (language) {
+      case Languages.ar:
+        return 'Arabic';
+      case Languages.en:
+        return 'English';
     }
   }
 }

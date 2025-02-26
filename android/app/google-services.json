@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "421398615191",
+    "project_id": "elevated-a742a",
+    "storage_bucket": "elevated-a742a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421398615191:android:5dd8a382f544abc55585d2",
+        "android_client_info": {
+          "package_name": "com.example.elevated"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCig3cIoi2wOXwZL67YEAlRrvrdLo_-F84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

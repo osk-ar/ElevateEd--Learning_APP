@@ -1,9 +1,9 @@
 import 'package:ElevatED/core/constants/enum.dart';
-import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
 import 'package:ElevatED/core/helper/json_helpers.dart';
 import 'package:ElevatED/features/data_sources/local/app_prefs.dart';
 import 'package:ElevatED/features/domain/entities/home.dart';
-import 'package:ElevatED/features/domain/usecases/get_homeusecase.dart';
+import 'package:ElevatED/features/domain/usecases/get_home_usecase.dart';
 import 'package:ElevatED/features/presentation/splash/states/splash_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +19,8 @@ class SplashCubit extends Cubit<SplashState> {
       String role = appPrefs.getString(KeyPrefs.ROLE.name)!;
 
       Home homeData = await getHomeusecase.call(id);
-      DataIntent.pushHomeData(homeData);
-      DataIntent.pushUserRole(getUserRoleFromString(role));
+      MemoryCache.pushHomeData(homeData);
+      MemoryCache.pushUserRole(getUserRoleFromString(role));
 
       return true;
     }

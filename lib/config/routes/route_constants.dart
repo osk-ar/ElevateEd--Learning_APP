@@ -24,5 +24,10 @@ class Routes {
   static const String homeScreenRoute = "/home";
   static const String statisticsScreenRoute = "/progress";
   static const String coursesScreenRoute = "/courses";
+  static const String profileScreenRoute = "/profile";
+
   static const String courseDetailsScreenRoute = "/courseDetails";
+  static const String settingsScreenRoute = "/settings";
+  static const String multipleOptionSettingScreenRoute =
+      "/multipleOptionSetting";
 }

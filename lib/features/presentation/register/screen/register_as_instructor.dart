@@ -93,10 +93,7 @@ class _RegisterAsInstructorState extends State<RegisterAsInstructor> {
           key: instructorRegisterFormStateKey,
           child: Column(
             children: [
-              PreferredSize(
-                preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: defaultAppbar("Instructor Register")!,
-              ),
+              defaultAppbar("Instructor Register"),
               SizedBox(height: 30.h),
               BlocBuilder<InstructorRegisterCubit, InstructorRegisterState>(
                 builder: (context, state) {

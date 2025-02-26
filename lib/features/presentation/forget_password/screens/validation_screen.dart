@@ -1,10 +1,18 @@
+import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
+import 'package:ElevatED/core/helper/extensions.dart';
+import 'package:ElevatED/core/helper/validation.dart';
+import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/common/cta_button.dart';
 import 'package:ElevatED/features/presentation/common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/common/double_circular_avatar.dart';
 import 'package:ElevatED/features/presentation/common/input_field.dart';
+import 'package:ElevatED/features/presentation/forget_password/cubit/validation_cubit.dart';
+import 'package:ElevatED/features/presentation/forget_password/state/validation_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ValidationScreen extends StatefulWidget {
@@ -16,10 +24,12 @@ class ValidationScreen extends StatefulWidget {
 
 class _ValidationScreenState extends State<ValidationScreen> {
   late final TextEditingController emailController;
+  late final GlobalKey<FormState> _formKey;
 
   @override
   void initState() {
     emailController = TextEditingController();
+    _formKey = GlobalKey<FormState>();
     super.initState();
   }
 
@@ -56,14 +66,38 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 getMediumStyle(fontSize: 16.sp, color: ThemeColors.textColor),
           ),
           SizedBox(height: 100.h),
-          InputField(title: "Email", controller: emailController),
+          Form(
+            key: _formKey,
+            child: InputField(
+              title: "Email",
+              controller: emailController,
+              validator: (value) {
+                return Validation.validateEmail(value);
+              },
+            ),
+          ),
           const Spacer(),
-          CTAButton(
-            text: "Send OTP",
-            onPressed: () {
-              //TODO add action to send otp
-              print("OTP Clicked!");
+          BlocListener<ValidationCubit, ValidationState>(
+            listener: (context, state) {
+              if (state is ValidationSent) {
+                if (!state.didSend) return;
+                MemoryCache.pushEmail(emailController.text);
+                context.pushNamed(Routes.forgetPasswordVerificationScreenRoute);
+              } else if (state is ValidationError) {
+                context.message(
+                    message: "Error: ${state.error}",
+                    textColor: AppColors.lightErrorColor);
+              }
             },
+            child: CTAButton(
+              text: "Send OTP",
+              onPressed: () {
+                print("Send OTP Clicked!");
+                if (_formKey.currentState?.validate() ?? false) {
+                  context.read<ValidationCubit>().sendOtp(emailController.text);
+                }
+              },
+            ),
           ),
           SizedBox(height: 232.h),
         ],

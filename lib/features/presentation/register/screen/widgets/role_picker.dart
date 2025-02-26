@@ -11,40 +11,45 @@ class RolePicker extends StatelessWidget {
   const RolePicker({
     super.key,
     this.width = 200,
-    this.height = 46,
+    this.height = 45,
+    this.radius = 25,
     this.animationDuration = 300,
     required this.isStudent,
   });
 
-  final double? width;
-  final double? height;
-  final int? animationDuration;
+  final double width;
+  final double height;
+  final double radius;
+  final int animationDuration;
   final bool isStudent;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width!.w,
-      height: height!.h,
+      width: width.w,
+      height: height.h,
       decoration: BoxDecoration(
-          color: ThemeColors.secondaryColor,
-          borderRadius: BorderRadius.circular(25.r),
-          border: Border.all(color: AppColors.primaryColor)),
+        color: ThemeColors.secondaryColor,
+        borderRadius: BorderRadius.circular(radius.r),
+        border: Border.all(
+            color: AppColors.primaryColor,
+            strokeAlign: BorderSide.strokeAlignOutside),
+      ),
       child: Stack(
         fit: StackFit.expand,
         children: [
           AnimatedPositioned(
-            duration: Duration(milliseconds: animationDuration!),
+            duration: Duration(milliseconds: animationDuration),
             curve: Curves.easeInOut,
-            left: isStudent ? 0 : width!.w / 2,
+            left: isStudent ? 0 : width.w / 2,
             child: AnimatedContainer(
-              duration: Duration(milliseconds: animationDuration!),
+              duration: Duration(milliseconds: animationDuration),
               curve: Curves.easeInOut,
-              width: isStudent ? width!.w / 2 : width!.w / 2,
-              height: height!.h,
+              width: width.w / 2,
+              height: height.h,
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(height!.h / 2),
+                borderRadius: BorderRadius.circular(radius.r),
               ),
             ),
           ),
@@ -53,6 +58,10 @@ class RolePicker extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: TextButton(
+                    style: TextButton.styleFrom(
+                      overlayColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                    ),
                     onPressed: () {
                       context
                           .read<RegisterCubit>()
@@ -72,6 +81,10 @@ class RolePicker extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: TextButton(
+                    style: TextButton.styleFrom(
+                      overlayColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                    ),
                     onPressed: () {
                       context
                           .read<RegisterCubit>()

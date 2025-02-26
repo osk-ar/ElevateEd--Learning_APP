@@ -1,6 +1,6 @@
 import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/themes/theme.dart';
-import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
 import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
@@ -112,7 +112,7 @@ class _RegisterAsStudentState extends State<RegisterAsStudent> {
                 // give message with success
                 context.message(message: "success");
                 // push dataIntent
-                DataIntent.pushAuthResponseData(state.responseModel);
+                MemoryCache.pushAuthResponseData(state.responseModel);
                 // navigate to next screen
                 context.pushReplacementNamed(Routes.mainScreenRoute);
               } else if (state is StudentRegisterFailure) {

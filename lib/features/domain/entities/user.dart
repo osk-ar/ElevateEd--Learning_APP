@@ -9,7 +9,9 @@ class User {
   final String? password;
   final String? fullName;
   final File? profileImageFile;
-  final String? profileImage;
+  final File? coverImageFile;
+  final String? profileImageUrl;
+  final String? coverImageUrl;
   final String? description;
   final DateTime? birthDate;
   final String? phoneNumber;
@@ -19,9 +21,11 @@ class User {
 
   User({
     this.profileImageFile,
+    this.coverImageFile,
     this.id,
     this.userRole,
-    this.profileImage,
+    this.profileImageUrl,
+    this.coverImageUrl,
     this.description,
     this.fullName,
     this.phoneNumber,

@@ -1,4 +1,4 @@
-import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/courses/screen/courses_screen.dart';
 import 'package:ElevatED/features/presentation/profile/screen/profile_screen.dart';
@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
   ];
   final List<Widget> pages = [
     HomeScreen(
-      homeData: DataIntent.getHomeData()!,
+      homeData: MemoryCache.getHomeData()!,
     ),
     const CoursesScreen(),
     const StatisticsScreen(),

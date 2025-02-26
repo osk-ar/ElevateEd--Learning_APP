@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:ElevatED/core/constants/enum.dart';
-import 'package:ElevatED/core/helper/data_intent.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
 import 'package:ElevatED/core/helper/image_handler.dart';
 import 'package:ElevatED/features/data_sources/local/app_prefs.dart';
 import 'package:ElevatED/features/domain/entities/home.dart';
 import 'package:ElevatED/features/domain/entities/user.dart';
-import 'package:ElevatED/features/domain/usecases/get_homeusecase.dart';
+import 'package:ElevatED/features/domain/usecases/get_home_usecase.dart';
 import 'package:ElevatED/features/domain/usecases/register_usecase.dart';
 import 'package:ElevatED/features/presentation/register/states/instructor_register_state.dart';
 import 'package:flutter/material.dart';
@@ -83,12 +83,12 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
     emit(InstructorRegisterLoading());
     try {
       final user = User(
-        userRole: DataIntent.getUserRole(),
-        fullName: DataIntent.getFullName(),
-        phoneNumber: DataIntent.getPhone(),
-        birthDate: DateTime.parse(DataIntent.getBirthDate()!),
-        email: DataIntent.getEmail(),
-        password: DataIntent.getPassword(),
+        userRole: MemoryCache.getUserRole(),
+        fullName: MemoryCache.getFullName(),
+        phoneNumber: MemoryCache.getPhone(),
+        birthDate: DateTime.parse(MemoryCache.getBirthDate()!),
+        email: MemoryCache.getEmail(),
+        password: MemoryCache.getPassword(),
         profileImageFile: profileImage,
         professionalTitle: title,
         description: description,
@@ -99,7 +99,7 @@ class InstructorRegisterCubit extends Cubit<InstructorRegisterState> {
       User userData = await registerUserUseCase.call(user);
       updatesharedPrefs(authResponseData: userData);
       Home home = await getHomeusecase.call(userData.id!);
-      DataIntent.pushHomeData(home);
+      MemoryCache.pushHomeData(home);
       emit(InstructorRegisterSuccess(user: userData));
     } catch (error) {
       print(error.toString());

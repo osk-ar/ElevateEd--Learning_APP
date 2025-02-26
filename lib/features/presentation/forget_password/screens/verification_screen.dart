@@ -1,4 +1,6 @@
+import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/core/helper/memory_cache.dart';
 import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
@@ -21,14 +23,17 @@ class VerificationScreen extends StatefulWidget {
 
 class _VerificationScreenState extends State<VerificationScreen> {
   late final GlobalKey<FormState> _otpFormKey;
+  late final TextEditingController _controller;
   @override
   void initState() {
     _otpFormKey = GlobalKey<FormState>();
+    _controller = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
@@ -58,9 +63,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
             style:
                 getMediumStyle(fontSize: 16.sp, color: ThemeColors.textColor),
           ),
-          //todo change to dynamic email
           Text(
-            "example@gmail.com",
+            MemoryCache.getEmail() ?? "example@gmail.com",
             style:
                 getRegularStyle(fontSize: 14.sp, color: ThemeColors.textColor),
           ),
@@ -68,31 +72,54 @@ class _VerificationScreenState extends State<VerificationScreen> {
           Form(
             key: _otpFormKey,
             child: OtpField(
-              onCompleted: (otp) {},
+              controller: _controller,
+              onCompleted: (otp) {
+                _otpFormKey.currentState?.validate();
+              },
               validator: (otp) {
-                final cubit = context.read<VerificationCubit>();
-                String? verificationResult = cubit.verifyOTP(otp ?? "");
-                return verificationResult;
+                if (otp == null || otp.isEmpty) {
+                  return 'OTP cannot be empty';
+                }
+                return null;
               },
             ),
           ),
           const Spacer(),
-          CTAButton(
-            text: "Verify OTP",
-            onPressed: () {
-              print("Verify OTP CTA Clicked!");
-              if (_otpFormKey.currentState?.validate() ?? false) {
-                context.message(
-                  message: "Verification Success!",
-                  textColor: AppColors.inversePrimaryColor,
-                );
-                //todo navigate to change password screen
-              }
+          BlocListener<VerificationCubit, VerificationState>(
+            listener: (context, state) {
+              if (state is VerificationVerified) {
+                if (!state.didVerify) return;
+                context
+                    .pushNamed(Routes.forgetPasswordChangePasswordScreenRoute);
+              } else if (state is VerificationError) {}
             },
+            child: CTAButton(
+              text: "Verify OTP",
+              onPressed: () async {
+                print("Verify OTP CTA Clicked!");
+                if (!(_otpFormKey.currentState?.validate() ?? true)) return;
+
+                context
+                    .read<VerificationCubit>()
+                    .otpValidator(context, _controller.text);
+              },
+            ),
           ),
           SizedBox(height: 10.h),
           const ResendOTPWidget(),
-          SizedBox(height: 140.h),
+          SizedBox(height: 80.h),
+          BlocBuilder<VerificationCubit, VerificationState>(
+            builder: (context, state) {
+              if (state is VerificationLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                      color: AppColors.inversePrimaryColor),
+                );
+              }
+              return SizedBox(height: 33.h);
+            },
+          ),
+          SizedBox(height: 50.h),
         ],
       ),
     );

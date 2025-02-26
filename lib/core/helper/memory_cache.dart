@@ -2,8 +2,8 @@ import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/features/domain/entities/home.dart';
 import 'package:ElevatED/features/domain/entities/user.dart';
 
-class DataIntent {
-  DataIntent._();
+class MemoryCache {
+  MemoryCache._();
 
 //------------------------------------
   // User Data
@@ -50,16 +50,16 @@ class DataIntent {
 
 //------------------------------------
   static void pushRegisterData(Map<String, dynamic> registerModel) {
-    DataIntent.pushUserRole(registerModel['role']!);
-    DataIntent.pushEmail(registerModel['email']!);
-    DataIntent.pushPassword(registerModel['password']!);
-    DataIntent.pushFullName(registerModel['fullName']!);
-    DataIntent.pushPhone(registerModel['phone']!);
-    DataIntent.pushBirthDate(registerModel['birthDate']!);
+    MemoryCache.pushUserRole(registerModel['role']!);
+    MemoryCache.pushEmail(registerModel['email']!);
+    MemoryCache.pushPassword(registerModel['password']!);
+    MemoryCache.pushFullName(registerModel['fullName']!);
+    MemoryCache.pushPhone(registerModel['phone']!);
+    MemoryCache.pushBirthDate(registerModel['birthDate']!);
   }
 
   static void pushAuthResponseData(User userModel) {
-    DataIntent.pushId(userModel.id!);
-    DataIntent.pushUserRole(userModel.userRole!);
+    MemoryCache.pushId(userModel.id!);
+    MemoryCache.pushUserRole(userModel.userRole!);
   }
 }

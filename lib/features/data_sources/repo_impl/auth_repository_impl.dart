@@ -35,7 +35,6 @@ class AuthRepositoryImpl implements AuthRepository {
         description: user.description,
         phoneNumber: user.phoneNumber,
         birthDate: user.birthDate,
-        profileImage: user.profileImageFile,
         interests: user.interests!.map((item) => item.name).toList(),
         // only in instructor
         professionalTitle: user.professionalTitle,
@@ -46,5 +45,26 @@ class AuthRepositoryImpl implements AuthRepository {
       id: registerResponse.id,
       userRole: registerResponse.userRole,
     );
+  }
+
+  @override
+  Future<bool> sendOtp(String email) async {
+    bool didSend = await remoteDataSource.sendOtp(email);
+
+    return didSend;
+  }
+
+  @override
+  Future<bool> verifyOtp(String email, String otp) async {
+    bool didVerify = await remoteDataSource.verifyOtp(email, otp);
+
+    return didVerify;
+  }
+
+  @override
+  Future<bool> resetPassword(String email, String newPassword) async {
+    bool didReset = await remoteDataSource.resetPassword(email, newPassword);
+
+    return didReset;
   }
 }

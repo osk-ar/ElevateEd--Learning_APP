@@ -2,9 +2,9 @@ import 'package:ElevatED/features/domain/entities/user.dart';
 import 'package:ElevatED/features/domain/repo/auth_repository.dart';
 
 class LoginUseCase {
-  final AuthRepository repository;
+  final AuthRepository _authRepository;
 
-  LoginUseCase(this.repository);
+  LoginUseCase(this._authRepository);
 
-  Future<User> call(User user) async => await repository.login(user);
+  Future<User> call(User user) async => await _authRepository.login(user);
 }

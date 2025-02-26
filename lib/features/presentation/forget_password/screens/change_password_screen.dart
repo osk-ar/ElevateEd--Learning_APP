@@ -135,4 +135,3 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 }
-// when back is pressed call a void function then await 2 seconds if its pressed again before the timer exit the app

@@ -1,3 +1,7 @@
+import 'package:ElevatED/features/data_sources/local/disk_cache.dart';
+import 'package:ElevatED/features/domain/usecases/reset_password_usecase.dart';
+import 'package:ElevatED/features/domain/usecases/send_otp_usecase.dart';
+import 'package:ElevatED/features/domain/usecases/verify_otp_usecase.dart';
 import 'package:ElevatED/features/presentation/forget_password/cubit/change_password_cubit.dart';
 import 'package:ElevatED/features/presentation/forget_password/cubit/validation_cubit.dart';
 import 'package:ElevatED/features/presentation/forget_password/cubit/verification_cubit.dart';
@@ -8,7 +12,7 @@ import 'package:ElevatED/features/data_sources/repo_impl/auth_repository_impl.da
 import 'package:ElevatED/features/data_sources/repo_impl/main_repository_impl.dart';
 import 'package:ElevatED/features/domain/repo/auth_repository.dart';
 import 'package:ElevatED/features/domain/repo/main_repository.dart';
-import 'package:ElevatED/features/domain/usecases/get_homeusecase.dart';
+import 'package:ElevatED/features/domain/usecases/get_home_usecase.dart';
 import 'package:ElevatED/features/domain/usecases/login_usecase.dart';
 import 'package:ElevatED/features/domain/usecases/register_usecase.dart';
 import 'package:ElevatED/features/presentation/course_details/cubits/course_details_cubit.dart';
@@ -33,9 +37,12 @@ Future<void> init() async {
   var dio = await DioFactory().getDio();
   sl.registerLazySingleton<Dio>(() => dio);
 
-  /// Repositories
+  /// Data Sources
   sl.registerLazySingleton<AppPrefs>(() => AppPrefsImpl(sharedPreferences));
+  sl.registerLazySingleton<DiskCache>(() => DiskCacheImpl(sharedPreferences));
   sl.registerLazySingleton<RemoteDataSource>(() => RemoteDataSource(sl()));
+
+  /// Repositories
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<MainRepository>(() => MainRepositoryImpl(sl()));
 
@@ -44,12 +51,17 @@ Future<void> init() async {
   sl.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(sl()));
   sl.registerLazySingleton<GetHomeusecase>(() => GetHomeusecase(sl()));
 
+  sl.registerLazySingleton<SendOtpUsecase>(() => SendOtpUsecase(sl()));
+  sl.registerLazySingleton<VerifyOtpUsecase>(() => VerifyOtpUsecase(sl()));
+  sl.registerLazySingleton<ResetPasswordUsecase>(
+      () => ResetPasswordUsecase(sl()));
+
   /// Cubits
   sl.registerFactory<SplashCubit>(() => SplashCubit(sl(), sl()));
 
   sl.registerFactory<LoginCubit>(() => LoginCubit(sl(), sl()));
-  sl.registerFactory<ValidationCubit>(() => ValidationCubit());
-  sl.registerFactory<VerificationCubit>(() => VerificationCubit());
+  sl.registerFactory<ValidationCubit>(() => ValidationCubit(sl()));
+  sl.registerFactory<VerificationCubit>(() => VerificationCubit(sl(), sl()));
   sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit());
 
   sl.registerFactory<RegisterCubit>(() => RegisterCubit());

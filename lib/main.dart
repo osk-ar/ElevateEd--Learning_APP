@@ -7,20 +7,24 @@ import 'package:ElevatED/config/themes/theme_data.dart';
 import 'package:ElevatED/core/dependency_injection.dart';
 import 'package:ElevatED/core/resources/language_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:themed/themed.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 late final WidgetsBinding engine;
 
 void main() async {
   engine = WidgetsFlutterBinding.ensureInitialized();
-  var widgetsBinding = WidgetsBinding.instance;
+  // WidgetsBinding widgetsBinding = WidgetsBinding.instance;
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await EasyLocalization.ensureInitialized();
   await init();
 
@@ -32,9 +36,20 @@ void main() async {
       Themed.currentTheme = darkTheme;
     }
   };
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+
+  // Record Crashes to Firebase Crashlytics
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+    FlutterError.dumpErrorToConsole(details);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  // Only allow portrait orientation
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(
     EasyLocalization(
       supportedLocales: AppLanguages.locals,
@@ -68,8 +83,11 @@ class MyApp extends StatelessWidget {
           themeMode: ThemeMode.system,
           theme: lightThemeData,
           darkTheme: darkThemeData,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.splashScreenRoute,
+          initialRoute: Routes.settingsScreenRoute,
         ),
       ),
     );
@@ -77,22 +95,6 @@ class MyApp extends StatelessWidget {
 }
 
 
-//? 2hrs        -> change text select color to secondary color
-//? 2hrs        -> fix role button in register page
-//? 4hrs        -> fix themes & clean project
-//? 1/4day      -> create student register page
-//? 1/4day      -> create instructor register page
-//? 15min       -> send request shape to remon
-//? 1day        -> create cubit - repo - usecase - request = for register
-//? 1/4day      -> create sharedPrefs for auth creds
-// TODO 1day    -> modify progress screen from baioumy
-// TODO 15min   -> send progress screen request shape to remon
-// TODO 1day    -> create cubit - repo - usecase - request = for progress
-//* Total sum to: 3.75 days | 2.5 hrs ~= 1 week
-//// Extras
-// TODO -> fix ui doesn't build when navigating thru screens in register & login
-// TODO -> instead of multiple cubit calls (context.read<>()...) in blocBuilders create a final cubit = context.read<>(); then take values from it
-// TODO -> add forget password & email verification to auth
 
 ///* recap
 /// auth request has profile

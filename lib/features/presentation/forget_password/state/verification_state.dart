@@ -7,6 +7,24 @@ class VerificationState extends Equatable {
 
 class VerificationInitial extends VerificationState {}
 
+class VerificationLoading extends VerificationState {}
+
+class VerificationVerified extends VerificationState {
+  final bool didVerify;
+  VerificationVerified({required this.didVerify});
+
+  @override
+  List<Object?> get props => [didVerify];
+}
+
+class VerificationError extends VerificationState {
+  final String error;
+  VerificationError({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
 class VerificationResentOTP extends VerificationState {
   final String timer;
   VerificationResentOTP({required this.timer});

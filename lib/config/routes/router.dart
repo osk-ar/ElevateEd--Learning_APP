@@ -15,6 +15,8 @@ import 'package:ElevatED/features/presentation/register/cubits/student_register_
 import 'package:ElevatED/features/presentation/course_details/screen/course_details_screen.dart';
 import 'package:ElevatED/features/presentation/login/screen/login_screen.dart';
 import 'package:ElevatED/features/presentation/on_boarding/on_boarding_screen.dart';
+import 'package:ElevatED/features/presentation/settings/screens/settings_screen.dart';
+import 'package:ElevatED/features/presentation/settings/screens/sub_screens/language_screen.dart';
 import 'package:ElevatED/features/presentation/splash/cubits/splash_cubit.dart';
 import 'package:ElevatED/features/presentation/register/screen/register_as_instructor.dart';
 import 'package:ElevatED/features/presentation/register/screen/register_as_student.dart';
@@ -49,7 +51,6 @@ class RouteGenerator {
             child: const LoginScreen(),
           ),
         );
-      //!-----------------------------------------------------
       case Routes.forgetPasswordValidationScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<ValidationCubit>(
@@ -71,7 +72,6 @@ class RouteGenerator {
             child: const ChangePasswordScreen(),
           ),
         );
-      //!-----------------------------------------------------
       case Routes.signupScreenRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<RegisterCubit>(
@@ -108,6 +108,20 @@ class RouteGenerator {
             child: const courseDetailsScreen(),
           ),
         );
+
+      //!-----------------------------------------------------
+      case Routes.settingsScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => const SettingsScreen(),
+        );
+      case Routes.multipleOptionSettingScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<CourseDetailsCubit>(
+            create: (context) => sl<CourseDetailsCubit>(),
+            child: LanguageScreen(sl()),
+          ),
+        );
+      //!-----------------------------------------------------
 
       ///login
       // case Routes.logInScreenRoute:

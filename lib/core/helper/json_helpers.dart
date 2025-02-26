@@ -10,3 +10,14 @@ UserRole getUserRoleFromString(String userRole) {
       throw Exception('Invalid role value');
   }
 }
+
+String userRoleToString(UserRole role) {
+  switch (role) {
+    case UserRole.student:
+      return "STUDENT";
+    case UserRole.instructor:
+      return "TEACHER";
+    default:
+      throw Exception('Invalid role value');
+  }
+}
