@@ -1,7 +1,7 @@
 import 'package:ElevatED/core/resources/app_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/on_boarding/widgets/custom_animated_widget.dart';
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/features/presentation/common/cta_button.dart';

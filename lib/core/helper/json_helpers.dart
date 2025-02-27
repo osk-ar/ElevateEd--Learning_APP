@@ -17,7 +17,5 @@ String userRoleToString(UserRole role) {
       return "STUDENT";
     case UserRole.instructor:
       return "TEACHER";
-    default:
-      throw Exception('Invalid role value');
   }
 }

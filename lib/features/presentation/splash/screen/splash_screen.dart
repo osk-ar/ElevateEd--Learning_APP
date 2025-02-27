@@ -1,5 +1,5 @@
 import 'package:ElevatED/config/routes/route_constants.dart';
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/helper/extensions.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/common/double_circular_avatar.dart';

@@ -15,8 +15,15 @@ import 'package:ElevatED/features/presentation/register/cubits/student_register_
 import 'package:ElevatED/features/presentation/course_details/screen/course_details_screen.dart';
 import 'package:ElevatED/features/presentation/login/screen/login_screen.dart';
 import 'package:ElevatED/features/presentation/on_boarding/on_boarding_screen.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/language_cubit.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/notifications_cubit.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/theme_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/screens/settings_screen.dart';
+import 'package:ElevatED/features/presentation/settings/screens/sub_screens/community_guidelines.dart';
 import 'package:ElevatED/features/presentation/settings/screens/sub_screens/language_screen.dart';
+import 'package:ElevatED/features/presentation/settings/screens/sub_screens/notification_screen.dart';
+import 'package:ElevatED/features/presentation/settings/screens/sub_screens/privacy_policy_screen.dart';
+import 'package:ElevatED/features/presentation/settings/screens/sub_screens/theme_screen.dart';
 import 'package:ElevatED/features/presentation/splash/cubits/splash_cubit.dart';
 import 'package:ElevatED/features/presentation/register/screen/register_as_instructor.dart';
 import 'package:ElevatED/features/presentation/register/screen/register_as_student.dart';
@@ -114,11 +121,33 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const SettingsScreen(),
         );
-      case Routes.multipleOptionSettingScreenRoute:
+      case Routes.privacyPolicySettingScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<CourseDetailsCubit>(
-            create: (context) => sl<CourseDetailsCubit>(),
-            child: LanguageScreen(sl()),
+          builder: (context) => const PrivacyPolicyPage(),
+        );
+      case Routes.communityGuidelinesSettingScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => const CommunityGuidelinesPage(),
+        );
+      case Routes.languageSettingScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<LanguageCubit>(
+            create: (context) => sl<LanguageCubit>(),
+            child: const LanguageScreen(),
+          ),
+        );
+      case Routes.themeSettingScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<ThemeCubit>(
+            create: (context) => sl<ThemeCubit>(),
+            child: const ThemeScreen(),
+          ),
+        );
+      case Routes.notificationsSettingScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<NotificationCubit>(
+            create: (context) => sl<NotificationCubit>(),
+            child: const NotificationScreen(),
           ),
         );
       //!-----------------------------------------------------

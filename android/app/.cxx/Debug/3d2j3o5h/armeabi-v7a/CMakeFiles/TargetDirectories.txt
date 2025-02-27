@@ -1,0 +1,2 @@
+D:/UNI and CODE/Grad_Project/folder/ElevateEd--Learning_APP/android/app/.cxx/Debug/3d2j3o5h/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/UNI and CODE/Grad_Project/folder/ElevateEd--Learning_APP/android/app/.cxx/Debug/3d2j3o5h/armeabi-v7a/CMakeFiles/rebuild_cache.dir

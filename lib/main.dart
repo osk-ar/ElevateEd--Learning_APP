@@ -2,14 +2,13 @@ import 'dart:ui';
 
 import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/routes/router.dart';
-import 'package:ElevatED/config/themes/theme.dart';
 import 'package:ElevatED/config/themes/theme_data.dart';
 import 'package:ElevatED/core/dependency_injection.dart';
+import 'package:ElevatED/core/helper/theme_helpers.dart';
 import 'package:ElevatED/core/resources/language_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,20 +20,15 @@ late final WidgetsBinding engine;
 
 void main() async {
   engine = WidgetsFlutterBinding.ensureInitialized();
-  // WidgetsBinding widgetsBinding = WidgetsBinding.instance;
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsBinding widgetsBinding = WidgetsBinding.instance;
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await EasyLocalization.ensureInitialized();
   await init();
-
+  ThemeHelpers themeHelpers = sl<ThemeHelpers>();
   PlatformDispatcher.instance.onPlatformBrightnessChanged = () {
-    final brightness = PlatformDispatcher.instance.platformBrightness;
-    if (brightness == Brightness.light) {
-      Themed.currentTheme = lightTheme;
-    } else {
-      Themed.currentTheme = darkTheme;
-    }
+    themeHelpers.getCurrentTheme();
   };
 
   // Record Crashes to Firebase Crashlytics
@@ -65,8 +59,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  final brightness =
-      SchedulerBinding.instance.platformDispatcher.platformBrightness;
+  final ThemeHelpers themeHelpers = sl<ThemeHelpers>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +68,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => Themed(
-        currentTheme:
-            brightness == Brightness.light ? lightTheme : newDarkTheme,
+        currentTheme: themeHelpers.getCurrentTheme(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'ElevateEd',
@@ -87,7 +79,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.settingsScreenRoute,
+          initialRoute: Routes.splashScreenRoute,
         ),
       ),
     );
@@ -103,3 +95,7 @@ class MyApp extends StatelessWidget {
 /// 
 /// use memory cache
 /// dont forget to clear cache
+// todo dont forget to add billing_details, reset_password, notificatinos, logout options in settings 
+// todo revise on auth to make sure its complete and functional with remon
+// todo remake home ui, progress ui
+// todo translate the WHOLE app

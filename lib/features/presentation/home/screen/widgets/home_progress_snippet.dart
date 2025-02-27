@@ -1,4 +1,4 @@
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/common/bar_chart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

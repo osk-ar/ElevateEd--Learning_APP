@@ -27,7 +27,13 @@ class Routes {
   static const String profileScreenRoute = "/profile";
 
   static const String courseDetailsScreenRoute = "/courseDetails";
+
   static const String settingsScreenRoute = "/settings";
-  static const String multipleOptionSettingScreenRoute =
-      "/multipleOptionSetting";
+  static const String languageSettingScreenRoute = "/languageOptionSetting";
+  static const String themeSettingScreenRoute = "/themeOptionSetting";
+  static const String notificationsSettingScreenRoute =
+      "/notificationsOptionSetting";
+  static const String privacyPolicySettingScreenRoute = "/privacyPolicySetting";
+  static const String communityGuidelinesSettingScreenRoute =
+      "/communityGuidelinesSetting";
 }

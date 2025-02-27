@@ -1,3 +1,4 @@
+import 'package:ElevatED/core/helper/theme_helpers.dart';
 import 'package:ElevatED/features/data_sources/local/disk_cache.dart';
 import 'package:ElevatED/features/domain/usecases/reset_password_usecase.dart';
 import 'package:ElevatED/features/domain/usecases/send_otp_usecase.dart';
@@ -5,6 +6,9 @@ import 'package:ElevatED/features/domain/usecases/verify_otp_usecase.dart';
 import 'package:ElevatED/features/presentation/forget_password/cubit/change_password_cubit.dart';
 import 'package:ElevatED/features/presentation/forget_password/cubit/validation_cubit.dart';
 import 'package:ElevatED/features/presentation/forget_password/cubit/verification_cubit.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/language_cubit.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/notifications_cubit.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/theme_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:ElevatED/features/data_sources/api/remote_data_source.dart';
 import 'package:ElevatED/features/data_sources/local/app_prefs.dart';
@@ -37,9 +41,12 @@ Future<void> init() async {
   var dio = await DioFactory().getDio();
   sl.registerLazySingleton<Dio>(() => dio);
 
+  /// Custom Classes
+  sl.registerLazySingleton<DiskCache>(() => DiskCacheImpl(sharedPreferences));
+  sl.registerLazySingleton<ThemeHelpers>(() => ThemeHelpers(sl()));
+
   /// Data Sources
   sl.registerLazySingleton<AppPrefs>(() => AppPrefsImpl(sharedPreferences));
-  sl.registerLazySingleton<DiskCache>(() => DiskCacheImpl(sharedPreferences));
   sl.registerLazySingleton<RemoteDataSource>(() => RemoteDataSource(sl()));
 
   /// Repositories
@@ -70,5 +77,8 @@ Future<void> init() async {
   sl.registerFactory<InstructorRegisterCubit>(
       () => InstructorRegisterCubit(sl(), sl(), sl()));
 
+  sl.registerFactory<ThemeCubit>(() => ThemeCubit(sl(), sl()));
+  sl.registerFactory<LanguageCubit>(() => LanguageCubit(sl()));
+  sl.registerFactory<NotificationCubit>(() => NotificationCubit(sl()));
   sl.registerFactory<CourseDetailsCubit>(() => CourseDetailsCubit());
 }

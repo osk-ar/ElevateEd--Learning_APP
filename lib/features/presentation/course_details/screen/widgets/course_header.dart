@@ -3,7 +3,7 @@ import 'package:ElevatED/features/presentation/course_details/cubits/course_deta
 import 'package:ElevatED/features/presentation/course_details/states/course_details_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class CourseHeader extends StatelessWidget {

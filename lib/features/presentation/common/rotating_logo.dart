@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/resources/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

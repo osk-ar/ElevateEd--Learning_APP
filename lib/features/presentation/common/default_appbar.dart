@@ -1,4 +1,4 @@
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,8 +18,6 @@ PreferredSizeWidget defaultAppbar(String title) {
 
 SliverAppBar defaultSliverAppbar(String title) {
   return SliverAppBar(
-    floating: false, // AppBar does not float
-    pinned: true, // AppBar stays visible when scrolling
     centerTitle: true,
     backgroundColor: Colors.transparent,
     foregroundColor: ThemeColors.textColor,

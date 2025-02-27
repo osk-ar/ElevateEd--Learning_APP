@@ -6,7 +6,7 @@ import 'package:ElevatED/features/presentation/statistics/statistics_screen.dart
 import 'package:ElevatED/features/presentation/home/screen/home_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

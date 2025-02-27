@@ -1,4 +1,4 @@
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +19,7 @@ class SettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: ThemeColors.secondaryColor,
+      tileColor: ThemeColors.lightSurfaceToDarkSecondary,
       iconColor: foregroundColor,
       textColor: foregroundColor,
       shape: RoundedRectangleBorder(

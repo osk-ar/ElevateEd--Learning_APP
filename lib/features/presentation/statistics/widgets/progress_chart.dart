@@ -1,4 +1,4 @@
-import 'package:ElevatED/config/themes/theme.dart';
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/core/resources/app_styles.dart';
 import 'package:ElevatED/features/presentation/common/line_chart.dart';
@@ -38,8 +38,6 @@ class _ProgressChartState extends State<ProgressChart> {
       case ProgressCharType.year:
         spots = reduceYearDataToFLSpots(data: widget.rawData);
         break;
-      default:
-        spots = [];
     }
     maxValuePoint = spots.reduce((a, b) {
       var valueA = a.y;
