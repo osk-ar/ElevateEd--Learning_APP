@@ -1,9 +1,9 @@
-class Routes {
-  Routes._();
+class RouteConstants {
+  RouteConstants._();
 
   //* Welcome screens
   //todo change "/splash" to "/" to make app start here and make it navigate to home or onBoarding
-  static const String splashScreenRoute = "/splash";
+  static const String splashScreenRoute = "/";
   static const String onBoardingScreenRoute = "/onBoarding";
 
   //* Auth screens
@@ -24,9 +24,10 @@ class Routes {
   static const String homeScreenRoute = "/home";
   static const String statisticsScreenRoute = "/progress";
   static const String coursesScreenRoute = "/courses";
-  static const String profileScreenRoute = "/profile";
 
   static const String courseDetailsScreenRoute = "/courseDetails";
+  static const String paymentSuccessScreenRoute = "/paymentSuccess";
+  static const String paymentCancelScreenRoute = "/paymentCancel";
 
   static const String settingsScreenRoute = "/settings";
   static const String languageSettingScreenRoute = "/languageOptionSetting";
@@ -36,4 +37,17 @@ class Routes {
   static const String privacyPolicySettingScreenRoute = "/privacyPolicySetting";
   static const String communityGuidelinesSettingScreenRoute =
       "/communityGuidelinesSetting";
+
+  static const String courseVideoScreenRoute = "/courseVideo";
+  static const String profileScreenRoute = "/profile";
+  static const String visitProfileScreenRoute = "/visitProfile";
+  static const String editProfileScreenRoute = "/editProfile";
+
+  static const String createCourseScreenRoute = "/createCourse";
+
+  static const String addVideoFormRoute = "/addVideoForm";
+  static const String addAssignmentFormRoute = "/addAssignmentForm";
+
+  static const String communityScreenRoute = "/community";
+  static const String uploadCourseScreenRoute = "/uploadCourse";
 }

@@ -10,4 +10,13 @@ import UIKit
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
+  @objc func screenCaptureStatusChanged() {
+  if UIScreen.main.isCaptured {
+  window?.isHidden = true 
+  } else {
+  window?.isHidden = false
+  }
+  }
 }
+

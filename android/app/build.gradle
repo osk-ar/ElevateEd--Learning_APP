@@ -8,6 +8,10 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+dependencies {
+   implementation("com.paymob.sdk:Paymob-SDK:1.5.9")
+}
+
 android {
     namespace = "com.example.e_learning_app_gp"
     compileSdk = flutter.compileSdkVersion
@@ -21,6 +25,8 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+    
+    buildFeatures { dataBinding = true }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).

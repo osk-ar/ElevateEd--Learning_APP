@@ -2,7 +2,7 @@ part of 'package:ElevatED/features/presentation/settings/cubits/notifications_cu
 
 class NotificationState extends Equatable {
   const NotificationState(this.notifications);
-  final Notifications notifications;
+  final NotificationStatusEnum notifications;
 
   @override
   List<Object?> get props => [notifications];

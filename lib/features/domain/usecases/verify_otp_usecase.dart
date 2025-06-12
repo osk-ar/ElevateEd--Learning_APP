@@ -1,4 +1,4 @@
-import 'package:ElevatED/features/domain/repo/auth_repository.dart';
+import 'package:ElevatED/features/domain/repositories/auth_repository.dart';
 
 class VerifyOtpUsecase {
   final AuthRepository _authRepository;

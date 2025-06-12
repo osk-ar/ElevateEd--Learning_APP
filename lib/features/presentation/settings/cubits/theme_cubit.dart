@@ -1,6 +1,5 @@
 import 'package:ElevatED/core/constants/enum.dart';
-import 'package:ElevatED/core/helper/theme_helpers.dart';
-import 'package:ElevatED/features/data_sources/local/disk_cache.dart';
+import 'package:ElevatED/core/services/theme%20service/theme_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -8,19 +7,14 @@ import 'package:equatable/equatable.dart';
 part 'package:ElevatED/features/presentation/settings/states/theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit(this._diskCache, this._themeHelpers)
-      : super(const ThemeInitial(ThemeModes.system)) {
-    final int? themeMode = _diskCache.getThemeMode();
-    if (themeMode != null) {
-      emit(ThemeChanged(ThemeModes.values[themeMode]));
-    }
+  ThemeCubit(this._themeService) : super(const ThemeInitial(ThemeEnum.system)) {
+    final int themeMode = _themeService.getThemeEnum().index;
+    emit(ThemeChanged(ThemeEnum.values[themeMode]));
   }
-  final DiskCache _diskCache;
-  final ThemeHelpers _themeHelpers;
+  final ThemeService _themeService;
 
-  void changeTheme(BuildContext context, ThemeModes themeMode) {
-    _diskCache.saveThemeMode(themeMode);
-    _themeHelpers.getCurrentTheme();
+  void changeTheme(BuildContext context, ThemeEnum themeMode) {
+    _themeService.changeTheme(themeMode);
     emit(ThemeChanged(themeMode));
   }
 }

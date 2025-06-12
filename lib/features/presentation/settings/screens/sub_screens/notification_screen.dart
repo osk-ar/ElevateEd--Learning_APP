@@ -1,7 +1,7 @@
 import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/constants/enum.dart';
-import 'package:ElevatED/core/resources/app_colors.dart';
-import 'package:ElevatED/features/presentation/common/default_appbar.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
+import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/settings/cubits/notifications_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/screens/widgets/settings_option_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,18 +22,18 @@ class NotificationScreen extends StatelessWidget {
           child: BlocBuilder<NotificationCubit, NotificationState>(
             builder: (context, state) {
               return ListView.separated(
-                itemCount: Notifications.values.length,
+                itemCount: NotificationStatusEnum.values.length,
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 24.h);
                 },
                 itemBuilder: (_, index) {
                   return SettingOptionTile(
-                    title: Notifications.values[index].name.tr(),
+                    title: NotificationStatusEnum.values[index].name.tr(),
                     foregroundColor: AppColors.whiteColor,
                     isSelected: index == state.notifications.index,
                     onTap: () {
                       context.read<NotificationCubit>().changeNotificationMode(
-                          context, Notifications.values[index]);
+                          context, NotificationStatusEnum.values[index]);
                     },
                   );
                 },

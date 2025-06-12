@@ -1,7 +1,7 @@
 import 'package:ElevatED/config/themes/theme_colors.dart';
-import 'package:ElevatED/core/resources/app_colors.dart';
-import 'package:ElevatED/core/resources/app_styles.dart';
-import 'package:ElevatED/features/presentation/common/default_appbar.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
+import 'package:ElevatED/config/themes/text_styles.dart';
+import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/settings/screens/widgets/paragraph_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

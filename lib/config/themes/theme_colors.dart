@@ -1,4 +1,4 @@
-import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:themed/themed.dart';
 
@@ -69,6 +69,9 @@ class ThemeColors {
 
   static const subTextColor = ColorRef(AppColors.surfaceColor, id: "subText");
 
+  static const warningColor =
+      ColorRef(AppColors.lightErrorColor, id: "warning");
+
   static const inverseTextColor =
       ColorRef(AppColors.whiteColor, id: "inverseText");
 
@@ -77,6 +80,12 @@ class ThemeColors {
 
   static const lightSurfaceToDarkSecondary =
       ColorRef(AppColors.surfaceColor, id: "lightSurfaceToDarkSecondary");
+
+  static const lightSurfaceToWhite =
+      ColorRef(AppColors.surfaceColor, id: "lightSurfaceToWhite");
+
+  static const shadowColor = ColorRef(Color(0xFF000000), id: "shadow");
+  static const errorColor = ColorRef(Color(0xFFDC3545), id: "error");
 }
 
 Map<ThemeRef, Object> lightTheme = {};
@@ -89,4 +98,6 @@ Map<ThemeRef, Object> newDarkTheme = {
   ThemeColors.inverseTextColor: AppColors.darkBackgroundColor,
   ThemeColors.disabledColor: AppColors.surfaceColor,
   ThemeColors.lightSurfaceToDarkSecondary: AppColors.darkSecondaryColor,
+  ThemeColors.lightSurfaceToWhite: AppColors.whiteColor,
+  ThemeColors.warningColor: AppColors.darkErrorColor,
 };

@@ -1,9 +1,9 @@
 import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/themes/theme_colors.dart';
-import 'package:ElevatED/core/helper/extensions.dart';
-import 'package:ElevatED/core/resources/app_colors.dart';
-import 'package:ElevatED/core/resources/assets_manager.dart';
-import 'package:ElevatED/features/presentation/common/default_appbar.dart';
+import 'package:ElevatED/config/extensions.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
+import 'package:ElevatED/core/constants/app_icons.dart';
+import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/settings/screens/widgets/settings_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -25,26 +25,27 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 0),
             SettingTile(
               title: 'language'.tr(),
-              iconPath: IconsAssets.languageIcon,
+              icon: AppIcons.language,
               foregroundColor: AppColors.whiteColor,
               onTap: () {
-                context.pushNamed(Routes.languageSettingScreenRoute);
+                context.pushNamed(RouteConstants.languageSettingScreenRoute);
               },
             ),
             SettingTile(
               title: 'notification'.tr(),
-              iconPath: IconsAssets.notificationsIcon,
+              icon: Icons.notifications_rounded,
               foregroundColor: AppColors.whiteColor,
               onTap: () {
-                context.pushNamed(Routes.notificationsSettingScreenRoute);
+                context
+                    .pushNamed(RouteConstants.notificationsSettingScreenRoute);
               },
             ),
             SettingTile(
               title: 'theme'.tr(),
-              iconPath: IconsAssets.themeIcon,
+              icon: AppIcons.theme,
               foregroundColor: AppColors.whiteColor,
               onTap: () {
-                context.pushNamed(Routes.themeSettingScreenRoute);
+                context.pushNamed(RouteConstants.themeSettingScreenRoute);
               },
             ),
             Divider(
@@ -54,13 +55,13 @@ class SettingsScreen extends StatelessWidget {
             ),
             SettingTile(
               title: 'billing_details'.tr(),
-              iconPath: IconsAssets.billingIcon,
+              icon: AppIcons.billing,
               foregroundColor: AppColors.whiteColor,
               onTap: () {},
             ),
             SettingTile(
               title: 'change_password'.tr(),
-              iconPath: IconsAssets.passwordIcon,
+              icon: AppIcons.password,
               foregroundColor: AppColors.whiteColor,
               onTap: () {},
             ),
@@ -71,24 +72,26 @@ class SettingsScreen extends StatelessWidget {
             ),
             SettingTile(
               title: 'privacy_policy'.tr(),
-              iconPath: IconsAssets.privacyIcon,
+              icon: Icons.privacy_tip_rounded,
               foregroundColor: AppColors.whiteColor,
               onTap: () {
-                context.pushNamed(Routes.privacyPolicySettingScreenRoute);
+                context
+                    .pushNamed(RouteConstants.privacyPolicySettingScreenRoute);
               },
             ),
             SettingTile(
               title: 'community_guidelines'.tr(),
-              iconPath: IconsAssets.guideLinesIcon,
+              icon: AppIcons.guidelines,
               foregroundColor: AppColors.whiteColor,
               onTap: () {
-                context.pushNamed(Routes.communityGuidelinesSettingScreenRoute);
+                context.pushNamed(
+                    RouteConstants.communityGuidelinesSettingScreenRoute);
               },
             ),
             const Spacer(),
             SettingTile(
               title: 'logout'.tr(),
-              iconPath: IconsAssets.LogoutIcon,
+              icon: Icons.logout_outlined,
               foregroundColor: AppColors.lightErrorColor,
               onTap: () {},
             ),

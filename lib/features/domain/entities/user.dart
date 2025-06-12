@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/features/data/models/course/course_category.dart';
 
 class User {
   final int? id;
-  final UserRole? userRole;
+  final UserRoleEnum? userRole;
   final String? email;
+  final String? token;
   final String? password;
   final String? fullName;
   final File? profileImageFile;
@@ -15,7 +17,7 @@ class User {
   final String? description;
   final DateTime? birthDate;
   final String? phoneNumber;
-  final List<Interests>? interests;
+  final List<CourseCategory>? interests;
   final List<String>? personalLinks;
   final String? professionalTitle;
 
@@ -23,8 +25,9 @@ class User {
     this.profileImageFile,
     this.coverImageFile,
     this.id,
-    this.userRole,
     this.profileImageUrl,
+    this.userRole,
+    this.token,
     this.coverImageUrl,
     this.description,
     this.fullName,

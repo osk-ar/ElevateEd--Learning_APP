@@ -2,7 +2,7 @@ part of 'package:ElevatED/features/presentation/settings/cubits/theme_cubit.dart
 
 class ThemeState extends Equatable {
   const ThemeState(this.themeMode);
-  final ThemeModes themeMode;
+  final ThemeEnum themeMode;
 
   @override
   List<Object?> get props => [themeMode];

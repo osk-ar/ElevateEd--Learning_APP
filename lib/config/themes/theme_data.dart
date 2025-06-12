@@ -1,5 +1,5 @@
 import 'package:ElevatED/config/themes/input_decoration_theme.dart';
-import 'package:ElevatED/core/resources/app_colors.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData lightThemeData = ThemeData.light().copyWith(
@@ -9,7 +9,7 @@ ThemeData lightThemeData = ThemeData.light().copyWith(
   //-
   colorScheme: const ColorScheme.light(
       primary: AppColors.primaryColor,
-      onPrimary: Colors.white,
+      onPrimary: AppColors.whiteColor,
       //-
       surface: AppColors.primaryColor,
       onSurface: AppColors.darkBackgroundColor,
@@ -31,7 +31,7 @@ ThemeData darkThemeData = ThemeData.dark().copyWith(
 );
 
 TextSelectionThemeData textSelectionThemeData = TextSelectionThemeData(
-  selectionColor: AppColors.primaryColor.withOpacity(0.4),
+  selectionColor: AppColors.primaryColor.withAlpha(130),
   selectionHandleColor: AppColors.primaryColor,
   cursorColor: AppColors.primaryColor,
 );

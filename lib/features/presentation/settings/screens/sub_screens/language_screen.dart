@@ -1,7 +1,7 @@
 import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/constants/enum.dart';
-import 'package:ElevatED/core/resources/app_colors.dart';
-import 'package:ElevatED/features/presentation/common/default_appbar.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
+import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/settings/cubits/language_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/screens/widgets/settings_option_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,19 +22,19 @@ class LanguageScreen extends StatelessWidget {
           child: BlocBuilder<LanguageCubit, LanguageState>(
             builder: (context, state) {
               return ListView.separated(
-                itemCount: Languages.values.length,
+                itemCount: LanguageEnum.values.length,
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 24.h);
                 },
                 itemBuilder: (_, index) {
                   return SettingOptionTile(
-                    title: Languages.values[index].name.tr(),
+                    title: LanguageEnum.values[index].name.tr(),
                     foregroundColor: AppColors.whiteColor,
                     isSelected: index == state.language.index,
                     onTap: () {
                       context
                           .read<LanguageCubit>()
-                          .changeLanguage(context, Languages.values[index]);
+                          .changeLanguage(context, LanguageEnum.values[index]);
                     },
                   );
                 },

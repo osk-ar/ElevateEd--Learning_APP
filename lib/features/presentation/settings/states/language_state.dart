@@ -2,7 +2,7 @@ part of 'package:ElevatED/features/presentation/settings/cubits/language_cubit.d
 
 class LanguageState extends Equatable {
   const LanguageState(this.language);
-  final Languages language;
+  final LanguageEnum language;
 
   @override
   List<Object?> get props => [language];

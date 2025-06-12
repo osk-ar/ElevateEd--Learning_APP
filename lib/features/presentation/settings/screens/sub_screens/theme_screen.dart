@@ -1,7 +1,7 @@
 import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/core/constants/enum.dart';
-import 'package:ElevatED/core/resources/app_colors.dart';
-import 'package:ElevatED/features/presentation/common/default_appbar.dart';
+import 'package:ElevatED/core/constants/app_colors.dart';
+import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/settings/cubits/theme_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/screens/widgets/settings_option_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,19 +22,19 @@ class ThemeScreen extends StatelessWidget {
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return ListView.separated(
-                itemCount: ThemeModes.values.length,
+                itemCount: ThemeEnum.values.length,
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 24.h);
                 },
                 itemBuilder: (_, index) {
                   return SettingOptionTile(
-                    title: ThemeModes.values[index].name.tr(),
+                    title: ThemeEnum.values[index].name.tr(),
                     foregroundColor: AppColors.whiteColor,
                     isSelected: index == state.themeMode.index,
                     onTap: () {
                       context
                           .read<ThemeCubit>()
-                          .changeTheme(context, ThemeModes.values[index]);
+                          .changeTheme(context, ThemeEnum.values[index]);
                     },
                   );
                 },

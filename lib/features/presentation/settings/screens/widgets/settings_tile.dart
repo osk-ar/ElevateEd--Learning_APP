@@ -1,19 +1,18 @@
 import 'package:ElevatED/config/themes/theme_colors.dart';
-import 'package:ElevatED/core/resources/app_styles.dart';
+import 'package:ElevatED/config/themes/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SettingTile extends StatelessWidget {
   const SettingTile(
       {super.key,
       required this.title,
       required this.onTap,
-      required this.iconPath,
+      required this.icon,
       required this.foregroundColor});
   final String title;
   final void Function()? onTap;
-  final String iconPath;
+  final IconData icon;
   final Color foregroundColor;
 
   @override
@@ -25,7 +24,7 @@ class SettingTile extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
       ),
-      leading: SvgPicture.asset(iconPath, width: 24.r, height: 24.r),
+      leading: Icon(icon, size: 24.r),
       title: Text(
         title,
         style: getMediumStyle(
