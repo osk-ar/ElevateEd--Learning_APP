@@ -9,12 +9,10 @@ class CourseBuildingBlock extends StatelessWidget {
       {super.key,
       this.index = 0,
       this.title = "Unknown Default Test",
-      required this.buttonCallBack, required this.type, required this.icon});
+      required this.type});
   final int index;
   final String type;
   final String title;
-  final IconData icon;
-  final VoidCallback buttonCallBack;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +20,7 @@ class CourseBuildingBlock extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 12.w, right: 8.w, top: 4.h, bottom: 4.h),
       margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+      height: 48.h,
       decoration: BoxDecoration(
         color: ThemeColors.lightSurfaceToDarkSecondary,
         borderRadius: BorderRadius.circular(8.r),
@@ -38,13 +37,6 @@ class CourseBuildingBlock extends StatelessWidget {
               style:
                   getMediumStyle(fontSize: 16.sp, color: AppColors.whiteColor),
               overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          IconButton(
-            onPressed: buttonCallBack,
-            icon: Icon(
-              icon,
-              color: AppColors.inversePrimaryColor,
             ),
           ),
         ],

@@ -11,12 +11,14 @@ class CTAButton extends StatelessWidget {
     required this.onPressed,
     this.width,
     this.focusNode,
+    this.isLoading = false,
   });
 
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double? width;
   final FocusNode? focusNode;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class CTAButton extends StatelessWidget {
         ),
         child: ElevatedButton(
           focusNode: focusNode,
-          onPressed: onPressed,
+          onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
             splashFactory: InkRipple.splashFactory,
             elevation: 0,
@@ -49,11 +51,24 @@ class CTAButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
           ),
-          child: Text(
-            text,
-            style: getSemiBoldStyle(
-                fontSize: 16.sp, color: ThemeColors.inverseTextColor),
-          ),
+          child: isLoading
+              ? SizedBox(
+                  width: 24.r,
+                  height: 24.r,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.r,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      ThemeColors.inverseTextColor,
+                    ),
+                  ),
+                )
+              : Text(
+                  text,
+                  style: getSemiBoldStyle(
+                    fontSize: 16.sp,
+                    color: ThemeColors.inverseTextColor,
+                  ),
+                ),
         ),
       ),
     );

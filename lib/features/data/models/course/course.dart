@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ElevatED/features/data/models/assignment/assignment.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';
 import 'package:ElevatED/features/data/models/video/video.dart';
@@ -33,6 +35,7 @@ class Course {
   // fromJson constructor
   factory Course.fromJson(Map<String, dynamic> json) {
     final courseDetails = json["courseDetails"];
+    log(courseDetails['tasks'].toString());
     return Course(
       id: courseDetails['id'],
       title: courseDetails['courseName'],
@@ -47,7 +50,8 @@ class Course {
           .toList()
         ..sort((a, b) => a.index.compareTo(b.index)),
       assignments: (courseDetails['tasks'] as List<dynamic>)
-          .map((assignment) => Assignment.fromJson(assignment))
+          .map((assignment) =>
+              Assignment.fromJson(assignment as Map<String, dynamic>))
           .toList()
         ..sort((a, b) => a.index.compareTo(b.index)),
       isOwned: json["isOwned"],

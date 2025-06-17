@@ -8,7 +8,7 @@ import 'package:ElevatED/core/managers/validation_manager.dart';
 import 'package:ElevatED/features/presentation/0_common/cta_button.dart';
 import 'package:ElevatED/features/presentation/0_common/hint_widget.dart';
 import 'package:ElevatED/features/presentation/0_common/input_field.dart';
-import 'package:ElevatED/features/presentation/10_create_course/cubit/pricing_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/pricing_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

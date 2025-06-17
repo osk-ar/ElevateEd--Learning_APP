@@ -1,6 +1,7 @@
 import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';
 import 'package:ElevatED/features/data/models/data_point.dart';
+import 'package:ElevatED/features/data/models/orderable/orderable.dart';
 import 'package:ElevatED/features/data/models/view/normalized_course.dart';
 import 'package:ElevatED/features/data/models/user_data.dart';
 
@@ -20,6 +21,8 @@ class MemoryCache {
   static UserData? _visitedUserData;
   static List<CourseCategory> _categories = [];
   static List<NormalizedCourse> _allCourses = [];
+  static List<Orderable>? _currentCourseItems;
+  static int? _currentCourseItemIndex;
 
   static void pushId(int id) => _id = id;
 
@@ -65,6 +68,19 @@ class MemoryCache {
   static void pushAllCourses(List<NormalizedCourse> courses) =>
       _allCourses = courses;
   static void clearAllCourses() => _allCourses = [];
+
+  static void pushCurrentCourseItems(List<Orderable> items) =>
+      _currentCourseItems = items;
+
+  static void pushCurrentCourseItemIndex(int index) =>
+      _currentCourseItemIndex = index;
+
+  static List<Orderable>? getCurrentCourseItems() => _currentCourseItems;
+  static int? getCurrentCourseItemIndex() => _currentCourseItemIndex;
+  static void clearCurrentCourseItems() {
+    _currentCourseItems = null;
+    _currentCourseItemIndex = null;
+  }
 
 //------------------------------------
   static void pushRegisterData(Map<String, dynamic> registerModel) {

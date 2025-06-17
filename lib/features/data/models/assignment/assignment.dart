@@ -1,25 +1,24 @@
 import 'package:ElevatED/features/data/models/assignment/question.dart';
+import 'package:ElevatED/features/data/models/orderable/orderable.dart';
 
-class Assignment {
-  int index;
-  String title;
-
-  List<Question> questions;
+class Assignment extends Orderable {
+  final List<Question> questions;
 
   // Normal constructor
-  Assignment({
-    required this.index,
-    required this.title,
+  const Assignment({
+    super.id = -1,
+    required super.index,
+    required super.title,
     required this.questions,
   });
 
   // fromJson constructor
   factory Assignment.fromJson(Map<String, dynamic> json) {
     return Assignment(
+      id: json['id'],
       index: json['index'],
       title: json['title'],
-      questions: Question.mapQuestions(
-          json['questions'] as List<Map<String, dynamic>>),
+      questions: Question.mapQuestions(json['questions'] as List<dynamic>),
     );
   }
 
@@ -30,4 +29,7 @@ class Assignment {
       'questions': questions.map((q) => q.toJson()).toList(),
     };
   }
+
+  @override
+  List<Object> get props => [...super.props, questions];
 }

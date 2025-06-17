@@ -8,6 +8,8 @@ import 'package:ElevatED/features/presentation/settings/screens/widgets/settings
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/auth_cubit.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -93,7 +95,9 @@ class SettingsScreen extends StatelessWidget {
               title: 'logout'.tr(),
               icon: Icons.logout_outlined,
               foregroundColor: AppColors.lightErrorColor,
-              onTap: () {},
+              onTap: () {
+                context.read<AuthCubit>().logout(context);
+              },
             ),
             const SizedBox(height: 0),
           ],

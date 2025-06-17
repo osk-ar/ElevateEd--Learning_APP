@@ -9,6 +9,11 @@ abstract class NormalizedCourseContent {
     required this.index,
     required this.title,
   });
+
+  NormalizedCourseContent copyWith({
+    int? index,
+    String? title,
+  });
 }
 
 class UploadCourseVideo extends NormalizedCourseContent {
@@ -21,6 +26,18 @@ class UploadCourseVideo extends NormalizedCourseContent {
     required this.path,
     required this.extension,
   });
+
+  @override
+  UploadCourseVideo copyWith({
+    int? index,
+    String? title,
+  }) {
+    return UploadCourseVideo(
+        index: index ?? this.index,
+        title: title ?? this.title,
+        path: path,
+        extension: extension);
+  }
 }
 
 class NormalizedCourseAssignment extends NormalizedCourseContent {
@@ -28,4 +45,15 @@ class NormalizedCourseAssignment extends NormalizedCourseContent {
 
   NormalizedCourseAssignment(
       {required super.index, required super.title, required this.questions});
+
+  @override
+  NormalizedCourseAssignment copyWith({
+    int? index,
+    String? title,
+  }) {
+    return NormalizedCourseAssignment(
+        index: index ?? this.index,
+        title: title ?? this.title,
+        questions: questions);
+  }
 }

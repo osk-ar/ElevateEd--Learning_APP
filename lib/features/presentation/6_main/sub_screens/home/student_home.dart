@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:ElevatED/core/constants/enum.dart';
+import 'package:ElevatED/features/data/models/data_point.dart';
+import 'package:ElevatED/features/presentation/6_main/sub_screens/home/widgets/home_appbar.dart';
+import 'package:ElevatED/features/presentation/6_main/sub_screens/home/widgets/home_progress_snippet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ElevatED/config/themes/theme_colors.dart';
@@ -34,20 +39,51 @@ class _StudentHomeState extends State<StudentHome> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Welcome Section
-            Text(
-              "Welcome, ${userData.name}",
-              style: getBoldStyle(
-                fontSize: 24.sp,
-                color: ThemeColors.textColor,
-              ),
+            SizedBox(height: 24.h),
+            HomeAppbar(name: userData.name, role: UserRoleEnum.student),
+            SizedBox(height: 16.h),
+
+            // Activity Stats Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Recent Progress",
+                  style: getBoldStyle(
+                    fontSize: 16.sp,
+                    color: ThemeColors.textColor,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 8.h),
-            Text(
-              "Track your learning progress",
-              style: getRegularStyle(
-                fontSize: 16.sp,
-                color: ThemeColors.subTextColor,
-              ),
+            SizedBox(height: 16.h),
+            HomeProgressSnippet(
+              progressPoints: userData.activityPoints.isEmpty
+                  ? [
+                      DataPoint(
+                        dateTime:
+                            DateTime.now().subtract(const Duration(days: 2)),
+                        value: 0,
+                      ),
+                      DataPoint(
+                        dateTime:
+                            DateTime.now().subtract(const Duration(days: 1)),
+                        value: 0,
+                      ),
+                      DataPoint(
+                        dateTime: DateTime.now(),
+                        value: 0,
+                      ),
+                    ]
+                  : userData.activityPoints,
+              totalRecentProgress: userData.activityPoints.isEmpty
+                  ? 0
+                  : userData.activityPoints
+                      .map((point) => point.value)
+                      .reduce((a, b) => a + b)
+                      .round(),
+              title: "Recent Progress",
+              valueExtention: "\Hrs",
             ),
             SizedBox(height: 24.h),
 

@@ -43,23 +43,20 @@ class CoursesCubit extends Cubit<CoursesState> {
 
   void switchTab(bool isPurchasedTab) {
     _isPurchasedTab = isPurchasedTab;
-    if (_isPurchasedTab && _purchasedCourses.isEmpty) {
-      loadCourses();
-    } else {
-      emit(CoursesLoaded(
-        courses: _isPurchasedTab ? _purchasedCourses : _allCourses,
-        categories: _categories,
-        hasMore: _hasMore,
-        currentPage: _currentPage,
-        isPurchasedTab: _isPurchasedTab,
-      ));
-    }
+    loadCourses();
   }
 
   void loadCourses() async {
     emit(CoursesLoading());
     _currentPage = 1;
     _hasMore = true;
+
+    if (_isPurchasedTab) {
+      _purchasedCourses = [];
+    } else {
+      _allCourses = [];
+    }
+
     try {
       final courses = _isPurchasedTab
           ? await getPurchasedCoursesUseCase()
@@ -70,11 +67,12 @@ class CoursesCubit extends Cubit<CoursesState> {
 
       if (_isPurchasedTab) {
         _purchasedCourses = courses;
+        _hasMore = false;
       } else {
         _allCourses = courses;
+        _hasMore = courses.length == _pageSize;
       }
 
-      _hasMore = courses.length == _pageSize;
       if (_categories.isEmpty) {
         await loadCategories();
       } else {
@@ -92,33 +90,31 @@ class CoursesCubit extends Cubit<CoursesState> {
   }
 
   void loadMoreCourses() async {
-    if (!_hasMore || _isLoadingMore || state is CoursesLoading) return;
+    if (!_hasMore ||
+        _isLoadingMore ||
+        state is CoursesLoading ||
+        _isPurchasedTab) return;
+
     _isLoadingMore = true;
     emit(CoursesLoadingMore(
-      courses: _isPurchasedTab ? _purchasedCourses : _allCourses,
+      courses: _allCourses,
       categories: _categories,
       currentPage: _currentPage,
       isPurchasedTab: _isPurchasedTab,
     ));
     try {
       final nextPage = _currentPage + 1;
-      final moreCourses = _isPurchasedTab
-          ? await getPurchasedCoursesUseCase()
-          : await getCoursesUseCase(
-              page: nextPage,
-              pageSize: _pageSize,
-            );
+      final moreCourses = await getCoursesUseCase(
+        page: nextPage,
+        pageSize: _pageSize,
+      );
 
-      if (_isPurchasedTab) {
-        _purchasedCourses.addAll(moreCourses);
-      } else {
-        _allCourses.addAll(moreCourses);
-      }
-
+      _allCourses.addAll(moreCourses);
       _hasMore = moreCourses.length == _pageSize;
       _currentPage = nextPage;
+
       emit(CoursesLoaded(
-        courses: _isPurchasedTab ? _purchasedCourses : _allCourses,
+        courses: _allCourses,
         categories: _categories,
         hasMore: _hasMore,
         currentPage: _currentPage,

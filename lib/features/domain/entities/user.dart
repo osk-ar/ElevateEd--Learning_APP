@@ -3,6 +3,10 @@ import 'dart:io';
 import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';
 
+/*
+  Will be deprecated in the future
+*/
+
 class User {
   final int? id;
   final UserRoleEnum? userRole;

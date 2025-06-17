@@ -11,10 +11,11 @@ import 'package:ElevatED/features/data/data%20sources/cache/memory_cache.dart';
 import 'package:ElevatED/features/data/models/assignment/assignment.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';
 import 'package:ElevatED/features/data/models/upload/upload_course_model.dart';
-import 'package:ElevatED/features/data/models/view/normalized_course_content.dart'
-    as view;
+import 'package:ElevatED/features/data/models/view/normalized_course_content.dart';
 import 'package:ElevatED/features/presentation/0_common/draggable_fab.dart';
-import 'package:ElevatED/features/presentation/10_create_course/cubit/create_course_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/content_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/general_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/states/general_states.dart';
 import 'package:ElevatED/features/presentation/10_create_course/steps/content_step.dart';
 import 'package:ElevatED/features/presentation/10_create_course/steps/general_step.dart';
 import 'package:ElevatED/features/presentation/10_create_course/steps/pricing_step.dart';
@@ -31,7 +32,8 @@ class CreateCourseScreen extends StatefulWidget {
 }
 
 class _CreateCourseScreenState extends State<CreateCourseScreen> {
-  late CreateCourseCubit createCourseCubit;
+  late GeneralCubit generalCubit;
+  late ContentCubit contentCubit;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
@@ -39,7 +41,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   @override
   void initState() {
     super.initState();
-    createCourseCubit = context.read<CreateCourseCubit>();
+    generalCubit = context.read<GeneralCubit>();
+    contentCubit = context.read<ContentCubit>();
   }
 
   @override
@@ -74,17 +77,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       context.message(message: "Please fill all general fields");
       return null;
     }
-    if (createCourseCubit.courseContent.isEmpty) {
+    if (contentCubit.content.isEmpty) {
       context.message(message: "Please add at least one content item");
       return null;
     }
-    if (createCourseCubit.categoryID == 0) {
+    if (generalCubit.selectedCategoryId == 0) {
       context.message(message: "Please select a category");
       return null;
     }
 
-    final assignments = createCourseCubit.courseContent
-        .whereType<view.NormalizedCourseAssignment>()
+    final assignments = contentCubit.content
+        .whereType<NormalizedCourseAssignment>()
         .map((a) => Assignment(
               index: a.index,
               title: a.title,
@@ -92,12 +95,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             ))
         .toList();
 
-    final videos = createCourseCubit.courseContent
-        .whereType<view.UploadCourseVideo>()
-        .toList();
+    final videos = contentCubit.content.whereType<UploadCourseVideo>().toList();
 
-    final category = createCourseCubit.categories.firstWhere(
-      (cat) => cat.id == createCourseCubit.categoryID,
+    final category = generalCubit.categories.firstWhere(
+      (cat) => cat.id == generalCubit.selectedCategoryId,
     );
 
     return UploadCourseModel(
@@ -131,11 +132,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           Column(
             children: [
               Flexible(
-                child: BlocBuilder<CreateCourseCubit, CreateCourseState>(
-                  buildWhen: (previous, current) =>
-                      current is CreateCourseNavigated,
+                child: BlocBuilder<GeneralCubit, GeneralState>(
+                  buildWhen: (previous, current) => current is GeneralNavigated,
                   builder: (context, state) {
-                    log("message : CreateCourseNavigated");
                     return RepaintBoundary(
                       child: CustomScrollView(
                         slivers: [
@@ -159,17 +158,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                   lineThickness: 2.w,
                                   iconPadding: 4.r,
                                   stepIcons: icons,
-                                  groupIndex: createCourseCubit.currentIndex,
+                                  groupIndex: generalCubit.currentIndex,
                                 ),
                               ),
                               centerTitle: true,
                             ),
                           ),
                           //! stepper body
-                          if (createCourseCubit.currentIndex == 0)
+                          if (generalCubit.currentIndex == 0)
                             SliverToBoxAdapter(child: steps[0]),
-                          if (createCourseCubit.currentIndex == 1) steps[1],
-                          if (createCourseCubit.currentIndex == 2)
+                          if (generalCubit.currentIndex == 1) steps[1],
+                          if (generalCubit.currentIndex == 2)
                             SliverToBoxAdapter(child: steps[2]),
                         ],
                       ),
@@ -208,7 +207,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                   content: AppStrings.removeAllConfirmation,
                                   confirmButtonText: AppStrings.reset,
                                   onConfirmPressed: () {
-                                    createCourseCubit.resetContent();
+                                    contentCubit.resetContent();
                                     context.pop();
                                   },
                                   cancelButtonText: AppStrings.cancel,
@@ -219,11 +218,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             ),
 
                             //! info button
-                            BlocBuilder<CreateCourseCubit, CreateCourseState>(
+                            BlocBuilder<GeneralCubit, GeneralState>(
                               buildWhen: (previous, current) =>
-                                  current is CreateCourseNavigated,
+                                  current is GeneralNavigated,
                               builder: (context, state) {
-                                if (state is CreateCourseNavigated &&
+                                if (state is GeneralNavigated &&
                                     state.index == 1) {
                                   return IconButton(
                                     color: AppColors.whiteColor,
@@ -324,8 +323,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                       color: AppColors.whiteColor, width: 2.r),
                                 ),
                               ),
-                              onPressed: () =>
-                                  createCourseCubit.decrementIndex(),
+                              onPressed: () => generalCubit.previousStep(),
                               icon: const Icon(Icons.arrow_back),
                             ),
                             IconButton(
@@ -334,10 +332,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 backgroundColor: AppColors.primaryColor,
                               ),
                               onPressed: () {
-                                if (createCourseCubit.currentIndex == 2) {
+                                if (generalCubit.currentIndex == 2) {
                                   _navigateToUpload();
                                 } else {
-                                  createCourseCubit.incrementIndex();
+                                  generalCubit.nextStep();
                                 }
                               },
                               icon: const Icon(Icons.arrow_forward),
@@ -353,10 +351,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           ),
 
           //! Draggable FAB
-          BlocBuilder<CreateCourseCubit, CreateCourseState>(
-            buildWhen: (previous, current) => current is CreateCourseNavigated,
+          BlocBuilder<GeneralCubit, GeneralState>(
+            buildWhen: (previous, current) => current is GeneralNavigated,
             builder: (context, state) {
-              if (state is CreateCourseNavigated && state.index == 1) {
+              if (state is GeneralNavigated && state.index == 1) {
                 return DraggableFab(
                   childFabSpacing: 8.h,
                   bottomPadding: 70.h,
@@ -386,8 +384,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             confirmButtonText: AppStrings.continueString,
                             onConfirmPressed: () async {
                               context.pop();
-                              await createCourseCubit
-                                  .pickMultipleVideos(context);
+                              await contentCubit.pickMultipleVideos(context);
                             },
                             cancelButtonText: AppStrings.cancel,
                             primaryColor: AppColors.primaryColor,

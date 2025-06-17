@@ -9,7 +9,6 @@ import 'package:ElevatED/features/domain/usecases/register_usecase.dart';
 import 'package:ElevatED/features/presentation/3_register/states/student_register_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/features/domain/entities/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';

@@ -1,17 +1,15 @@
+import 'package:ElevatED/features/data/models/orderable/orderable.dart';
 import 'package:ElevatED/features/data/models/video/comment.dart';
 
-class Video {
-  int index;
-  String title;
-  String description;
-  String videoUrl;
-  List<Comment> comments;
+class Video extends Orderable {
+  final String videoUrl;
+  final List<Comment> comments;
 
   // Normal constructor
-  Video({
-    required this.index,
-    required this.title,
-    required this.description,
+  const Video({
+    required super.id,
+    required super.index,
+    required super.title,
     required this.videoUrl,
     this.comments = const [],
   });
@@ -19,9 +17,9 @@ class Video {
   // fromJson constructor
   factory Video.fromJson(Map<String, dynamic> json) {
     return Video(
-      index: json['id'],
+      id: json['id'],
+      index: json['index'],
       title: json['title'],
-      description: json['description'],
       videoUrl: json['videoUrl'],
       comments: json['comments'] ??
           const []
@@ -29,4 +27,7 @@ class Video {
               .toList(),
     );
   }
+
+  @override
+  List<Object> get props => [...super.props, videoUrl, comments];
 }

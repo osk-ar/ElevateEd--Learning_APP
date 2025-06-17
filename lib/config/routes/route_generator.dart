@@ -1,16 +1,20 @@
 import 'dart:developer';
 
 import 'package:ElevatED/config/routes/route_constants.dart';
+import 'package:ElevatED/features/data/models/assignment/assignment.dart';
 import 'package:ElevatED/features/data/models/upload/upload_course_model.dart';
 import 'package:ElevatED/features/presentation/11_upload_course/cubits/upload_course_cubit.dart';
 import 'package:ElevatED/features/presentation/11_upload_course/screen/upload_course_screen.dart';
 import 'package:ElevatED/features/presentation/10_create_course/create_course_screen.dart';
-import 'package:ElevatED/features/presentation/10_create_course/cubit/create_course_cubit.dart';
-import 'package:ElevatED/features/presentation/10_create_course/cubit/pricing_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/pricing_cubit.dart';
 import 'package:ElevatED/features/presentation/10_create_course/forms/add_assignment_form.dart';
 import 'package:ElevatED/features/presentation/10_create_course/forms/add_video_form.dart';
+import 'package:ElevatED/features/presentation/6_main/cubits/categories_cubit.dart';
+import 'package:ElevatED/features/presentation/6_main/cubits/image_cubit.dart';
+import 'package:ElevatED/features/presentation/6_main/cubits/save_profile_cubit.dart';
 import 'package:ElevatED/features/presentation/6_main/cubits/stats_cubit.dart';
 import 'package:ElevatED/features/presentation/6_main/cubits/instructor_creativity_cubit.dart';
+import 'package:ElevatED/features/presentation/6_main/cubits/visit_profile_cubit.dart';
 import 'package:ElevatED/features/presentation/chat/chat_screen.dart';
 import 'package:ElevatED/features/presentation/course_details/cubits/course_details_cubit.dart';
 import 'package:ElevatED/features/presentation/5_forget_password/cubit/change_password_cubit.dart';
@@ -28,6 +32,7 @@ import 'package:ElevatED/features/presentation/3_register/cubits/student_registe
 import 'package:ElevatED/features/presentation/course_details/screen/course_details_screen.dart';
 import 'package:ElevatED/features/presentation/4_login/screen/login_screen.dart';
 import 'package:ElevatED/features/presentation/2_on_boarding/on_boarding_screen.dart';
+import 'package:ElevatED/features/presentation/settings/cubits/auth_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/cubits/language_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/cubits/notifications_cubit.dart';
 import 'package:ElevatED/features/presentation/settings/cubits/theme_cubit.dart';
@@ -42,8 +47,8 @@ import 'package:ElevatED/features/presentation/3_register/screen/register_as_ins
 import 'package:ElevatED/features/presentation/3_register/screen/register_as_student.dart';
 import 'package:ElevatED/features/presentation/3_register/screen/register_screen.dart';
 import 'package:ElevatED/features/presentation/1_splash/screen/splash_screen.dart';
-import 'package:ElevatED/features/presentation/under_shit/course_video_cubit.dart';
-import 'package:ElevatED/features/presentation/under_shit/course_video_screen.dart';
+import 'package:ElevatED/features/presentation/course_content_play/cubit/video/video_streaming_cubit.dart';
+import 'package:ElevatED/features/presentation/course_content_play/screens/course_video_screen.dart';
 import 'package:ElevatED/features/presentation/6_main/sub_screens/profile/edit/instructor_edit_profile_screen.dart';
 import 'package:ElevatED/init.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +61,12 @@ import 'package:ElevatED/features/data/data sources/cache/memory_cache.dart';
 import 'package:ElevatED/features/presentation/6_main/sub_screens/profile/view/instructor_profile_screen.dart';
 import 'package:ElevatED/features/presentation/6_main/sub_screens/profile/view/student_profile_screen.dart';
 import 'package:ElevatED/features/presentation/6_main/sub_screens/profile/edit/student_edit_profile_screen.dart';
+import 'package:ElevatED/features/presentation/course_content_play/cubit/video/video_player_ui_cubit.dart';
+import 'package:ElevatED/features/presentation/course_content_play/cubit/video/video_comments_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/content_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/general_cubit.dart';
+import 'package:ElevatED/features/presentation/course_content_play/screens/assignment_solver_screen.dart';
+import 'package:ElevatED/features/presentation/course_content_play/cubit/assignment/assignment_solver_cubit.dart';
 
 class RouteGenerator {
   RouteGenerator._();
@@ -159,11 +170,14 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
             providers: [
-              BlocProvider<CreateCourseCubit>(
-                create: (context) => sl<CreateCourseCubit>(),
+              BlocProvider<GeneralCubit>.value(
+                value: sl<GeneralCubit>(),
               ),
-              BlocProvider<PricingCubit>(
-                create: (context) => sl<PricingCubit>(),
+              BlocProvider<ContentCubit>.value(
+                value: sl<ContentCubit>(),
+              ),
+              BlocProvider<PricingCubit>.value(
+                value: sl<PricingCubit>(),
               ),
             ],
             child: const CreateCourseScreen(),
@@ -171,15 +185,15 @@ class RouteGenerator {
         );
       case RouteConstants.addVideoFormRoute:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<CreateCourseCubit>.value(
-            value: sl<CreateCourseCubit>(),
+          builder: (context) => BlocProvider<ContentCubit>.value(
+            value: sl<ContentCubit>(),
             child: const AddVideoForm(),
           ),
         );
       case RouteConstants.addAssignmentFormRoute:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<CreateCourseCubit>.value(
-            value: sl<CreateCourseCubit>(),
+          builder: (context) => BlocProvider<ContentCubit>.value(
+            value: sl<ContentCubit>(),
             child: const AddAssignmentForm(),
           ),
         );
@@ -205,7 +219,10 @@ class RouteGenerator {
       //?-----------------------------------------------------
       case RouteConstants.settingsScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => const SettingsScreen(),
+          builder: (context) => BlocProvider<AuthCubit>(
+            create: (context) => sl<AuthCubit>(),
+            child: const SettingsScreen(),
+          ),
         );
       case RouteConstants.privacyPolicySettingScreenRoute:
         return MaterialPageRoute(
@@ -238,8 +255,18 @@ class RouteGenerator {
         );
       case RouteConstants.courseVideoScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<CourseVideoCubit>(
-            create: (context) => sl<CourseVideoCubit>(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider<VideoStreamingCubit>(
+                create: (context) => sl<VideoStreamingCubit>(),
+              ),
+              BlocProvider<VideoPlayerUICubit>(
+                create: (context) => sl<VideoPlayerUICubit>(),
+              ),
+              BlocProvider<VideoCommentsCubit>(
+                create: (context) => sl<VideoCommentsCubit>(),
+              ),
+            ],
             child: const CourseVideoScreen(),
           ),
         );
@@ -253,26 +280,50 @@ class RouteGenerator {
       case RouteConstants.visitProfileScreenRoute:
         final int userId = settings.arguments as int;
         return MaterialPageRoute(
-          builder: (context) => VisitProfileScreen(userId: userId),
+          builder: (context) => BlocProvider<VisitProfileCubit>(
+            create: (context) => sl<VisitProfileCubit>(),
+            child: VisitProfileScreen(userId: userId),
+          ),
         );
       case RouteConstants.editProfileScreenRoute:
-        final role = MemoryCache.getUserRole() ?? UserRoleEnum.student;
+        final role = MemoryCache.getUserData()?.role;
         return MaterialPageRoute(
-          builder: (context) => role == UserRoleEnum.instructor
-              ? const EditProfileScreen()
-              : const StudentEditProfileScreen(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider<ImageCubit>(
+                create: (context) => sl<ImageCubit>(),
+              ),
+              BlocProvider<SaveProfileCubit>(
+                create: (context) => sl<SaveProfileCubit>(),
+              ),
+              BlocProvider<CategoriesCubit>(
+                create: (context) => sl<CategoriesCubit>(),
+              ),
+            ],
+            child: role == UserRoleEnum.instructor
+                ? const InstructorEditProfileScreen()
+                : const StudentEditProfileScreen(),
+          ),
         );
 
       case RouteConstants.paymentSuccessScreenRoute:
-        final courseId = settings.arguments as int;
         return MaterialPageRoute(
-          builder: (context) => PaymentSuccessScreen(courseId: courseId),
+          builder: (context) => const PaymentSuccessScreen(),
         );
 
       case RouteConstants.paymentCancelScreenRoute:
-        final courseId = settings.arguments as int;
         return MaterialPageRoute(
-          builder: (context) => PaymentCancelScreen(courseId: courseId),
+          builder: (context) => const PaymentCancelScreen(),
+        );
+
+      case RouteConstants.assignmentSolverScreenRoute:
+        final assignment = settings.arguments as Assignment;
+        log("assignment: ${assignment.title}");
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<AssignmentSolverCubit>(
+            create: (_) => sl<AssignmentSolverCubit>(),
+            child: AssignmentSolverScreen(assignment: assignment),
+          ),
         );
 
       ///login

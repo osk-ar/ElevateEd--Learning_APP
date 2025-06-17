@@ -298,5 +298,18 @@
     "instructor_creativity_add_course": "Add Course",
     "instructor_creativity_no_courses": "No courses created yet.\nStart creating your first course!",
     "instructor_creativity_enrolled": "Enrolled",
-    "instructor_creativity_rating": "Rating"
+    "instructor_creativity_rating": "Rating",
+    "no_portfolio_url": "No portfolio URL available",
+    "no_github_url": "No GitHub URL available",
+    "no_linkedin_url": "No LinkedIn URL available",
+    "no_facebook_url": "No Facebook URL available",
+    "assignment_solver_title": "Solve Assignment",
+    "assignment_solver_submit": "Submit Assignment",
+    "assignment_solver_success": "Submission successful!",
+    "assignment_solver_error": "Submission failed",
+    "assignment_solver_type_answer": "Type your answer...",
+    "assignment_solver_mcq_placeholder": "Select an option",
+    "assignment_solver_essay_placeholder": "Type your answer...",
+    "assignment_solver_loading": "Loading assignment...",
+    "assignment_solver_no_questions": "No questions available."
 }

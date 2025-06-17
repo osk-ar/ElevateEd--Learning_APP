@@ -41,8 +41,6 @@ class _InstructorHomeState extends State<InstructorHome> {
             HomeAppbar(name: userData.name, role: UserRoleEnum.instructor),
             SizedBox(height: 16.h),
 
-            // My Courses Section
-
             // Activity Stats Section
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

@@ -66,10 +66,9 @@ class StudentProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // No professional title for students
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
                       child: ExpandableText(text: userData.description),
                     ),
                     Padding(

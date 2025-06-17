@@ -1,3 +1,4 @@
+import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +20,7 @@ class LoadingCourseCard extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: Container(
-                color: Colors.grey[300],
+                color: ThemeColors.backgroundColor,
               ),
             ),
           ),
@@ -32,7 +33,7 @@ class LoadingCourseCard extends StatelessWidget {
                   height: 24.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: ThemeColors.backgroundColor,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -41,7 +42,7 @@ class LoadingCourseCard extends StatelessWidget {
                   height: 16.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: ThemeColors.backgroundColor,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -50,7 +51,7 @@ class LoadingCourseCard extends StatelessWidget {
                   height: 16.h,
                   width: 200.w,
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: ThemeColors.backgroundColor,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -61,7 +62,7 @@ class LoadingCourseCard extends StatelessWidget {
                       height: 16.h,
                       width: 80.w,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: ThemeColors.backgroundColor,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),
@@ -70,7 +71,7 @@ class LoadingCourseCard extends StatelessWidget {
                       height: 16.h,
                       width: 100.w,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: ThemeColors.backgroundColor,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),

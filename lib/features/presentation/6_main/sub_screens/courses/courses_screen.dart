@@ -57,6 +57,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       appBar: AppBar(
         title: Text(AppStrings.courses),
         centerTitle: true,
+        surfaceTintColor: Colors.transparent,
         leading: const SizedBox.shrink(),
         bottom: TabBar(
           controller: _tabController,

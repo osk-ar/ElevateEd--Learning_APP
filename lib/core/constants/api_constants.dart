@@ -6,4 +6,7 @@ class ApiConstants {
   static const double tabletBreakpoint = 600;
   static const double watchBreakpoint = 300;
   static const int fetchLimit = 10;
+
+  static const int maxRetries = 3;
+  static const Duration retryDelay = Duration(seconds: 2);
 }

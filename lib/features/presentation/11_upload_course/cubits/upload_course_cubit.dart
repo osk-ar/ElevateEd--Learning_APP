@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ElevatED/features/data/models/upload/upload_course_model.dart';
 import 'package:ElevatED/features/presentation/11_upload_course/screen/widgets/upload_item_widget.dart';
@@ -13,6 +12,14 @@ class UploadCourseCubit extends Cubit<UploadCourseState> {
   late final int courseID;
 
   Future<void> startUpload(UploadCourseModel courseModel) async {
+    try {
+      await _startUploadInternal(courseModel);
+    } catch (e) {
+      emit(UploadCourseError(e.toString()));
+    }
+  }
+
+  Future<void> _startUploadInternal(UploadCourseModel courseModel) async {
     final steps = <UplaodItemProperities>[
       UplaodItemProperities('Course Details', 0),
     ];
@@ -63,6 +70,7 @@ class UploadCourseCubit extends Cubit<UploadCourseState> {
         video.title,
         fileSize,
         chunksCount,
+        courseID,
       );
       final uploadId = await repo.uploadVideoInitialize(uploadInitModel);
       for (int chunkIdx = 0; chunkIdx < chunksCount; chunkIdx++) {
@@ -85,6 +93,9 @@ class UploadCourseCubit extends Cubit<UploadCourseState> {
       steps[idx].status = UploadStatus.finished;
       emit(UploadCourseProgress(List<UplaodItemProperities>.from(steps)));
     }
+
+    // step 4 navigate to course details screen
+    emit(UploadCourseSuccess());
   }
 
   Future<File> _createChunkFile(
@@ -107,4 +118,11 @@ class UploadCourseInitial extends UploadCourseState {}
 class UploadCourseProgress extends UploadCourseState {
   final List<UplaodItemProperities> steps;
   UploadCourseProgress(this.steps);
+}
+
+class UploadCourseSuccess extends UploadCourseState {}
+
+class UploadCourseError extends UploadCourseState {
+  final String message;
+  UploadCourseError(this.message);
 }

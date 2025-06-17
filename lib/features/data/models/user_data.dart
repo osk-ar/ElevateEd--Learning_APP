@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/features/data/mappers/user_role_mapper.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';
 import 'package:ElevatED/features/data/models/data_point.dart';
 import 'package:ElevatED/features/data/models/view/normalized_course.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class UserData {
   int id;
@@ -29,6 +28,12 @@ abstract class UserData {
       required this.description,
       required this.purchasedCourses,
       required this.dateOfBirth});
+
+  static String getProfilePictureUrl(String url) {
+    String imgName = url.split("/").last;
+
+    return "${dotenv.get('API_LINK')}auth/files/$imgName";
+  }
 }
 
 class StudentUserData extends UserData {
@@ -52,12 +57,13 @@ class StudentUserData extends UserData {
 
   factory StudentUserData.fromJson(Map<String, dynamic> json) {
     return StudentUserData(
-      token: json['token'],
+      token: json['token'] ?? "",
       id: json['id'],
       name: json['fullName'],
       email: json['email'],
       phone: json['phoneNumber'],
-      profilePictureUrl: json['profilePictureUrl'],
+      profilePictureUrl:
+          UserData.getProfilePictureUrl(json['profilePictureUrl']),
       role: UserRoleMapper.stringToEnum((json['role'] as String)),
       description: json['description'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
@@ -68,19 +74,23 @@ class StudentUserData extends UserData {
               .toList()
           : [],
       purchasedCourses: json['purchased_courses'] != null
-          ? (json['purchased_courses'] as List<Map<String, dynamic>>)
+          ? (json['purchased_courses'] as List)
+              .cast<Map<String, dynamic>>()
               .map((course) => NormalizedCourse.fromJson(course))
               .toList()
           : [],
-      activityPoints: [
-        DataPoint(value: 10, dateTime: DateTime.now()),
-        DataPoint(
-            value: 20,
-            dateTime: DateTime.now().subtract(const Duration(days: 1))),
-        DataPoint(
-            value: 5,
-            dateTime: DateTime.now().subtract(const Duration(days: 2)))
-      ],
+      activityPoints: [],
+
+      /*
+      
+      json['activityPoints'] != null
+          ? (json['activityPoints'] as List)
+          .cast<Map<String, dynamic>>()
+          .map((point) => DataPoint.fromJson(point))
+          .toList()
+          : 
+      
+       */
     );
   }
 }
@@ -119,7 +129,8 @@ class InstructorUserData extends UserData {
       name: json['fullName'],
       email: json['email'],
       phone: json['phoneNumber'],
-      profilePictureUrl: json['profilePictureUrl'],
+      profilePictureUrl:
+          UserData.getProfilePictureUrl(json['profilePictureUrl']),
       role: UserRoleMapper.stringToEnum(json['role']),
       description: json['description'],
       dateOfBirth: DateTime.parse(json['dateOfBirth']),
@@ -139,6 +150,18 @@ class InstructorUserData extends UserData {
           .toList(),
       totalStudents: json['totalStudents'],
       revenuePoints: [],
+
+      /*
+      
+      json['revenuePoints'] != null
+          ? (json['revenuePoints'] as List)
+              .cast<Map<String, dynamic>>()
+              .map((point) => DataPoint.fromJson(point))
+              .toList()
+          : 
+      
+      
+       */
     );
   }
 }

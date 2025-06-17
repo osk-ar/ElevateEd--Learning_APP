@@ -46,7 +46,10 @@ class _InstructorCreativityScreenState extends State<InstructorCreativityScreen>
             fontSize: 24.sp,
             color: ThemeColors.textColor,
           ),
+          textAlign: TextAlign.center,
         ),
+        leading: const SizedBox.shrink(),
+        backgroundColor: ThemeColors.backgroundColor,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(48.h),
           child: Container(

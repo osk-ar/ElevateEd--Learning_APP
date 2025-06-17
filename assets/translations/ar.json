@@ -283,5 +283,18 @@
     "instructor_creativity_add_course": "إضافة دورة",
     "instructor_creativity_no_courses": "لم يتم إنشاء دورات بعد.\nابدأ بإنشاء دورتك الأولى!",
     "instructor_creativity_enrolled": "المسجلين",
-    "instructor_creativity_rating": "التقييم"
+    "instructor_creativity_rating": "التقييم",
+    "no_portfolio_url": "لا يوجد رابط للمعرض الشخصي",
+    "no_github_url": "لا يوجد رابط لجيت هاب",
+    "no_linkedin_url": "لا يوجد رابط للينكدإن",
+    "no_facebook_url": "لا يوجد رابط للفيسبوك",
+    "assignment_solver_title": "حل الواجب",
+    "assignment_solver_submit": "إرسال الواجب",
+    "assignment_solver_success": "تم الإرسال بنجاح!",
+    "assignment_solver_error": "فشل الإرسال",
+    "assignment_solver_type_answer": "اكتب إجابتك...",
+    "assignment_solver_mcq_placeholder": "اختر خيارًا",
+    "assignment_solver_essay_placeholder": "اكتب إجابتك...",
+    "assignment_solver_loading": "جاري تحميل الواجب...",
+    "assignment_solver_no_questions": "لا توجد أسئلة متاحة."
 }

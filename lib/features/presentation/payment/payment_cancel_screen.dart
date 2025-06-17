@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaymentCancelScreen extends StatelessWidget {
-  final int courseId;
-  const PaymentCancelScreen({super.key, required this.courseId});
+  const PaymentCancelScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +58,8 @@ class PaymentCancelScreen extends StatelessWidget {
                     // Navigate back to course details
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RouteConstants.courseDetailsScreenRoute,
+                      RouteConstants.homeScreenRoute,
                       (route) => false,
-                      arguments: courseId,
                     );
                   },
                   child: Text(

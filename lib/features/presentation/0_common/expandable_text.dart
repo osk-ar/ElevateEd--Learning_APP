@@ -20,7 +20,6 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   Widget build(BuildContext context) {
-    print("building: $size");
     return InkWell(
       onTap: () {
         setState(() {

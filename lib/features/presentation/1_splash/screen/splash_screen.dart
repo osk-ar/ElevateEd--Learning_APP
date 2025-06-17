@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ? RouteConstants.mainScreenRoute
         : RouteConstants.onBoardingScreenRoute;
 
-    context.pushNamed(route);
+    context.pushReplacementNamed(route);
   }
 
   @override

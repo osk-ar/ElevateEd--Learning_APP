@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
-  final int courseId;
-  const PaymentSuccessScreen({super.key, required this.courseId});
+  const PaymentSuccessScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +56,8 @@ class PaymentSuccessScreen extends StatelessWidget {
                     // Navigate to course details and then to first video
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RouteConstants.courseDetailsScreenRoute,
+                      RouteConstants.homeScreenRoute,
                       (route) => false,
-                      arguments: courseId,
                     );
                   },
                   child: Text(

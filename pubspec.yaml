@@ -39,6 +39,7 @@ dependencies:
   path:
   # Firebase
   firebase_crashlytics:
+  firebase_messaging:
   firebase_analytics:
   firebase_core:
   # UI
@@ -46,6 +47,7 @@ dependencies:
   grouped_list: ^6.0.0
   water_drop_nav_bar:
   cupertino_icons:
+  video_player: ^2.8.2
   fl_chart:
   pinput:
   # Security
@@ -56,6 +58,7 @@ dependencies:
   url_launcher:
   app_links: ^6.4.0
   intl: ^0.19.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

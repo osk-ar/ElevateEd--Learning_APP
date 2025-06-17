@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:ElevatED/features/presentation/10_create_course/states/pricing_states.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,27 +17,4 @@ class PricingCubit extends Cubit<PricingState> {
     totalFeesController.text = totalFees.toStringAsFixed(2);
     totalRevenueController.text = totalRevenue.toStringAsFixed(2);
   }
-}
-
-class PricingState extends Equatable {
-  final int totalPrice;
-
-  const PricingState(this.totalPrice);
-
-  @override
-  List<Object?> get props => [];
-}
-
-class PricingInitial extends PricingState {
-  const PricingInitial() : super(0);
-
-  @override
-  List<Object?> get props => [totalPrice];
-}
-
-class PricingUpdated extends PricingState {
-  const PricingUpdated(super.totalPrice);
-
-  @override
-  List<Object?> get props => [totalPrice];
 }

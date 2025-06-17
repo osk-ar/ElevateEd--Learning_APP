@@ -34,6 +34,25 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="fed5-156-201-44-12.ngrok-free.app"
+                    android:pathPrefix="/payment-success" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="fed5-156-201-44-12.ngrok-free.app"
+                    android:pathPrefix="/payment-cancel" />
+            </intent-filter>
+
+
         </activity>
         <!-- Required for Image_Croppper Package -->
         <activity

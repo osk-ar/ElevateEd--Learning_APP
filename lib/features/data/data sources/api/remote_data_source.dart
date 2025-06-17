@@ -1,15 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:typed_data';
 
+import 'package:ElevatED/core/constants/api_constants.dart';
 import 'package:ElevatED/core/constants/app_keys.dart';
 import 'package:ElevatED/core/constants/enum.dart';
 import 'package:ElevatED/core/managers/error_manager.dart';
+import 'package:ElevatED/core/services/Shared%20Preferences%20Service/shared_preferences_service.dart';
 import 'package:ElevatED/features/data/data%20sources/cache/memory_cache.dart';
 import 'package:ElevatED/features/data/mappers/user_role_mapper.dart';
 import 'package:ElevatED/features/data/models/assignment/assignment.dart';
 import 'package:ElevatED/features/data/models/course/course_category.dart';
 import 'package:ElevatED/features/data/models/upload/upload_course_model.dart';
+import 'package:ElevatED/features/data/models/video/comment.dart';
+import 'package:ElevatED/features/data/models/video/stream/stream_response.dart';
+import 'package:ElevatED/features/data/models/video/stream/stream_video_metadata.dart';
 import 'package:ElevatED/features/data/models/video/upload_video_initialize.dart';
 import 'package:ElevatED/features/data/models/video/video_chunk_model.dart';
 import 'package:ElevatED/features/data/models/user_data.dart';
@@ -22,7 +28,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RemoteDataSource {
   late Dio dio;
-  RemoteDataSource(this.dio);
+  final SharedPreferencesService appSharedPrefs;
+  RemoteDataSource(this.dio, this.appSharedPrefs);
 
   //*--------------------
   //? login by email and password
@@ -51,6 +58,9 @@ class RemoteDataSource {
           break;
       }
       MemoryCache.pushUserData(userData);
+
+      appSharedPrefs.setString(AppKeys.tokenKey, userData.token);
+      appSharedPrefs.setInt(AppKeys.idKey, userData.id);
       return userData;
     }
 
@@ -85,6 +95,8 @@ class RemoteDataSource {
           break;
       }
       MemoryCache.pushUserData(userData);
+      appSharedPrefs.setString(AppKeys.tokenKey, userData.token);
+      appSharedPrefs.setInt(AppKeys.idKey, userData.id);
       return userData;
     }
 
@@ -536,6 +548,216 @@ class RemoteDataSource {
 
     if (response.statusCode == 200) {
       log("200 from upload finalize");
+      return;
+    }
+
+    throw UserFriendlyException(
+        ErrorManager.getAPIErrorMessage(response.statusCode));
+  }
+
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  //*--------------------
+  //? stream video
+  //*--------------------
+
+  Future<StreamResponse> streamVideoChunk(
+      String videoUrl, int start, int end) async {
+    int retryCount = 0;
+
+    while (retryCount < ApiConstants.maxRetries) {
+      try {
+        log("streaming video : $videoUrl");
+        final String url = videoUrl.split('/').last;
+
+        final response = await dio.request(
+          '${dotenv.get(AppKeys.envApiLinkKey)}videos/stream/$url',
+          options: Options(
+            method: 'GET',
+            headers: {
+              'Range': 'bytes=$start-$end',
+              'Authorization': 'Bearer ${MemoryCache.getUserData()!.token}',
+            },
+            responseType: ResponseType.bytes,
+          ),
+        );
+
+        if (response.statusCode == 206 || response.statusCode == 200) {
+          final chunkData = Uint8List.fromList(response.data);
+          late final StreamVideoMetadata metadata;
+
+          // Extract metadata from headers (available in every response)
+          final contentLength = response.headers.value('content-length');
+          final contentType =
+              response.headers.value('content-type') ?? 'video/mp4';
+          final contentRange = response.headers.value('content-range');
+
+          int totalFileSize = 0;
+
+          // Parse total size from Content-Range header (format: "bytes start-end/totalSize")
+          if (contentRange != null) {
+            final parts = contentRange.split('/');
+            if (parts.length == 2) {
+              totalFileSize = int.tryParse(parts[1]) ?? 0;
+            }
+          }
+
+          // Fallback to Content-Length if Content-Range not available
+          if (totalFileSize == 0 && contentLength != null) {
+            totalFileSize = int.tryParse(contentLength) ?? 0;
+          }
+
+          if (totalFileSize > 0) {
+            metadata = StreamVideoMetadata(
+              totalSize: totalFileSize,
+              format: contentType,
+            );
+          }
+
+          return StreamResponse(
+            data: chunkData,
+            metadata: metadata,
+            start: start,
+            end: end,
+          );
+        } else {
+          throw UserFriendlyException(
+              ErrorManager.getAPIErrorMessage(response.statusCode));
+        }
+      } catch (e) {
+        retryCount++;
+        if (retryCount >= ApiConstants.maxRetries) {
+          throw Exception(
+              'Failed to download chunk after ${ApiConstants.maxRetries} attempts: $e');
+        }
+        await Future.delayed(ApiConstants.retryDelay);
+      }
+    }
+
+    throw Exception('Max retries exceeded');
+  }
+
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  //*--------------------
+  //? get all comments
+  //*--------------------
+  Future<List<Comment>> getComments(String videoUrl) async {
+    final fileName = videoUrl.split('/').last;
+
+    final response = await dio.request(
+      '${dotenv.get(AppKeys.envApiLinkKey)}comments/video/$fileName',
+      options: Options(
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${MemoryCache.getUserData()!.token}',
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return (response.data["comments"] as List<dynamic>)
+          .map((commentJson) => Comment.fromJson(commentJson))
+          .toList();
+    }
+
+    throw UserFriendlyException(
+        ErrorManager.getAPIErrorMessage(response.statusCode));
+  }
+
+  //*--------------------
+  //? add comment
+  //*--------------------
+  Future<void> addComment(String videoUrl, String comment) async {
+    final fileName = videoUrl.split('/').last;
+    final userId = MemoryCache.getUserData()!.id;
+
+    log("adding comment for video: $fileName");
+    log("user token: ${MemoryCache.getUserData()!.token}");
+    log("user id: $userId");
+    log("comment: $comment");
+
+    final response = await dio.request(
+      '${dotenv.get(AppKeys.envApiLinkKey)}comments/add',
+      options: Options(
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${MemoryCache.getUserData()!.token}',
+        },
+      ),
+      data: {
+        'fileName': fileName,
+        'content': comment,
+        'userId': userId,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return;
+    }
+
+    throw UserFriendlyException(
+        ErrorManager.getAPIErrorMessage(response.statusCode));
+  }
+
+  Future<void> submitAssignment(
+      {required int assignmentId, required Map<int, String> answers}) async {
+    final response = await dio.request(
+      '${dotenv.get(AppKeys.envApiLinkKey)}assignments/submit',
+      options: Options(
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${MemoryCache.getUserData()!.token}',
+        },
+      ),
+      data: {
+        'assignmentId': assignmentId,
+        'answers': answers,
+      },
+    );
+
+    if (response.statusCode == 200) {
       return;
     }
 

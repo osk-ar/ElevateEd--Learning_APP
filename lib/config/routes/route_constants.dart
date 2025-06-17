@@ -26,8 +26,8 @@ class RouteConstants {
   static const String coursesScreenRoute = "/courses";
 
   static const String courseDetailsScreenRoute = "/courseDetails";
-  static const String paymentSuccessScreenRoute = "/paymentSuccess";
-  static const String paymentCancelScreenRoute = "/paymentCancel";
+  static const String paymentSuccessScreenRoute = "/payment-success";
+  static const String paymentCancelScreenRoute = "/payment-cancel";
 
   static const String settingsScreenRoute = "/settings";
   static const String languageSettingScreenRoute = "/languageOptionSetting";
@@ -50,4 +50,7 @@ class RouteConstants {
 
   static const String communityScreenRoute = "/community";
   static const String uploadCourseScreenRoute = "/uploadCourse";
+
+  static const String assignmentSolverScreenRoute =
+      "/assignmentSolver"; // expects Assignment as argument
 }

@@ -214,4 +214,24 @@ class AppStrings {
       'instructor_creativity_enrolled'.tr();
   static String get instructorCreativityRating =>
       'instructor_creativity_rating'.tr();
+
+  // Social Media URLs
+  static String get noPortfolioUrl => 'no_portfolio_url'.tr();
+  static String get noGithubUrl => 'no_github_url'.tr();
+  static String get noLinkedinUrl => 'no_linkedin_url'.tr();
+  static String get noFacebookUrl => 'no_facebook_url'.tr();
+
+  static String get assignmentSolverTitle => 'assignment_solver_title'.tr();
+  static String get assignmentSolverSubmit => 'assignment_solver_submit'.tr();
+  static String get assignmentSolverSuccess => 'assignment_solver_success'.tr();
+  static String get assignmentSolverError => 'assignment_solver_error'.tr();
+  static String get assignmentSolverTypeAnswer =>
+      'assignment_solver_type_answer'.tr();
+  static String get assignmentSolverMcqPlaceholder =>
+      'assignment_solver_mcq_placeholder'.tr();
+  static String get assignmentSolverEssayPlaceholder =>
+      'assignment_solver_essay_placeholder'.tr();
+  static String get assignmentSolverLoading => 'assignment_solver_loading'.tr();
+  static String get assignmentSolverNoQuestions =>
+      'assignment_solver_no_questions'.tr();
 }

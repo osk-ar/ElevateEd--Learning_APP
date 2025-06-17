@@ -1,11 +1,13 @@
+import 'dart:developer';
+
 import 'package:ElevatED/features/data/models/assignment/answer.dart';
 
 abstract interface class Question {
-  int index;
-  String title;
+  final int index;
+  final String title;
   final String type;
 
-  Question({
+  const Question({
     required this.index,
     required this.title,
     required this.type,
@@ -19,8 +21,14 @@ abstract interface class Question {
     throw UnimplementedError('toJson must be implemented in subclasses');
   }
 
-  static List<Question> mapQuestions(List<Map<String, dynamic>> json) {
+  Question copyWith({
+    int? index,
+    String? title,
+  });
+
+  static List<Question> mapQuestions(List<dynamic> json) {
     List<Question> questions = [];
+    log(json.toString());
 
     for (Map<String, dynamic> question in json) {
       if (question['type'] == 'multiple_choice') {
@@ -37,9 +45,9 @@ abstract interface class Question {
 }
 
 class MultipleChoiseQuestion extends Question {
-  List<Answer> answers;
+  final List<Answer> answers;
 
-  MultipleChoiseQuestion({
+  const MultipleChoiseQuestion({
     required super.index,
     required super.title,
     required this.answers,
@@ -50,7 +58,7 @@ class MultipleChoiseQuestion extends Question {
     return MultipleChoiseQuestion(
       index: json['index'],
       title: json['title'],
-      answers: (json['answer'] as List<Map<String, dynamic>>)
+      answers: (json['answers'] as List<dynamic>)
           .map((ans) => Answer.fromJson(ans))
           .toList(),
     );
@@ -65,12 +73,25 @@ class MultipleChoiseQuestion extends Question {
       'type': type,
     };
   }
+
+  @override
+  MultipleChoiseQuestion copyWith({
+    int? index,
+    String? title,
+    List<Answer>? answers,
+  }) {
+    return MultipleChoiseQuestion(
+      index: index ?? this.index,
+      title: title ?? this.title,
+      answers: answers ?? this.answers,
+    );
+  }
 }
 
 class EssayQuestion extends Question {
-  Answer answer;
+  final Answer answer;
 
-  EssayQuestion({
+  const EssayQuestion({
     required super.index,
     required super.title,
     required this.answer,
@@ -92,5 +113,18 @@ class EssayQuestion extends Question {
       'answer': answer.toJson(),
       'type': type,
     };
+  }
+
+  @override
+  EssayQuestion copyWith({
+    int? index,
+    String? title,
+    Answer? answer,
+  }) {
+    return EssayQuestion(
+      index: index ?? this.index,
+      title: title ?? this.title,
+      answer: answer ?? this.answer,
+    );
   }
 }

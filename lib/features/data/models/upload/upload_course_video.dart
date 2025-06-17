@@ -10,4 +10,9 @@ class UploadCourseVideo extends NormalizedCourseContent {
     required this.path,
     required this.extension,
   });
+
+  @override
+  NormalizedCourseContent copyWith({int? index, String? title}) {
+    throw UnimplementedError();
+  }
 }

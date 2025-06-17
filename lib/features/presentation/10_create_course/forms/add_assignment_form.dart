@@ -9,7 +9,7 @@ import 'package:ElevatED/features/data/models/assignment/question.dart';
 import 'package:ElevatED/features/presentation/0_common/cta_button.dart';
 import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/0_common/input_field.dart';
-import 'package:ElevatED/features/presentation/10_create_course/cubit/create_course_cubit.dart';
+import 'package:ElevatED/features/presentation/10_create_course/cubits/content_cubit.dart';
 import 'package:ElevatED/features/presentation/10_create_course/widgets/course_building_block.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,15 +24,22 @@ class AddAssignmentForm extends StatefulWidget {
 
 class _AddAssignmentFormState extends State<AddAssignmentForm> {
   final _titleController = TextEditingController();
+  final List<Question> _questions = [];
 
   late final GlobalKey<FormState> _formKey;
-  late final CreateCourseCubit cubit;
+  late final ContentCubit cubit;
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<CreateCourseCubit>();
+    cubit = context.read<ContentCubit>();
     _formKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
   }
 
   void _addMultipleChoiceQuestion(int index) {
@@ -44,7 +51,9 @@ class _AddAssignmentFormState extends State<AddAssignmentForm> {
         content: MultipleChoiceQuestionDialog(
           index: index,
           onSave: (question) {
-            cubit.saveQuestion(question);
+            setState(() {
+              _questions.add(question);
+            });
             Navigator.pop(context);
           },
         ),
@@ -61,12 +70,30 @@ class _AddAssignmentFormState extends State<AddAssignmentForm> {
         content: EssayQuestionDialog(
           index: index,
           onSave: (question) {
-            cubit.saveQuestion(question);
+            setState(() {
+              _questions.add(question);
+            });
             Navigator.pop(context);
           },
         ),
       ),
     );
+  }
+
+  void _submitAssignment() {
+    if (!_formKey.currentState!.validate() || _questions.isEmpty) {
+      context.message(message: "Please add title and at least one question");
+      return;
+    }
+
+    final assignment = NormalizedCourseAssignment(
+      index: cubit.content.length,
+      title: _titleController.text,
+      questions: _questions,
+    );
+
+    cubit.addContent(assignment);
+    context.pop();
   }
 
   @override
@@ -95,8 +122,8 @@ class _AddAssignmentFormState extends State<AddAssignmentForm> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: () => _addMultipleChoiceQuestion(
-                              cubit.lastAssignmentQuestions.length),
+                          onPressed: () =>
+                              _addMultipleChoiceQuestion(_questions.length),
                           icon: const Icon(Icons.check_box),
                           label: const Text('Add MCQ'),
                           style: ElevatedButton.styleFrom(
@@ -112,8 +139,7 @@ class _AddAssignmentFormState extends State<AddAssignmentForm> {
                           ),
                         ),
                         ElevatedButton.icon(
-                          onPressed: () => _addEssayQuestion(
-                              cubit.lastAssignmentQuestions.length),
+                          onPressed: () => _addEssayQuestion(_questions.length),
                           icon: const Icon(Icons.edit_note),
                           label: const Text('Add Essay'),
                           style: ElevatedButton.styleFrom(
@@ -130,39 +156,68 @@ class _AddAssignmentFormState extends State<AddAssignmentForm> {
                         ),
                       ],
                     ),
+                    if (_questions.isNotEmpty) ...[
+                      SizedBox(height: 16.h),
+                      Text(
+                        'Questions (${_questions.length})',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ],
                 ),
               ),
             ),
           ),
-          BlocBuilder<CreateCourseCubit, CreateCourseState>(
-            buildWhen: (previous, current) =>
-                current is CreateCourseQuestionsUpdated,
-            builder: (context, state) {
-              return SliverReorderableList(
-                itemCount: cubit.lastAssignmentQuestions.length,
-                itemBuilder: (context, index) {
-                  final question = cubit.lastAssignmentQuestions[index];
-                  final String type =
-                      question is MultipleChoiseQuestion ? "MCQ" : "Essay";
-                  return ReorderableDragStartListener(
-                    key: ValueKey(question),
-                    index: index,
-                    child: CourseBuildingBlock(
-                      index: question.index + 1,
-                      title: question.title,
-                      type: type,
-                      icon: Icons.close_rounded,
-                      buttonCallBack: () {
-                        cubit.removeQuestion(index);
-                      },
+          SliverReorderableList(
+            itemCount: _questions.length,
+            itemBuilder: (context, index) {
+              final question = _questions[index];
+              final String type =
+                  question is MultipleChoiseQuestion ? "MCQ" : "Essay";
+              final key = ValueKey('${question.runtimeType}_$index');
+              return ReorderableDragStartListener(
+                key: key,
+                index: index,
+                child: Dismissible(
+                  key: key,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 16.r),
+                    child: Icon(
+                      Icons.delete_outline,
+                      color: Colors.white,
+                      size: 24.r,
                     ),
-                  );
-                },
-                onReorder: (oldIndex, newIndex) {
-                  cubit.reOrderQuestions(oldIndex, newIndex);
-                },
+                  ),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    setState(() {
+                      _questions.removeAt(index);
+                    });
+                    context.message(message: "${type.capitalize()} removed");
+                  },
+                  child: CourseBuildingBlock(
+                    index: question.index + 1,
+                    title: question.title,
+                    type: type,
+                  ),
+                ),
               );
+            },
+            onReorder: (oldIndex, newIndex) {
+              setState(() {
+                if (oldIndex < newIndex) {
+                  newIndex -= 1;
+                }
+                final item = _questions.removeAt(oldIndex);
+                _questions.insert(newIndex, item);
+                // Update indices
+                for (var i = 0; i < _questions.length; i++) {
+                  _questions[i] = _questions[i].copyWith(index: i);
+                }
+              });
             },
           ),
           SliverToBoxAdapter(
@@ -170,25 +225,7 @@ class _AddAssignmentFormState extends State<AddAssignmentForm> {
               padding: EdgeInsets.symmetric(horizontal: 8.h),
               child: CTAButton(
                 text: AppStrings.submit,
-                onPressed: () {
-                  if (!_formKey.currentState!.validate() ||
-                      cubit.lastAssignmentQuestions.isEmpty) {
-                    context.message(
-                        message: "Please add title and at least one question");
-                    return;
-                  }
-
-                  final NormalizedCourseAssignment assignment =
-                      NormalizedCourseAssignment(
-                    index: cubit.courseContent.length,
-                    title: _titleController.text,
-                    questions: cubit.lastAssignmentQuestions,
-                  );
-                  cubit.resetQuestions();
-
-                  cubit.saveItem(assignment);
-                  context.pop();
-                },
+                onPressed: _submitAssignment,
               ),
             ),
           ),

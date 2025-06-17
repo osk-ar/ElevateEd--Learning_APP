@@ -6,20 +6,23 @@ import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImagePickerWidget extends StatelessWidget {
-  const ImagePickerWidget(
-      {super.key,
-      this.iconSize,
-      this.radius,
-      this.borderWidth,
-      this.onTap,
-      required this.imageExist,
-      this.imageFile});
+  const ImagePickerWidget({
+    super.key,
+    this.iconSize,
+    this.radius,
+    this.borderWidth,
+    this.onTap,
+    required this.imageExist,
+    this.imageFile,
+    this.onImagePicked,
+  });
   final double? iconSize;
   final double? radius;
   final double? borderWidth;
   final void Function()? onTap;
   final bool imageExist;
   final File? imageFile;
+  final void Function(bool hasImage)? onImagePicked;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,12 @@ class ImagePickerWidget extends StatelessWidget {
                     color: ThemeColors.inverseTextColor,
                   ),
             InkWell(
-              onTap: onTap,
+              onTap: () {
+                if (onTap != null) {
+                  onTap!();
+                  onImagePicked?.call(!imageExist);
+                }
+              },
               borderRadius: BorderRadius.circular(
                   (radius ?? 61.r) + (borderWidth ?? 6.r)),
             )

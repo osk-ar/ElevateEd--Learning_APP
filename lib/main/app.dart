@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
           onGenerateRoute: RouteGenerator.getRoute,
+          initialRoute: RouteConstants.splashScreenRoute,
         ),
       ),
     );

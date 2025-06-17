@@ -26,20 +26,6 @@ class CourseDetailsError extends CourseDetailsState {
   List<Object> get props => [message];
 }
 
-class CourseDetailsDescriptionSizeChanged extends CourseDetailsState {
-  final int size;
-  const CourseDetailsDescriptionSizeChanged({required this.size});
-  @override
-  List<Object> get props => [size];
-}
-
-class CourseDetailsFavouriteChanged extends CourseDetailsState {
-  final bool isFavorite;
-  const CourseDetailsFavouriteChanged({required this.isFavorite});
-  @override
-  List<Object> get props => [isFavorite];
-}
-
 class CourseDetailsPaymentUrlReceived extends CourseDetailsState {
   final String paymentUrl;
   const CourseDetailsPaymentUrlReceived({required this.paymentUrl});
