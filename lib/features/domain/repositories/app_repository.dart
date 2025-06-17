@@ -49,4 +49,6 @@ abstract class AppRepository {
 
   Future<void> submitAssignment(
       {required int assignmentId, required Map<int, String> answers});
+
+  Future<void> sendActivityPoint({required int userId, required double hours});
 }

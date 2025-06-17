@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:ElevatED/config/extensions.dart';
 import 'package:ElevatED/features/data/models/assignment/question.dart';
+import 'package:ElevatED/features/data/data%20sources/cache/memory_cache.dart';
+import 'package:ElevatED/features/domain/usecases/send_activity_point_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ElevatED/features/data/models/assignment/assignment.dart';
@@ -11,11 +13,13 @@ part '../../state/assignment/assignment_solver_state.dart';
 
 class AssignmentSolverCubit extends Cubit<AssignmentSolverState> {
   final SubmitAssignmentUseCase submitAssignmentUseCase;
+  final SendActivityPointUseCase sendActivityPointUseCase;
   late final Assignment assignment;
   final Map<int, String> _answers = {};
 
   AssignmentSolverCubit(
     this.submitAssignmentUseCase,
+    this.sendActivityPointUseCase,
   ) : super(AssignmentSolverInitial());
 
   void setAssignment(Assignment assignment) {
@@ -86,5 +90,20 @@ class AssignmentSolverCubit extends Cubit<AssignmentSolverState> {
       }
     }
     return null;
+  }
+
+  Future<void> sendActivityPoint(int secondsSpent) async {
+    try {
+      final userId = MemoryCache.getUserData()?.id;
+      if (userId == null && secondsSpent <= 10) return;
+
+      final hours = secondsSpent / 3600.0;
+      await sendActivityPointUseCase(
+        userId: userId!,
+        hours: hours,
+      );
+    } catch (e) {
+      // Optionally log or handle error
+    }
   }
 }

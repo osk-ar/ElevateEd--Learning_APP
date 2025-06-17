@@ -1,3 +1,4 @@
+import 'package:ElevatED/config/routes/route_constants.dart';
 import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/config/extensions.dart';
 import 'package:ElevatED/core/managers/validation_manager.dart';
@@ -102,8 +103,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             const Spacer(),
             BlocListener<ChangePasswordCubit, ChangePasswordState>(
               listener: (context, state) {
-                if (state is ChangePasswordLoaded) {
-                  context.bottomSheet(child: const BottomSuccessSheet());
+                if (state is ChangePasswordSuccess) {
+                  context.pushNamedAndRemoveUntil(
+                      RouteConstants.loginScreenRoute,
+                      predicate: (route) => false);
+                }
+                if (state is ChangePasswordError) {
+                  context.message(message: state.error);
                 }
               },
               child: CTAButton(

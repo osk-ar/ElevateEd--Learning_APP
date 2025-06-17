@@ -135,4 +135,15 @@ class AppRepositoryImpl extends AppRepository {
     await remoteDataSource.submitAssignment(
         assignmentId: assignmentId, answers: answers);
   }
+
+  @override
+  Future<void> sendActivityPoint({
+    required int userId,
+    required double hours,
+  }) async {
+    await remoteDataSource.sendActivityPoint(
+      userId: userId,
+      hours: hours,
+    );
+  }
 }

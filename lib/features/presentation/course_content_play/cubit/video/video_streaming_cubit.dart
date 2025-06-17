@@ -5,6 +5,7 @@ import 'package:ElevatED/features/data/models/video/stream/stream_chunk_info.dar
 import 'package:ElevatED/features/data/models/video/stream/stream_video_metadata.dart';
 import 'package:ElevatED/features/data/models/video/video.dart';
 import 'package:ElevatED/features/domain/repositories/video_repository.dart';
+import 'package:ElevatED/features/domain/usecases/send_activity_point_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'dart:async';
@@ -21,6 +22,7 @@ part '../../state/video/video_streaming_state.dart';
 /// provided as stubs and must be implemented in the upcoming iterations.
 class VideoStreamingCubit extends Cubit<VideoStreamingState> {
   final VideoRepository repository;
+  final SendActivityPointUseCase sendActivityPointUseCase;
 
   static const int bufferAheadChunks = 1; // keep 1 ahead
   static const int chunkSize = 1024 * 1024 * 1; // 1 MB per chunk
@@ -39,7 +41,8 @@ class VideoStreamingCubit extends Cubit<VideoStreamingState> {
   bool isBuffering = false;
   int? totalSize;
 
-  VideoStreamingCubit(this.repository) : super(const VideoStreamingInitial());
+  VideoStreamingCubit(this.repository, this.sendActivityPointUseCase)
+      : super(const VideoStreamingInitial());
 
   // Provide controller from UI so cubit can control playback/mute
   void attachController(VideoPlayerController controller) {
@@ -296,5 +299,20 @@ class VideoStreamingCubit extends Cubit<VideoStreamingState> {
   Future<void> close() async {
     await _cleanup();
     return super.close();
+  }
+
+  Future<void> sendActivityPoint(int secondsSpent) async {
+    try {
+      final userId = MemoryCache.getUserData()?.id;
+      if (userId == null && secondsSpent <= 10) return;
+
+      final hours = secondsSpent / 3600.0;
+      await sendActivityPointUseCase(
+        userId: userId!,
+        hours: hours,
+      );
+    } catch (e) {
+      // Optionally log or handle error
+    }
   }
 }

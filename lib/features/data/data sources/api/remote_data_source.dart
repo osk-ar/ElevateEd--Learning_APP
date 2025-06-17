@@ -218,7 +218,7 @@ class RemoteDataSource {
     );
 
     if (response.statusCode == 200) {
-      return response.data;
+      return response.data == "Password reset successfully.";
     }
 
     throw UserFriendlyException(
@@ -742,8 +742,43 @@ class RemoteDataSource {
 
   Future<void> submitAssignment(
       {required int assignmentId, required Map<int, String> answers}) async {
+    final studentId = MemoryCache.getUserData()!.id;
+
+    final queryParameters = {
+      'studentId': studentId,
+      'taskId': assignmentId,
+    };
+    final data = json.encode({
+      'answers': answers,
+    });
+
     final response = await dio.request(
-      '${dotenv.get(AppKeys.envApiLinkKey)}assignments/submit',
+      '${dotenv.get(AppKeys.envApiLinkKey)}submissions/task',
+      options: Options(
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${MemoryCache.getUserData()!.token}',
+        },
+      ),
+      data: data,
+      queryParameters: queryParameters,
+    );
+
+    if (response.statusCode == 200) {
+      return;
+    }
+
+    throw UserFriendlyException(
+        ErrorManager.getAPIErrorMessage(response.statusCode));
+  }
+
+  Future<void> sendActivityPoint({
+    required int userId,
+    required double hours,
+  }) async {
+    final response = await dio.request(
+      '${dotenv.get(AppKeys.envApiLinkKey)}students/$userId/points',
       options: Options(
         method: 'POST',
         headers: {
@@ -752,15 +787,12 @@ class RemoteDataSource {
         },
       ),
       data: {
-        'assignmentId': assignmentId,
-        'answers': answers,
+        'points': hours,
       },
     );
-
     if (response.statusCode == 200) {
       return;
     }
-
     throw UserFriendlyException(
         ErrorManager.getAPIErrorMessage(response.statusCode));
   }

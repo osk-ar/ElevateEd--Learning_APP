@@ -65,7 +65,10 @@ class SettingsScreen extends StatelessWidget {
               title: 'change_password'.tr(),
               icon: AppIcons.password,
               foregroundColor: AppColors.whiteColor,
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(
+                    RouteConstants.forgetPasswordChangePasswordScreenRoute);
+              },
             ),
             Divider(
               height: 2.h,

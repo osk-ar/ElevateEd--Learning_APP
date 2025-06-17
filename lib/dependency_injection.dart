@@ -65,6 +65,7 @@ import 'package:ElevatED/features/presentation/10_create_course/cubits/content_c
 import 'package:ElevatED/features/presentation/10_create_course/cubits/general_cubit.dart';
 import 'package:ElevatED/features/presentation/course_content_play/cubit/assignment/assignment_solver_cubit.dart';
 import 'package:ElevatED/features/domain/usecases/submit_assignment_usecase.dart';
+import 'package:ElevatED/features/domain/usecases/send_activity_point_usecase.dart';
 
 Future<void> registerDependencies() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -117,6 +118,8 @@ Future<void> registerDependencies() async {
   sl.registerLazySingleton(() => AddCommentUseCase(sl()));
   sl.registerLazySingleton<SubmitAssignmentUseCase>(
       () => SubmitAssignmentUseCase(sl()));
+  sl.registerLazySingleton<SendActivityPointUseCase>(
+      () => SendActivityPointUseCase(sl()));
 
   /// Cubits
   sl.registerFactory<SplashCubit>(() => SplashCubit(sl(), sl()));
@@ -124,7 +127,7 @@ Future<void> registerDependencies() async {
   sl.registerFactory<LoginCubit>(() => LoginCubit(sl(), sl()));
   sl.registerFactory<ValidationCubit>(() => ValidationCubit(sl()));
   sl.registerFactory<VerificationCubit>(() => VerificationCubit(sl(), sl()));
-  sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit());
+  sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit(sl()));
 
   sl.registerFactory<RegisterCubit>(() => RegisterCubit());
   sl.registerFactory<StudentRegisterCubit>(
@@ -137,7 +140,8 @@ Future<void> registerDependencies() async {
   sl.registerFactory<NotificationCubit>(() => NotificationCubit());
 
   sl.registerFactory<CourseDetailsCubit>(() => CourseDetailsCubit(sl(), sl()));
-  sl.registerFactory<VideoStreamingCubit>(() => VideoStreamingCubit(sl()));
+  sl.registerFactory<VideoStreamingCubit>(
+      () => VideoStreamingCubit(sl(), sl()));
   sl.registerFactory<StatsCubit>(() => StatsCubit());
 
   sl.registerFactory<UploadCourseCubit>(() => UploadCourseCubit(sl()));
@@ -161,7 +165,8 @@ Future<void> registerDependencies() async {
   sl.registerFactory<VideoCommentsCubit>(() => VideoCommentsCubit(sl(), sl()));
 
   // Assignment Solver Cubit
-  sl.registerFactory<AssignmentSolverCubit>(() => AssignmentSolverCubit(sl()));
+  sl.registerFactory<AssignmentSolverCubit>(
+      () => AssignmentSolverCubit(sl(), sl()));
 
   // Create Course Cubits
   sl.registerLazySingleton<GeneralCubit>(() => GeneralCubit(sl()));

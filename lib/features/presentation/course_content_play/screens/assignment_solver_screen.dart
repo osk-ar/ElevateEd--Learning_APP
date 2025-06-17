@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:async';
 
 import 'package:ElevatED/features/presentation/0_common/cta_button.dart';
 import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
@@ -25,6 +26,9 @@ class AssignmentSolverScreen extends StatefulWidget {
 
 class _AssignmentSolverScreenState extends State<AssignmentSolverScreen> {
   final List<EssayController> _controllers = [];
+  Timer? _timeSpentTimer;
+  int _secondsSpent = 0;
+
   @override
   void initState() {
     super.initState();
@@ -38,13 +42,18 @@ class _AssignmentSolverScreenState extends State<AssignmentSolverScreen> {
         index: q.index,
       ));
     }
+    _timeSpentTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _secondsSpent++;
+    });
   }
 
   @override
   void dispose() {
+    context.read<AssignmentSolverCubit>().sendActivityPoint(_secondsSpent);
     for (var ec in _controllers) {
       ec.dispose();
     }
+    _timeSpentTimer?.cancel();
     super.dispose();
   }
 

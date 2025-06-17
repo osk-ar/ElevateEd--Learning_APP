@@ -320,8 +320,8 @@ class RouteGenerator {
         final assignment = settings.arguments as Assignment;
         log("assignment: ${assignment.title}");
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<AssignmentSolverCubit>(
-            create: (_) => sl<AssignmentSolverCubit>(),
+          builder: (context) => BlocProvider<AssignmentSolverCubit>.value(
+            value: sl<AssignmentSolverCubit>(),
             child: AssignmentSolverScreen(assignment: assignment),
           ),
         );

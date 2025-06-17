@@ -24,6 +24,15 @@ class MemoryCache {
   static List<Orderable>? _currentCourseItems;
   static int? _currentCourseItemIndex;
 
+  static String? _resetPasswordEmail;
+
+  static void pushResetPasswordEmail(String email) =>
+      _resetPasswordEmail = email;
+
+  static String? getResetPasswordEmail() => _resetPasswordEmail;
+
+  static void clearResetPasswordEmail() => _resetPasswordEmail = null;
+
   static void pushId(int id) => _id = id;
 
   static void pushEmail(String email) => _email = email;

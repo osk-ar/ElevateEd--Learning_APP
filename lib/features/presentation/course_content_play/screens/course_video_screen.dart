@@ -14,6 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:ElevatED/config/themes/text_styles.dart';
+import 'package:ElevatED/features/domain/usecases/send_activity_point_usecase.dart';
+import 'package:ElevatED/features/data/data sources/cache/memory_cache.dart';
+import 'package:ElevatED/init.dart';
 
 class CourseVideoScreen extends StatefulWidget {
   const CourseVideoScreen({super.key});
@@ -27,6 +30,8 @@ class _CourseVideoScreenState extends State<CourseVideoScreen> {
   static const double _defaultAspectRatio = 16 / 9;
   Timer? _hideControlsTimer;
   final TextEditingController _commentController = TextEditingController();
+  Timer? _timeSpentTimer;
+  int _secondsSpent = 0;
   // Colors for shimmer effect
   static const _shimmerBaseColor = ThemeColors.lightSurfaceToDarkSecondary;
   static const _shimmerHighlightColor = ThemeColors.backgroundColor;
@@ -38,6 +43,9 @@ class _CourseVideoScreenState extends State<CourseVideoScreen> {
     _setupVideoController();
     context.read<VideoStreamingCubit>().initialize(loadComments: (videoUrl) {
       context.read<VideoCommentsCubit>().loadComments(videoUrl);
+    });
+    _timeSpentTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _secondsSpent++;
     });
   }
 
@@ -81,6 +89,8 @@ class _CourseVideoScreenState extends State<CourseVideoScreen> {
     _hideControlsTimer?.cancel();
     _playerController.pause();
     _playerController.dispose();
+    _timeSpentTimer?.cancel();
+    context.read<VideoStreamingCubit>().sendActivityPoint(_secondsSpent);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.dispose();
