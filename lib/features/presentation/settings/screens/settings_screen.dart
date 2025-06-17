@@ -3,6 +3,7 @@ import 'package:ElevatED/config/themes/theme_colors.dart';
 import 'package:ElevatED/config/extensions.dart';
 import 'package:ElevatED/core/constants/app_colors.dart';
 import 'package:ElevatED/core/constants/app_icons.dart';
+import 'package:ElevatED/features/data/data%20sources/cache/memory_cache.dart';
 import 'package:ElevatED/features/presentation/0_common/default_appbar.dart';
 import 'package:ElevatED/features/presentation/settings/screens/widgets/settings_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -66,6 +67,8 @@ class SettingsScreen extends StatelessWidget {
               icon: AppIcons.password,
               foregroundColor: AppColors.whiteColor,
               onTap: () {
+                MemoryCache.pushResetPasswordEmail(
+                    MemoryCache.getUserData()!.email);
                 context.pushNamed(
                     RouteConstants.forgetPasswordChangePasswordScreenRoute);
               },
